@@ -6,6 +6,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.geekbrains.city_whether.frag.ChooseCityFrag;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ShowActivity extends AppCompatActivity {
@@ -13,6 +15,7 @@ public class ShowActivity extends AppCompatActivity {
     private static final String TAG = "33333";
 
     private String city = "";
+    private int current_position;
     private boolean isWind;
     private boolean isPressure;
     private TextView textViewCity;
@@ -29,11 +32,12 @@ public class ShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        city = getIntent().getStringExtra(ChooseActivity.CITY);
+        current_position =  getIntent().getIntExtra(ChooseCityFrag.CURRENT_POS,0);
+        city = getIntent().getStringExtra(ChooseCityFrag.CITY);
         Log.d(TAG, "city = " + city);
-        isWind = getIntent().getBooleanExtra(ChooseActivity.WIND, false);
+        isWind = getIntent().getBooleanExtra(ChooseCityFrag.WIND, false);
         Log.d(TAG, "isWind = " + isWind);
-        isPressure = getIntent().getBooleanExtra(ChooseActivity.PRESSURE, false);
+        isPressure = getIntent().getBooleanExtra(ChooseCityFrag.PRESSURE, false);
         Log.d(TAG, "isPressure = " + isPressure);
 
         init();
@@ -75,6 +79,7 @@ public class ShowActivity extends AppCompatActivity {
             String wind = new WindBuilder().getWindSpeed(getApplicationContext());
             textViewWind.setText(wind);
         }
+
        if (isPressure){
            String press = new PressureBuilder().getPressure(getApplicationContext());
            textViewPressure.setText(press);

@@ -1,28 +1,34 @@
-package com.geekbrains.a1l5_fragments;
+package com.geekbrains.city_whether;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import com.geekbrains.a1l5_fragments.fragments.CitiesFragment;
+
+import com.geekbrains.city_whether.frag.ChooseCityFrag;
+import com.geekbrains.city_whether.frag.WhetherFragment;
+
 import java.util.Objects;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class Main_Activity extends AppCompatActivity {
 
-    private static  final String TAG = "33333";
+    private static final String TAG = "33333";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_choose_fr);
 
         if (getIntent().getExtras()!=null){
             int position = getIntent().getIntExtra("index",0);
             Log.d(TAG, "MainActivity onCreate position = " + position);
-            CitiesFragment citiesFragment = (CitiesFragment)getSupportFragmentManager().
-                    findFragmentById(R.id.cities);
+            ChooseCityFrag chooseCityFrag = (ChooseCityFrag)getSupportFragmentManager().
+                    findFragmentById(R.id.citiesWhether);
             //вызываем метод фрагмента для передачи актуальной позиции
-            Objects.requireNonNull(citiesFragment).getCurrentPosition(position);
+            Objects.requireNonNull(chooseCityFrag).getCurrentPosition(position);
         }
     }
     // переопределение метода onBackPressed() пришлось убрать, иначе при нажатии кнопки "назад"
     //переход по фрагментам идёт через 2 позиции!!!
-}
+    }
+

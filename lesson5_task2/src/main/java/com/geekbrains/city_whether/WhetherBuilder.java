@@ -4,9 +4,9 @@ import android.content.Context;
 
 import java.util.Random;
 
-class WhetherBuilder {
+public class WhetherBuilder {
 
-    String getWhether(Context context){
+    public String getWhether(Context context){
         String result;
         Random random = new Random();
         int rnd = random.nextInt(5);

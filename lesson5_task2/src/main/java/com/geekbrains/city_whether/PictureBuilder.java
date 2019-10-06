@@ -5,9 +5,9 @@ import android.graphics.drawable.Drawable;
 
 import androidx.core.content.ContextCompat;
 
-class PictureBuilder {
+public class PictureBuilder {
 
-    Drawable getDrawableIcon(Context context, String srt){
+    public Drawable getDrawableIcon(Context context, String srt){
         Drawable drawable = null;
         String sun =  context.getResources().getString(R.string.Sun);
         String var_clouds =  context.getResources().getString(R.string.var_clouds);

@@ -9,21 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".ChooseActivity"></activity>
         <activity
-            android:name="com.geekbrains.city_whether.ShowActivity"
-            android:theme="@style/AppTheme"
-            android:label="@string/WhetherInCity">
-
-        </activity>
-        <activity android:name="com.geekbrains.city_whether.ChooseActivity"
-            android:theme="@style/ChooseThem"
-            android:label="@string/CityChoose">
+            android:name=".ShowActivity"
+            android:label="@string/WhetherInCity"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".Main_Activity"
+            android:label="@string/CityChoose"
+            android:theme="@style/ChooseThem">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
