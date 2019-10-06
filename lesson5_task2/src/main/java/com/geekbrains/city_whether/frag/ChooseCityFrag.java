@@ -4,12 +4,10 @@ package com.geekbrains.city_whether.frag;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +16,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ListView;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
-
-import com.geekbrains.city_whether.ChooseActivity;
 import com.geekbrains.city_whether.DetailActivity;
 import com.geekbrains.city_whether.R;
-import com.geekbrains.city_whether.ShowActivity;
-
 import java.util.Objects;
 
 /**
@@ -67,14 +58,13 @@ public class ChooseCityFrag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
-        //showCityWhether();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Определение, можно ли будет расположить рядом герб в другом фрагменте
+        // Определение, можно ли будет расположить рядом данные в другом фрагменте
         isExistWhetherFrag = getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE;
 
@@ -85,7 +75,7 @@ public class ChooseCityFrag extends Fragment {
             Log.d(TAG, "savedInstanceState != null  currentPosition "+ currentPosition);
         }
 
-        // Если можно нарисовать рядом герб, то сделаем это
+        // Если можно нарисовать рядом данные, то сделаем это
         if (isExistWhetherFrag) {
             Log.d(TAG, "onActivityCreated  isExistWhetherFrag "+ isExistWhetherFrag);
             showCityWhether();
@@ -115,7 +105,6 @@ public class ChooseCityFrag extends Fragment {
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTowns = view.findViewById(R.id.spinnerTowns);
         spinnerTowns.setAdapter(adapterSpinner); //подключанм адаптер к списку
-//        spinnerTowns.setSelection(1); //показываем вторую позицию
 
         spinnerTowns.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -125,7 +114,6 @@ public class ChooseCityFrag extends Fragment {
                 String str = parent.getItemAtPosition(position).toString();
                 Log.d(TAG, "spinnerTowns onItemSelected Город " + str +
                         " currentPosition = " + currentPosition );
-                //showCityWhether();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -141,9 +129,11 @@ public class ChooseCityFrag extends Fragment {
                 isWind = checkBoxWind.isChecked();
                 isPressure = checkBoxPressure.isChecked();
 
+                //если альбомная ориентация,то
                 if (isExistWhetherFrag){
                     Log.d(TAG, "buttonShow onClick isExistWhetherFrag = " + isExistWhetherFrag);
                     showCityWhether();
+                    //а если портретная, то
                 }else {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
                     intent.putExtra(CURRENT_POS, currentPosition);
@@ -152,8 +142,6 @@ public class ChooseCityFrag extends Fragment {
                     intent.putExtra(PRESSURE, isPressure);
                     startActivity(intent);
                 }
-
-
             }
         });
     }
@@ -163,12 +151,11 @@ public class ChooseCityFrag extends Fragment {
     private void showCityWhether(){
 
         Log.d(TAG, "showCityWhether  isExistWhetherFrag =  " + isExistWhetherFrag);
-
-
             // Проверим, что фрагмент с погодой существует в activity - обращение по id фрагмента
             WhetherFragment whetherFrag = (WhetherFragment)
                     Objects.requireNonNull(getFragmentManager()).findFragmentById(R.id.whether_in_citys);
 
+            //для отладки
             if (whetherFrag != null){
                 Log.d(TAG, "whetherFrag.getIndex= " + whetherFrag.getIndex() +
                         "  currentPosition = " + currentPosition);
@@ -176,7 +163,7 @@ public class ChooseCityFrag extends Fragment {
 
             // Если есть необходимость, то выведем погоду
             if (whetherFrag == null || whetherFrag.getIndex() != currentPosition) {
-                // Создаем новый фрагмент с текущей позицией для вывода герба
+                // Создаем новый фрагмент с текущей позицией для вывода погоды
                 whetherFrag = WhetherFragment.newInstance(currentPosition);
 
                 // Выполняем транзакцию по замене фрагмента
@@ -189,7 +176,8 @@ public class ChooseCityFrag extends Fragment {
             }
     }
 
-    //получаем актуальное значение currentPosition при перевороте экрана в CoatOfArmsActivity
+    //получаем актуальное значение currentPosition при перевороте экрана в DetailActivity
+    //хотя в погодном приложении работает и без этого метода - обновление же по кнопке
     public void getCurrentPosition(int actualPosition){
         currentPosition = actualPosition;
         Log.d(TAG, "ChooseCityFrag getCurrentPosition actualPosition = " + currentPosition);

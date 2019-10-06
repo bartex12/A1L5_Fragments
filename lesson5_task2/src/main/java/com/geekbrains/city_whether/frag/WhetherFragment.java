@@ -2,23 +2,16 @@ package com.geekbrains.city_whether.frag;
 
 
 import android.annotation.SuppressLint;
-import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.geekbrains.city_whether.GreetingsBuilder;
 import com.geekbrains.city_whether.PictureBuilder;
 import com.geekbrains.city_whether.PressureBuilder;
@@ -74,7 +67,6 @@ public class WhetherFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
-        //showCityWhether();
     }
 
     private void initViews(View view) {
@@ -85,8 +77,7 @@ public class WhetherFragment extends Fragment {
         textViewWind = view.findViewById(R.id.textViewWind);
         textViewPressure = view.findViewById(R.id.textViewPressure);
         imageViewWhether = view.findViewById(R.id.imageViewWhether);
-
-        //textViewCity.setText(city);
+        
         String[] towns = getResources().getStringArray(R.array.towns);
         String town = towns[getIndex()];
 

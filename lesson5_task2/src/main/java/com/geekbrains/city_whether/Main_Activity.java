@@ -22,9 +22,11 @@ public class Main_Activity extends AppCompatActivity {
         if (getIntent().getExtras()!=null){
             int position = getIntent().getIntExtra("index",0);
             Log.d(TAG, "MainActivity onCreate position = " + position);
+
             ChooseCityFrag chooseCityFrag = (ChooseCityFrag)getSupportFragmentManager().
                     findFragmentById(R.id.citiesWhether);
-            //вызываем метод фрагмента для передачи актуальной позиции
+
+            //вызываем из активности метод фрагмента для передачи актуальной позиции
             Objects.requireNonNull(chooseCityFrag).getCurrentPosition(position);
         }
     }
