@@ -1,2 +1,2 @@
-include ':app', ':lesson5_task1'
+include ':app', ':lesson5_task1', ':lesson5_task2'
 rootProject.name='A1L5_Fragments'
