@@ -1,6 +1,4 @@
 package ru.geekbrains.a1l5_lifeCicles;
-
-
 import android.content.Context;
 import android.os.Bundle;
 
@@ -17,13 +15,9 @@ import android.widget.Toast;
 
 import java.util.Objects;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class BlankFragment extends Fragment {
 
-    private static final String TAG = "[BlankFragment]";
+    private static final String TAG = "33333";
     private String inputString = "";
 
     public BlankFragment() {
@@ -48,7 +42,6 @@ public class BlankFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         makeMessage("BlankFragment: onCreate()");
-        Log.d(TAG, "BlankFragment: onCreate()");
         inputString = Objects.requireNonNull(getArguments()).getString(MainActivity.INPUT);
     }
 
@@ -90,6 +83,12 @@ public class BlankFragment extends Fragment {
     public void onStop() {
         super.onStop();
         makeMessage("BlankFragment: onStop()");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        makeMessage("BlankFragment: onDestroy()");
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ru.geekbrains.a1l5_lifeCicles;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -12,8 +13,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    private String TAG = "[MainActivity]";
+    private String TAG = "33333";
     private TextView firstRunTextView;
     static final String INPUT = "input";
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle saveInstanceState){
+    protected void onRestoreInstanceState(@NonNull Bundle saveInstanceState){
         super.onRestoreInstanceState(saveInstanceState);
         firstRunTextView.setText("Повторный запуск!!");
         makeMessage("MainActivity onRestoreInstanceState()");
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle saveInstanceState){
+    protected void onSaveInstanceState(@NonNull Bundle saveInstanceState){
         super.onSaveInstanceState(saveInstanceState);
         makeMessage("MainActivity onSaveInstanceState()");
     }
