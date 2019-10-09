@@ -2,6 +2,7 @@ package com.geekbrains.city_whether.frag;
 
 
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -103,8 +104,12 @@ public class WhetherFragment extends Fragment {
         String textWhether = new WhetherBuilder().getWhether(getActivity());
         textViewWhether.setText(textWhether);
 
-        Drawable drawable = new PictureBuilder().getDrawableIcon(getActivity(), textWhether);
-        imageViewWhether.setImageDrawable(drawable);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            imageViewWhether.setVisibility(View.GONE);
+        }else {
+            Drawable drawable = new PictureBuilder().getDrawableIcon(getActivity(), textWhether);
+            imageViewWhether.setImageDrawable(drawable);
+        }
 
         String textTemper = new TempBuilder().getTemperature(getActivity());
         textViewTemper.setText(textTemper);
@@ -121,19 +126,19 @@ public class WhetherFragment extends Fragment {
         DataForecast[] data = new DataForecast[] {
                 new DataForecast("Завтра",ContextCompat
                         .getDrawable(Objects.requireNonNull(getActivity()), R.drawable.sun),
-                        "+15"),
+                        new TempBuilder().getTemperature(getActivity())),
                 new DataForecast("Послезавтра",ContextCompat
                         .getDrawable(Objects.requireNonNull(getActivity()), R.drawable.rain),
-                        "+20"),
+                        new TempBuilder().getTemperature(getActivity())),
                 new DataForecast("Через 2 дня",ContextCompat.
                         getDrawable(Objects.requireNonNull(getActivity()), R.drawable.partly_cloudy),
-                        "+17"),
+                        new TempBuilder().getTemperature(getActivity())),
                 new DataForecast("Через 3 дня",ContextCompat.
                         getDrawable(Objects.requireNonNull(getActivity()), R.drawable.sun),
-                        "+18"),
+                        new TempBuilder().getTemperature(getActivity())),
                 new DataForecast("Через 4 дня",ContextCompat.
                         getDrawable(Objects.requireNonNull(getActivity()), R.drawable.boom),
-                        "+14")};
+                        new TempBuilder().getTemperature(getActivity()))};
 
         ArrayList<DataForecast> list = new ArrayList<>(data.length);
         list.addAll(Arrays.asList(data));
