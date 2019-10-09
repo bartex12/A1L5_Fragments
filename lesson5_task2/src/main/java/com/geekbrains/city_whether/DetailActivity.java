@@ -37,8 +37,7 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
-
-        // Если эта activity запускается первый раз (с каждым новым гербом первый раз)
+        // Если эта activity запускается первый раз (с каждым новым городом первый раз)
         // то перенаправим параметр фрагменту
         Log.d(TAG, "DetailActivity  savedInstanceState = "+ savedInstanceState);
         if (savedInstanceState == null) {

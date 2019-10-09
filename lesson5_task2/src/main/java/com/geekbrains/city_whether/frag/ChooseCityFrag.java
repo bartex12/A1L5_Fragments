@@ -146,8 +146,7 @@ public class ChooseCityFrag extends Fragment {
         });
     }
 
-    // Показать погоду. Ecли возможно, то показать рядом со спиннером,
-    // если нет, то открыть вторую activity
+    // Показать погоду во фрагменте рядом со спиннером в альбомной ориентации
     private void showCityWhether(){
 
         Log.d(TAG, "showCityWhether  isExistWhetherFrag =  " + isExistWhetherFrag);
@@ -161,12 +160,12 @@ public class ChooseCityFrag extends Fragment {
                         "  currentPosition = " + currentPosition);
             }
 
-            // Если есть необходимость, то выведем погоду
+            // Если фрагмент не создан или он не соответствует выбранному городу, то ...
             if (whetherFrag == null || whetherFrag.getIndex() != currentPosition) {
-                // Создаем новый фрагмент с текущей позицией для вывода погоды
+                // ... создаем новый фрагмент с текущей позицией для вывода погоды
                 whetherFrag = WhetherFragment.newInstance(currentPosition);
 
-                // Выполняем транзакцию по замене фрагмента
+                // ... и выполняем транзакцию по замене фрагмента
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.whether_in_citys, whetherFrag);  // замена фрагмента
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);// эффект
