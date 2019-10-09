@@ -127,7 +127,7 @@ public class WhetherFragment extends Fragment {
                 new DataForecast("Завтра",ContextCompat
                         .getDrawable(Objects.requireNonNull(getActivity()), R.drawable.sun),
                         new TempBuilder().getTemperature(getActivity())),
-                new DataForecast("Послезавтра",ContextCompat
+                new DataForecast("Через день",ContextCompat
                         .getDrawable(Objects.requireNonNull(getActivity()), R.drawable.rain),
                         new TempBuilder().getTemperature(getActivity())),
                 new DataForecast("Через 2 дня",ContextCompat.
