@@ -51,7 +51,7 @@ public class ChooseCityFrag extends Fragment {
 
     private RecyclerView recyclerViewMarked; //RecyclerView для списка ранее выбранных городов
     private ArrayList<String> cityMarked = new ArrayList<>(); //список ранее выбранных городов
-    private RecyclerViewCityAdapter adapter; //адаптер для RecyclerView
+    private RecyclerViewCityAdapter recyclerViewCityAdapter; //адаптер для RecyclerView
 
     public ChooseCityFrag() {
         // Required empty public constructor
@@ -89,7 +89,7 @@ public class ChooseCityFrag extends Fragment {
             cityMarked = savedInstanceState.getStringArrayList("CityMarked");
             Log.d(TAG, "onViewCreated savedInstanceState cityMarked.size()= "+
                     Objects.requireNonNull(cityMarked).size());
-            
+
             //adapter.notifyDataSetChanged() не работает, придётся так
             this.initRecycledView();
         }
@@ -149,8 +149,7 @@ public class ChooseCityFrag extends Fragment {
                 city =  spinnerTowns.getSelectedItem().toString();
                 cityMarked.add(city); //добавляем город в список ранее выбранных городов
                 Log.d(TAG, "cityMarked.add(city) cityMarked.size() = " + cityMarked.size());
-
-                adapter.notifyDataSetChanged(); // - перерисует сразу весь список
+                recyclerViewCityAdapter.notifyDataSetChanged(); // - перерисует сразу весь список
                 isWind = checkBoxWind.isChecked();
                 isPressure = checkBoxPressure.isChecked();
 
@@ -173,10 +172,10 @@ public class ChooseCityFrag extends Fragment {
 
     private void initRecycledView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        adapter = new RecyclerViewCityAdapter(cityMarked);
+        recyclerViewCityAdapter = new RecyclerViewCityAdapter(cityMarked);
 
         recyclerViewMarked.setLayoutManager(layoutManager);
-        recyclerViewMarked.setAdapter(adapter);
+        recyclerViewMarked.setAdapter(recyclerViewCityAdapter);
 
     }
 
