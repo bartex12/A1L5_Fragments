@@ -8,6 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,9 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 import com.geekbrains.city_whether.DetailActivity;
 import com.geekbrains.city_whether.R;
+import com.geekbrains.city_whether.cityAdapter.RecyclerViewCityAdapter;
+
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -43,6 +49,10 @@ public class ChooseCityFrag extends Fragment {
     private boolean isWind;
     private boolean isPressure;
 
+    private RecyclerView recyclerViewMarked; //RecyclerView для списка ранее выбранных городов
+    private ArrayList<String> cityMarked = new ArrayList<>(); //список ранее выбранных городов
+    private RecyclerViewCityAdapter adapter; //адаптер для RecyclerView
+
     public ChooseCityFrag() {
         // Required empty public constructor
     }
@@ -58,7 +68,10 @@ public class ChooseCityFrag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
+        initRecycledView();
     }
+
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -72,9 +85,14 @@ public class ChooseCityFrag extends Fragment {
         if (savedInstanceState != null) {
             // Восстановление текущей позиции.
             currentPosition = savedInstanceState.getInt("CurrentCity", 0);
-            Log.d(TAG, "savedInstanceState != null  currentPosition "+ currentPosition);
+            Log.d(TAG, "onViewCreated savedInstanceState   currentPosition "+ currentPosition);
+            cityMarked = savedInstanceState.getStringArrayList("CityMarked");
+            Log.d(TAG, "onViewCreated savedInstanceState cityMarked.size()= "+
+                    Objects.requireNonNull(cityMarked).size());
+            
+            //adapter.notifyDataSetChanged() не работает, придётся так
+            this.initRecycledView();
         }
-
         // Если можно нарисовать рядом данные, то сделаем это
         if (isExistWhetherFrag) {
             Log.d(TAG, "onActivityCreated  isExistWhetherFrag "+ isExistWhetherFrag);
@@ -86,11 +104,14 @@ public class ChooseCityFrag extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putInt("CurrentCity", currentPosition);
+        outState.putStringArrayList("CityMarked", cityMarked);
+        Log.d(TAG, "ChooseCityFrag savedInstanceState cityMarked.size()= "+ cityMarked.size());
         super.onSaveInstanceState(outState);
     }
 
     private void initViews(View view) {
 
+        recyclerViewMarked = view.findViewById(R.id.recycledViewMarked);
         buttonShow =  view.findViewById(R.id.buttonShow);
         checkBoxWind = view.findViewById(R.id.checkBoxWind);
         checkBoxWind.setChecked(true);
@@ -126,6 +147,10 @@ public class ChooseCityFrag extends Fragment {
             public void onClick(View v) {
                 //а так можно получить город через спиннер
                 city =  spinnerTowns.getSelectedItem().toString();
+                cityMarked.add(city); //добавляем город в список ранее выбранных городов
+                Log.d(TAG, "cityMarked.add(city) cityMarked.size() = " + cityMarked.size());
+
+                adapter.notifyDataSetChanged(); // - перерисует сразу весь список
                 isWind = checkBoxWind.isChecked();
                 isPressure = checkBoxPressure.isChecked();
 
@@ -144,6 +169,15 @@ public class ChooseCityFrag extends Fragment {
                 }
             }
         });
+    }
+
+    private void initRecycledView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        adapter = new RecyclerViewCityAdapter(cityMarked);
+
+        recyclerViewMarked.setLayoutManager(layoutManager);
+        recyclerViewMarked.setAdapter(adapter);
+
     }
 
     // Показать погоду во фрагменте рядом со спиннером в альбомной ориентации
@@ -182,4 +216,6 @@ public class ChooseCityFrag extends Fragment {
         spinnerTowns.setSelection(currentPosition);
         Log.d(TAG, "ChooseCityFrag getCurrentPosition actualPosition = " + currentPosition);
     }
+
+
 }
