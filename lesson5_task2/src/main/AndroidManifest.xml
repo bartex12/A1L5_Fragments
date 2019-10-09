@@ -10,11 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".DetailActivity"></activity>
-        <activity android:name=".ChooseActivity"></activity>
-        <activity
-            android:name=".ShowActivity"
-            android:label="@string/WhetherInCity"
-            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".Main_Activity"
             android:label="@string/CityChoose"

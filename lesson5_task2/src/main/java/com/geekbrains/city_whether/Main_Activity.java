@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.geekbrains.city_whether.frag.ChooseCityFrag;
-import com.geekbrains.city_whether.frag.WhetherFragment;
 
 import java.util.Objects;
 
@@ -17,7 +16,7 @@ public class Main_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_fr);
+        setContentView(R.layout.activity_main);
 
         if (getIntent().getExtras()!=null){
             int position = getIntent().getIntExtra("index",0);
