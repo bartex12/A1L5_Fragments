@@ -27,7 +27,7 @@ public class DetailActivity extends AppCompatActivity {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             //после изменения строки списка и переворота экрана надо передать актуальную позицию
             //делать это буду через активность вызовом метода фрагмента
-            Log.d(TAG, "CoatOfArmsActivity onCreate index = " + index);
+            Log.d(TAG, "DetailActivity onCreate index = " + index);
             Intent intent = new Intent(DetailActivity.this, Main_Activity.class);
             intent.putExtra("index", index);
             startActivity(intent);

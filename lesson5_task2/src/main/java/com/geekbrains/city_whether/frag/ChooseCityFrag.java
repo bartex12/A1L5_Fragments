@@ -180,6 +180,7 @@ public class ChooseCityFrag extends Fragment {
     //хотя в погодном приложении работает и без этого метода - обновление же по кнопке
     public void getCurrentPosition(int actualPosition){
         currentPosition = actualPosition;
+        spinnerTowns.setSelection(currentPosition);
         Log.d(TAG, "ChooseCityFrag getCurrentPosition actualPosition = " + currentPosition);
     }
 }

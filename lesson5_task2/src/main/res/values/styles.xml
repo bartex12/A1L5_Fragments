@@ -13,24 +13,24 @@
     </style>
 
     <style name="HeadCityStyle">
-        <item name="android:textSize">28sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textStyle">italic</item>
     </style>
 
     <style name="GreetingCityStyle">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textStyle">italic</item>
     </style>
 
     <style name="WhetherCityStyle">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="CheckBoxStyle">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
 

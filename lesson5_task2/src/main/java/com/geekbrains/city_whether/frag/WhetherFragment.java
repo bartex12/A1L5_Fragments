@@ -77,7 +77,7 @@ public class WhetherFragment extends Fragment {
         textViewWind = view.findViewById(R.id.textViewWind);
         textViewPressure = view.findViewById(R.id.textViewPressure);
         imageViewWhether = view.findViewById(R.id.imageViewWhether);
-        
+
         String[] towns = getResources().getStringArray(R.array.towns);
         String town = towns[getIndex()];
 

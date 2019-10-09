@@ -23,9 +23,9 @@ public class Main_Activity extends AppCompatActivity {
             int position = getIntent().getIntExtra("index",0);
             Log.d(TAG, "MainActivity onCreate position = " + position);
 
+            //находим фрагмент
             ChooseCityFrag chooseCityFrag = (ChooseCityFrag)getSupportFragmentManager().
                     findFragmentById(R.id.citiesWhether);
-
             //вызываем из активности метод фрагмента для передачи актуальной позиции
             Objects.requireNonNull(chooseCityFrag).getCurrentPosition(position);
         }

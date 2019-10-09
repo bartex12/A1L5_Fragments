@@ -30,7 +30,7 @@ public class ShowActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_show);
 
         current_position =  getIntent().getIntExtra(ChooseCityFrag.CURRENT_POS,0);
         city = getIntent().getStringExtra(ChooseCityFrag.CITY);
