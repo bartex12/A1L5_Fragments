@@ -20,11 +20,17 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
     private static final String TAG = "33333";
     private ArrayList<String> data;
     Context context;
+    private OnCityClickListener onCityClickListener;
 
-    public RecyclerViewCityAdapter( ArrayList<String> data){
+    public interface OnCityClickListener {
+        void onCityClick(String city, int position);
+    }
+
+    public RecyclerViewCityAdapter( ArrayList<String> data, OnCityClickListener onCityClickListener){
         if (data!=null){
             this.data = data;
         }
+        this.onCityClickListener = onCityClickListener;
     }
 
     @NonNull
@@ -38,18 +44,21 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final int pos = position;
+       final int pos = position;
+        final String[] towns = context.getResources().getStringArray(R.array.towns);
         holder.textView.setText(data.get(position));
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String city = data.get(pos);
-                String[] towns = context.getResources().getStringArray(R.array.towns);
                 for (int i = 0; i<towns.length; i++){
                     if (towns[i].equals(city)){
                         Log.d(TAG, "RecyclerViewCityAdapter onBindViewHolder city =  "+ city+
                                 " cityPosition = " + i);
-                        Toast.makeText(context, "Выбран город: "+ city, Toast.LENGTH_SHORT).show();
+                        //вызываем метод интерфейса onCityClick и передаём в него название и позицию города
+                        //метод сработает у всех подписанных на него - у нас  в ChooseCityFrag
+                        onCityClickListener.onCityClick(city, i);
+
                         return;
                     }
                 }
@@ -59,9 +68,10 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
 
     @Override
     public int getItemCount() {
+        Log.d(TAG, "RecyclerViewCityAdapter getItemCount RecyclerViewCityAdapter =  "+
+                RecyclerViewCityAdapter.class.toString());
         return data.size();
     }
-
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -69,6 +79,15 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textViewCity);
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                }
+            });
         }
     }
 

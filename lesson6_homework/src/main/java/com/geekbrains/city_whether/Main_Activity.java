@@ -22,9 +22,10 @@ public class Main_Activity extends AppCompatActivity {
         if (getIntent().getExtras()!=null){
             int position = getIntent().getIntExtra("index",0);
             ArrayList<String> cityMarked = getIntent().getStringArrayListExtra(P.CITY_MARKED);
-            Log.d(TAG, "MainActivity onCreate position = " + position +
-                    " cityMarked.size() = " + cityMarked.size());
-
+            if (cityMarked!=null){
+                Log.d(TAG, "MainActivity onCreate position = " + position +
+                        " cityMarked.size() = " + cityMarked.size());
+            }
             //находим фрагмент
             ChooseCityFrag chooseCityFrag = (ChooseCityFrag)getSupportFragmentManager().
                     findFragmentById(R.id.citiesWhether);

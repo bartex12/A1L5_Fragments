@@ -20,6 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.geekbrains.city_whether.DetailActivity;
 import com.geekbrains.city_whether.P;
 import com.geekbrains.city_whether.R;
@@ -167,7 +169,16 @@ public class ChooseCityFrag extends Fragment {
 
     private void initRecycledView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerViewCityAdapter = new RecyclerViewCityAdapter(cityMarked);
+
+        RecyclerViewCityAdapter.OnCityClickListener onCityClickListener =
+                new RecyclerViewCityAdapter.OnCityClickListener() {
+            @Override
+            public void onCityClick(String city, int position) {
+                Toast.makeText(getActivity(), "Выбран город: "+ city + " позиция = " + position,
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+        recyclerViewCityAdapter = new RecyclerViewCityAdapter(cityMarked, onCityClickListener);
 
         recyclerViewMarked.setLayoutManager(layoutManager);
         recyclerViewMarked.setAdapter(recyclerViewCityAdapter);
@@ -210,7 +221,12 @@ public class ChooseCityFrag extends Fragment {
         spinnerTowns.setSelection(currentPosition);
         this.cityMarked = cityMarked;
         this.initRecycledView();
-        Log.d(TAG, "ChooseCityFrag getCurrentPosition actualPosition = " + currentPosition +
-                " cityMarked.size() = " + cityMarked.size());
+        try {
+            Log.d(TAG, "ChooseCityFrag getCurrentPosition actualPosition = " + currentPosition +
+                    " cityMarked.size() = " + cityMarked.size());
+        }catch (NullPointerException e){
+            e.getStackTrace();
+        }
+
     }
 }

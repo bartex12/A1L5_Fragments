@@ -1,7 +1,7 @@
 package com.geekbrains.city_whether;
 
 /**
-* класс для статических переменных*/
+* класс для констант*/
 
 public class P {
     public static final String CITY = "CITY";
