@@ -31,7 +31,7 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list,
+        View view = LayoutInflater.from(context).inflate(R.layout.item_list,
                 parent, false );
         return new ViewHolder(view);
     }
