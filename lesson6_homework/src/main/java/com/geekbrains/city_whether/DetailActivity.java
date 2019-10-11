@@ -23,9 +23,10 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         //получаем текущую позицию города в списке городов из интента
-        int currentPosition = Objects.requireNonNull(getIntent().getExtras()).getInt(ChooseCityFrag.CURRENT_POS);
+        int currentPosition = Objects.requireNonNull(getIntent()
+                .getExtras()).getInt(P.CURRENT_POS);
         ArrayList<String> cityMarked = getIntent()
-                .getStringArrayListExtra(ChooseCityFrag.CITY_MARKED);
+                .getStringArrayListExtra(P.CITY_MARKED);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             //после изменения строки списка и переворота экрана надо передать актуальную позицию
@@ -33,7 +34,7 @@ public class DetailActivity extends AppCompatActivity {
             Log.d(TAG, "DetailActivity onCreate currentPosition = " + currentPosition);
             Intent intent = new Intent(DetailActivity.this, Main_Activity.class);
             intent.putExtra("currentPosition", currentPosition);
-            intent.putExtra(ChooseCityFrag.CITY_MARKED, cityMarked);
+            intent.putExtra(P.CITY_MARKED, cityMarked);
             startActivity(intent);
             // Если устройство перевернули в альбомную ориентацию,
             // то надо эту activity закрыть и убрать из стэка

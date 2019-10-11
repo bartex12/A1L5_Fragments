@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import com.geekbrains.city_whether.DetailActivity;
+import com.geekbrains.city_whether.P;
 import com.geekbrains.city_whether.R;
 import com.geekbrains.city_whether.cityAdapter.RecyclerViewCityAdapter;
 
@@ -37,12 +38,6 @@ public class ChooseCityFrag extends Fragment {
     private CheckBox checkBoxPressure;
     private Spinner spinnerTowns;
     private String city = "";
-
-    public static final String CITY = "CITY";
-    public static final String WIND = "WIND";
-    public static final String PRESSURE = "PRESSURE";
-    public static final String CURRENT_POS = "CURRENT_POS";
-    public static final String CITY_MARKED = "CITY_MARKED";
 
     private boolean isExistWhetherFrag;  // Можно ли расположить рядом фрагмент с погодой
     private int currentPosition = 0;    // Текущая позиция (выбранный город)
@@ -83,9 +78,9 @@ public class ChooseCityFrag extends Fragment {
         // Если это не первое создание, то восстановим текущую позицию
         if (savedInstanceState != null) {
             // Восстановление текущей позиции.
-            currentPosition = savedInstanceState.getInt("CurrentCity", 0);
+            currentPosition = savedInstanceState.getInt(P.CURRENT_CITY, 0);
             Log.d(TAG, "onViewCreated savedInstanceState   currentPosition "+ currentPosition);
-            cityMarked = savedInstanceState.getStringArrayList("CityMarked");
+            cityMarked = savedInstanceState.getStringArrayList(P.CURRENT_CITY_MARKED);
             Log.d(TAG, "onViewCreated savedInstanceState cityMarked.size()= "+
                     Objects.requireNonNull(cityMarked).size());
 
@@ -102,8 +97,8 @@ public class ChooseCityFrag extends Fragment {
     // Сохраним текущую позицию (вызывается перед выходом из фрагмента)
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt("CurrentCity", currentPosition);
-        outState.putStringArrayList("CityMarked", cityMarked);
+        outState.putInt(P.CURRENT_CITY, currentPosition);
+        outState.putStringArrayList(P.CURRENT_CITY_MARKED, cityMarked);
         Log.d(TAG, "ChooseCityFrag savedInstanceState cityMarked.size()= "+ cityMarked.size());
         super.onSaveInstanceState(outState);
     }
@@ -159,11 +154,11 @@ public class ChooseCityFrag extends Fragment {
                     //а если портретная, то
                 }else {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra(CURRENT_POS, currentPosition);
-                    intent.putExtra(CITY_MARKED, cityMarked);
-                    intent.putExtra(CITY, city);
-                    intent.putExtra(WIND, isWind);
-                    intent.putExtra(PRESSURE, isPressure);
+                    intent.putExtra(P.CURRENT_POS, currentPosition);
+                    intent.putExtra(P.CITY_MARKED, cityMarked);
+                    intent.putExtra(P.CITY, city);
+                    intent.putExtra(P.WIND, isWind);
+                    intent.putExtra(P.PRESSURE, isPressure);
                     startActivity(intent);
                 }
             }
@@ -203,7 +198,7 @@ public class ChooseCityFrag extends Fragment {
                 ft.replace(R.id.whether_in_citys, whetherFrag);  // замена фрагмента
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);// эффект
                 //ft.addToBackStack(null);
-                ft.addToBackStack("Some_Key"); //добавление, чтобы получать по кнопке "назад"
+                ft.addToBackStack(P.SOME_KEY); //добавление, чтобы получать по кнопке "назад"
                 ft.commit();
             }
     }
