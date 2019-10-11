@@ -37,7 +37,7 @@ import java.util.Objects;
 public class WhetherFragment extends Fragment {
     private static final String TAG = "33333";
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerViewForecast;
     private WhetherCardAdapter cardAdapter;
 
     private TextView greetingsTextView;
@@ -46,9 +46,6 @@ public class WhetherFragment extends Fragment {
     private TextView textViewWind;
     private TextView textViewPressure;
     private ImageView imageViewWhether;
-
-    boolean isWind;
-    boolean isPressure;
 
     public WhetherFragment() {
         // Required empty public constructor
@@ -65,6 +62,7 @@ public class WhetherFragment extends Fragment {
 
     // Получить индекс из списка (фактически из параметра)
     int getIndex() {
+
         return Objects.requireNonNull(getArguments()).getInt("index", 0);
     }
 
@@ -85,7 +83,7 @@ public class WhetherFragment extends Fragment {
 
     private void initViews(View view) {
 
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerViewForecast = view.findViewById(R.id.recyclerViewForecast);
         greetingsTextView = view.findViewById(R.id.greetingsTextView);
         textViewWhether = view.findViewById(R.id.textViewWhether);
         textViewTemper = view.findViewById(R.id.textViewTemper);
@@ -124,19 +122,19 @@ public class WhetherFragment extends Fragment {
 
     private void  initRecyclerView(){
         DataForecast[] data = new DataForecast[] {
-                new DataForecast("Завтра",ContextCompat
+                new DataForecast(getString(R.string.tomorrow),ContextCompat
                         .getDrawable(Objects.requireNonNull(getActivity()), R.drawable.sun),
                         new TempBuilder().getTemperature(getActivity())),
-                new DataForecast("Через день",ContextCompat
+                new DataForecast(getString(R.string.oneDay),ContextCompat
                         .getDrawable(Objects.requireNonNull(getActivity()), R.drawable.rain),
                         new TempBuilder().getTemperature(getActivity())),
-                new DataForecast("Через 2 дня",ContextCompat.
+                new DataForecast(getString(R.string.after2days),ContextCompat.
                         getDrawable(Objects.requireNonNull(getActivity()), R.drawable.partly_cloudy),
                         new TempBuilder().getTemperature(getActivity())),
-                new DataForecast("Через 3 дня",ContextCompat.
+                new DataForecast(getString(R.string.after3days),ContextCompat.
                         getDrawable(Objects.requireNonNull(getActivity()), R.drawable.sun),
                         new TempBuilder().getTemperature(getActivity())),
-                new DataForecast("Через 4 дня",ContextCompat.
+                new DataForecast(getString(R.string.after4days),ContextCompat.
                         getDrawable(Objects.requireNonNull(getActivity()), R.drawable.boom),
                         new TempBuilder().getTemperature(getActivity()))};
 
@@ -146,7 +144,7 @@ public class WhetherFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         cardAdapter = new WhetherCardAdapter(list);
 
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(cardAdapter);
+        recyclerViewForecast.setLayoutManager(layoutManager);
+        recyclerViewForecast.setAdapter(cardAdapter);
     }
 }

@@ -10,6 +10,7 @@ import android.util.Log;
 import com.geekbrains.city_whether.frag.ChooseCityFrag;
 import com.geekbrains.city_whether.frag.WhetherFragment;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class DetailActivity extends AppCompatActivity {
@@ -21,15 +22,18 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        //получаем индекс из интента
-        int index = Objects.requireNonNull(getIntent().getExtras()).getInt(ChooseCityFrag.CURRENT_POS);
+        //получаем текущую позицию города в списке городов из интента
+        int currentPosition = Objects.requireNonNull(getIntent().getExtras()).getInt(ChooseCityFrag.CURRENT_POS);
+        ArrayList<String> cityMarked = getIntent()
+                .getStringArrayListExtra(ChooseCityFrag.CITY_MARKED);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             //после изменения строки списка и переворота экрана надо передать актуальную позицию
             //делать это буду через активность вызовом метода фрагмента
-            Log.d(TAG, "DetailActivity onCreate index = " + index);
+            Log.d(TAG, "DetailActivity onCreate currentPosition = " + currentPosition);
             Intent intent = new Intent(DetailActivity.this, Main_Activity.class);
-            intent.putExtra("index", index);
+            intent.putExtra("currentPosition", currentPosition);
+            intent.putExtra(ChooseCityFrag.CITY_MARKED, cityMarked);
             startActivity(intent);
             // Если устройство перевернули в альбомную ориентацию,
             // то надо эту activity закрыть и убрать из стэка
@@ -42,7 +46,7 @@ public class DetailActivity extends AppCompatActivity {
         Log.d(TAG, "DetailActivity  savedInstanceState = "+ savedInstanceState);
         if (savedInstanceState == null) {
             //создаём фрагмент, передавая индекс в аргументы фрагмента
-            WhetherFragment details = WhetherFragment.newInstance(index);
+            WhetherFragment details = WhetherFragment.newInstance(currentPosition);
             // Добавим фрагмент на activity
             getSupportFragmentManager()
                     .beginTransaction()

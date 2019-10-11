@@ -37,5 +37,10 @@
         <item>Самара</item>
         <item>Ростов-на-Дону</item>
     </string-array>
+    <string name="tomorrow">Завтра</string>
+    <string name="oneDay">Через день</string>
+    <string name="after2days">Через 2 дня</string>
+    <string name="after3days">Через 3 дня</string>
+    <string name="after4days">Через 4 дня</string>
 
 </resources>

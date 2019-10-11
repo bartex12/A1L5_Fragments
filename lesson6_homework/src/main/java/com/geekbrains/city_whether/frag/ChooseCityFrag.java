@@ -42,6 +42,7 @@ public class ChooseCityFrag extends Fragment {
     public static final String WIND = "WIND";
     public static final String PRESSURE = "PRESSURE";
     public static final String CURRENT_POS = "CURRENT_POS";
+    public static final String CITY_MARKED = "CITY_MARKED";
 
     private boolean isExistWhetherFrag;  // Можно ли расположить рядом фрагмент с погодой
     private int currentPosition = 0;    // Текущая позиция (выбранный город)
@@ -61,7 +62,7 @@ public class ChooseCityFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_city_list, container, false);
+        return inflater.inflate(R.layout.fragment_city_choose, container, false);
     }
 
     @Override
@@ -70,8 +71,6 @@ public class ChooseCityFrag extends Fragment {
         initViews(view);
         initRecycledView();
     }
-
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -161,6 +160,7 @@ public class ChooseCityFrag extends Fragment {
                 }else {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
                     intent.putExtra(CURRENT_POS, currentPosition);
+                    intent.putExtra(CITY_MARKED, cityMarked);
                     intent.putExtra(CITY, city);
                     intent.putExtra(WIND, isWind);
                     intent.putExtra(PRESSURE, isPressure);
@@ -208,13 +208,14 @@ public class ChooseCityFrag extends Fragment {
             }
     }
 
-    //получаем актуальное значение currentPosition при перевороте экрана в DetailActivity
+    //получаем актуальное значение currentPosition и cityMarked при перевороте экрана в DetailActivity
     //хотя в погодном приложении работает и без этого метода - обновление же по кнопке
-    public void getCurrentPosition(int actualPosition){
+    public void getCurrentPositionAndList(int actualPosition, ArrayList<String> cityMarked){
         currentPosition = actualPosition;
         spinnerTowns.setSelection(currentPosition);
-        Log.d(TAG, "ChooseCityFrag getCurrentPosition actualPosition = " + currentPosition);
+        this.cityMarked = cityMarked;
+        this.initRecycledView();
+        Log.d(TAG, "ChooseCityFrag getCurrentPosition actualPosition = " + currentPosition +
+                " cityMarked.size() = " + cityMarked.size());
     }
-
-
 }
