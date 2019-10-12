@@ -26,6 +26,7 @@ import com.geekbrains.city_whether.DetailActivity;
 import com.geekbrains.city_whether.P;
 import com.geekbrains.city_whether.R;
 import com.geekbrains.city_whether.cityAdapter.RecyclerViewCityAdapter;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -143,7 +144,11 @@ public class ChooseCityFrag extends Fragment {
             public void onClick(View v) {
                 //а так можно получить город через спиннер
                 city =  spinnerTowns.getSelectedItem().toString();
-                cityMarked.add(city); //добавляем город в список ранее выбранных городов
+                //проверяем есть ли город в списке cityMarked
+                if (!isCityInList(city)){
+                    //если нет, добавляем его
+                    cityMarked.add(city); //добавляем город в список ранее выбранных городов
+                }
                 Log.d(TAG, "cityMarked.add(city) cityMarked.size() = " + cityMarked.size());
                 recyclerViewCityAdapter.notifyDataSetChanged(); // - перерисует сразу весь список
                 isWind = checkBoxWind.isChecked();
@@ -151,9 +156,17 @@ public class ChooseCityFrag extends Fragment {
 
                 // показываем погоду в городе с учётом ориентации экрана
                 showCityWhetherWithOrientation();
-
             }
         });
+    }
+
+    private boolean isCityInList(String city) {
+        for (int i = 0; i < cityMarked.size(); i++){
+            if (cityMarked.get(i).equals(city)){
+                return true;
+            }
+        }
+        return false;
     }
 
     // показываем погоду в городе с учётом ориентации экрана
@@ -183,7 +196,8 @@ public class ChooseCityFrag extends Fragment {
                 currentPosition = position;
                 // если портретная ориентация, подтверждаем нажатие строки списка с городами
                 if (isExistWhetherFrag) {
-                    Toast.makeText(getActivity(), city, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), city, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView(),city, Snackbar.LENGTH_SHORT).show();
                 }
                 // показываем погоду в городе с учётом ориентации экрана
                 showCityWhetherWithOrientation();
@@ -244,3 +258,4 @@ public class ChooseCityFrag extends Fragment {
 
     }
 }
+

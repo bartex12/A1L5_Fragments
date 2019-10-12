@@ -41,14 +41,15 @@
             android:layout_height="wrap_content"
             android:text="@string/Pressure" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonShow"
-            style="@style/ButtonChooseStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:text="@string/ShowWeather" />
+            android:gravity="center_horizontal"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/ShowWeather"
+            android:theme="@style/MaterialButton" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycledViewMarked"

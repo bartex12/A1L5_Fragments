@@ -66,7 +66,6 @@ public class Main_Activity extends AppCompatActivity {
 
             case R.id.navigation_settings:
                 return true;
-
         }
         return super.onOptionsItemSelected(item);
     }
