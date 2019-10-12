@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.geekbrains.city_whether.frag.ChooseCityFrag;
 import com.geekbrains.city_whether.frag.WhetherFragment;
+import com.geekbrains.city_whether.preferences.PrefActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -78,6 +79,11 @@ public class DetailActivity extends AppCompatActivity {
                             getResources().getString(R.string.dialog));
                     return true;
                 case R.id.navigation_settings:
+                    Log.d(TAG, "onNavigationItemSelected");
+                    Intent intentSettings = new Intent(DetailActivity.this,
+                            PrefActivity.class);
+                    startActivity(intentSettings);
+                    finish();
                     return true;
             }
             return false;

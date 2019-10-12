@@ -6,7 +6,7 @@
     <string name="weather_night">Weather at night</string>
     <string name="on">at</string>
     <string name="weather">Weather</string>
-    <string name="ShowWeather">Show Weather</string>
+    <string name="ShowWeather">Weather forecast</string>
     <string name="WindSpeed">Speed of Wind</string>
     <string name="Pressure">Pressure</string>
     <string name="WhetherInCity">Whether In City</string>
@@ -39,6 +39,8 @@
     <string name="about_me">The app is made on relax</string>
     <string name="dialog">Диалог</string>
     <string name="aboutApp">About Application</string>
+    <string name="show">Show</string>
+    <string name="NotShow">Not show</string>
 
     <string-array name="towns">
         <item>Moscow</item>

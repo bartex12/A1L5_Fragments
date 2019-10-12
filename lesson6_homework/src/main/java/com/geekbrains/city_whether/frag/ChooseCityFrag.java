@@ -175,6 +175,7 @@ public class ChooseCityFrag extends Fragment {
         if (isExistWhetherFrag) {
             Log.d(TAG, "buttonShow onClick isExistWhetherFrag = " + isExistWhetherFrag);
             showCityWhether();
+            //Snackbar.make(getView(),city, Snackbar.LENGTH_SHORT).show();
             //а если портретная, то
         } else {
             Intent intent = new Intent(getActivity(), DetailActivity.class);
@@ -194,10 +195,9 @@ public class ChooseCityFrag extends Fragment {
             public void onCityClick(String city, int position) {
                 //изменяем текущюю позицию
                 currentPosition = position;
-                // если портретная ориентация, подтверждаем нажатие строки списка с городами
+                // если альбомная ориентация, подтверждаем нажатие строки списка с городами
                 if (isExistWhetherFrag) {
-                    //Toast.makeText(getActivity(), city, Toast.LENGTH_SHORT).show();
-                    Snackbar.make(getView(),city, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(Objects.requireNonNull(getView()),city, Snackbar.LENGTH_SHORT).show();
                 }
                 // показываем погоду в городе с учётом ориентации экрана
                 showCityWhetherWithOrientation();

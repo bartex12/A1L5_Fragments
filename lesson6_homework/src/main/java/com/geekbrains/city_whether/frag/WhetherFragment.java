@@ -2,6 +2,7 @@ package com.geekbrains.city_whether.frag;
 
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,9 +13,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.geekbrains.city_whether.GreetingsBuilder;
@@ -46,6 +50,9 @@ public class WhetherFragment extends Fragment {
     private TextView textViewWind;
     private TextView textViewPressure;
     private ImageView imageViewWhether;
+
+    private SharedPreferences prefSetting;
+    private boolean isShowCheckboxes;
 
     public WhetherFragment() {
         // Required empty public constructor
@@ -118,6 +125,24 @@ public class WhetherFragment extends Fragment {
         String press = new PressureBuilder().getPressure(getActivity());
         textViewPressure.setText(press);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG,"WhetherFragment onResume");
+        prefSetting = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        //получаем из файла настроек количество знаков после запятой
+        isShowCheckboxes = prefSetting.getBoolean("showCheckBoxes", true);
+        Log.d(TAG,"WhetherFragment initViews isShowCheckboxes = " + isShowCheckboxes);
+
+        if (isShowCheckboxes){
+            textViewWind.setVisibility(View.VISIBLE);
+            textViewPressure.setVisibility(View.VISIBLE);
+        }else {
+            textViewWind.setVisibility(View.INVISIBLE);
+            textViewPressure.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void  initRecyclerView(){

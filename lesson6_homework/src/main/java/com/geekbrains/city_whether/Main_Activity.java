@@ -1,11 +1,14 @@
 package com.geekbrains.city_whether;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,16 +16,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.SimpleAdapter;
 
 import com.geekbrains.city_whether.frag.ChooseCityFrag;
+import com.geekbrains.city_whether.frag.WhetherFragment;
+import com.geekbrains.city_whether.preferences.PrefActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Main_Activity extends AppCompatActivity {
 
     private static final String TAG = "33333";
+    private SharedPreferences prefSetting;
+    boolean isShowCheckboxes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +57,30 @@ public class Main_Activity extends AppCompatActivity {
     // переопределение метода onBackPressed() пришлось убрать, иначе при нажатии кнопки "назад"
     //переход по фрагментам идёт через 2 позиции!!!
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG,"MainActivity onResume");
+        //получаем настройки из активности настроек
+        prefSetting = PreferenceManager.getDefaultSharedPreferences(this);
+        //получаем из файла настроек количество знаков после запятой
+        isShowCheckboxes = prefSetting.getBoolean("showCheckBoxes", true);
+        Log.d(TAG,"MainActivity onResume isShowCheckboxes = " + isShowCheckboxes);
+        ChooseCityFrag fr = (ChooseCityFrag)getSupportFragmentManager().
+                findFragmentById(R.id.citiesWhether);
+        View view = Objects.requireNonNull(fr).getView();
+        CheckBox checkBoxWind = Objects.requireNonNull(view).findViewById(R.id.checkBoxWind);
+        CheckBox checkBoxPressure = Objects.requireNonNull(view).findViewById(R.id.checkBoxPressure);
+        if (isShowCheckboxes){
+            checkBoxWind.setVisibility(View.VISIBLE);
+            checkBoxPressure.setVisibility(View.VISIBLE);
+        }else {
+            checkBoxWind.setVisibility(View.GONE);
+            checkBoxPressure.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
@@ -65,6 +99,9 @@ public class Main_Activity extends AppCompatActivity {
                 return true;
 
             case R.id.navigation_settings:
+                Log.d(TAG, "OptionsItem = navigation_settings");
+                Intent intentSettings = new Intent(this, PrefActivity.class);
+                startActivity(intentSettings);
                 return true;
         }
         return super.onOptionsItemSelected(item);

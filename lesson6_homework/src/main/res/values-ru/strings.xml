@@ -8,7 +8,7 @@
     <string name="weather">Погода</string>
     <string name="CityChoose">Выбор города</string>
     <string name="Pressure">Давление</string>
-    <string name="ShowWeather">Показать погоду</string>
+    <string name="ShowWeather">Прогноз погоды</string>
     <string name="WhetherInCity">Погода в городе</string>
     <string name="WindSpeed">Скорость ветра</string>
     <string name="city">Город</string>
@@ -49,5 +49,7 @@
     <string name="yes">Да</string>
     <string name="dialog">Диалог</string>
     <string name="aboutApp">О приложении</string>
+    <string name="NotShow">Не показывать</string>
+    <string name="show">Показать</string>
 
 </resources>
