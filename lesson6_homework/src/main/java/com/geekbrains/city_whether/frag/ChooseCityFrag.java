@@ -183,7 +183,7 @@ public class ChooseCityFrag extends Fragment {
                 currentPosition = position;
                 // если портретная ориентация, подтверждаем нажатие строки списка с городами
                 if (isExistWhetherFrag) {
-                    Toast.makeText(getActivity(), "Выбран город: "+ city, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), city, Toast.LENGTH_SHORT).show();
                 }
                 // показываем погоду в городе с учётом ориентации экрана
                 showCityWhetherWithOrientation();

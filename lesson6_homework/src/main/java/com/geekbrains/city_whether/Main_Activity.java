@@ -2,8 +2,11 @@ package com.geekbrains.city_whether;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.geekbrains.city_whether.frag.ChooseCityFrag;
 
@@ -36,5 +39,29 @@ public class Main_Activity extends AppCompatActivity {
     }
     // переопределение метода onBackPressed() пришлось убрать, иначе при нажатии кнопки "назад"
     //переход по фрагментам идёт через 2 позиции!!!
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.navigation_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        Log.d(TAG, "ListOfSmetasNames onOptionsItemSelected id = " + id);
+        switch (id){
+            case R.id.navigation_about:
+
+                return true;
+
+            case R.id.navigation_settings:
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
     }
 

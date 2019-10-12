@@ -43,5 +43,6 @@
     <string name="after3days">Через 3 дня</string>
     <string name="after4days">Через 4 дня</string>
     <string name="pictureForecast">Картинка</string>
+    <string name="setting">Установки</string>
 
 </resources>

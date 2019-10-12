@@ -30,6 +30,8 @@
     <string name="after3days">After 3 days</string>
     <string name="after4days">After 4 days</string>
     <string name="pictureForecast">picture</string>
+    <string name="about">About</string>
+    <string name="setting">Setting</string>
 
     <string-array name="towns">
         <item>Moscow</item>
