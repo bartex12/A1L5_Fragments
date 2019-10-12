@@ -19,19 +19,20 @@ public class Main_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (getIntent().getExtras()!=null){
             int position = getIntent().getIntExtra("index",0);
             ArrayList<String> cityMarked = getIntent().getStringArrayListExtra(P.CITY_MARKED);
-            if (cityMarked!=null){
-                Log.d(TAG, "MainActivity onCreate position = " + position +
-                        " cityMarked.size() = " + cityMarked.size());
+            //ghb первой загрузке cityMarked=nullБ поэтому страхуемся
+            if (cityMarked==null){
+                cityMarked = new ArrayList<>();
             }
             //находим фрагмент
             ChooseCityFrag chooseCityFrag = (ChooseCityFrag)getSupportFragmentManager().
                     findFragmentById(R.id.citiesWhether);
             //вызываем из активности метод фрагмента для передачи актуальной позиции
             Objects.requireNonNull(chooseCityFrag).getCurrentPositionAndList(position, cityMarked);
-        }
+
+            Log.d(TAG, "MainActivity onCreate position = " + position +
+                " cityMarked = " + cityMarked);
     }
     // переопределение метода onBackPressed() пришлось убрать, иначе при нажатии кнопки "назад"
     //переход по фрагментам идёт через 2 позиции!!!

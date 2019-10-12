@@ -68,8 +68,6 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
 
     @Override
     public int getItemCount() {
-        Log.d(TAG, "RecyclerViewCityAdapter getItemCount RecyclerViewCityAdapter =  "+
-                RecyclerViewCityAdapter.class.toString());
         return data.size();
     }
 
