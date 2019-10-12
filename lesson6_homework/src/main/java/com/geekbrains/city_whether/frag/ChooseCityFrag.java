@@ -149,22 +149,26 @@ public class ChooseCityFrag extends Fragment {
                 isWind = checkBoxWind.isChecked();
                 isPressure = checkBoxPressure.isChecked();
 
-                //если альбомная ориентация,то
-                if (isExistWhetherFrag){
-                    Log.d(TAG, "buttonShow onClick isExistWhetherFrag = " + isExistWhetherFrag);
-                    showCityWhether();
-                    //а если портретная, то
-                }else {
-                    Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra(P.CURRENT_POS, currentPosition);
-                    intent.putExtra(P.CITY_MARKED, cityMarked);
-                    intent.putExtra(P.CITY, city);
-                    intent.putExtra(P.WIND, isWind);
-                    intent.putExtra(P.PRESSURE, isPressure);
-                    startActivity(intent);
-                }
+                // показываем погоду в городе с учётом ориентации экрана
+                showCityWhetherWithOrientation();
+
             }
         });
+    }
+
+    // показываем погоду в городе с учётом ориентации экрана
+    private void showCityWhetherWithOrientation() {
+        //если альбомная ориентация,то
+        if (isExistWhetherFrag) {
+            Log.d(TAG, "buttonShow onClick isExistWhetherFrag = " + isExistWhetherFrag);
+            showCityWhether();
+            //а если портретная, то
+        } else {
+            Intent intent = new Intent(getActivity(), DetailActivity.class);
+            intent.putExtra(P.CURRENT_POS, currentPosition);
+            intent.putExtra(P.CITY_MARKED, cityMarked);
+            startActivity(intent);
+        }
     }
 
     private void initRecycledView() {
@@ -174,8 +178,15 @@ public class ChooseCityFrag extends Fragment {
                 new RecyclerViewCityAdapter.OnCityClickListener() {
             @Override
             public void onCityClick(String city, int position) {
-                Toast.makeText(getActivity(), "Выбран город: "+ city + " позиция = " + position,
-                        Toast.LENGTH_SHORT).show();
+
+                //изменяем текущюю позицию
+                currentPosition = position;
+                // если портретная ориентация, подтверждаем нажатие строки списка с городами
+                if (isExistWhetherFrag) {
+                    Toast.makeText(getActivity(), "Выбран город: "+ city, Toast.LENGTH_SHORT).show();
+                }
+                // показываем погоду в городе с учётом ориентации экрана
+                showCityWhetherWithOrientation();
             }
         };
         recyclerViewCityAdapter = new RecyclerViewCityAdapter(cityMarked, onCityClickListener);

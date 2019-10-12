@@ -20,7 +20,7 @@
     <string name="ms">mps</string>
     <string name="press">Pressure</string>
     <string name="rain">Rain</string>
-    <string name="temper">Temperature +</string>
+    <string name="temper">Temperature  +</string>
     <string name="var_clouds">Partly cloudy</string>
     <string name="windSpeed">Wind speed</string>
     <string name="picture">Whether type</string>
@@ -29,9 +29,8 @@
     <string name="after2days">After 2 days</string>
     <string name="after3days">After 3 days</string>
     <string name="after4days">After 4 days</string>
+    <string name="pictureForecast">picture</string>
 
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="towns">
         <item>Moscow</item>
         <item>St.Petersburg</item>

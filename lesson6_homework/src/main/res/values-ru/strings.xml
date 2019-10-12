@@ -20,7 +20,7 @@
     <string name="ms">м/с</string>
     <string name="press">Давление</string>
     <string name="rain">Дождь</string>
-    <string name="temper">Температура +</string>
+    <string name="temper">Температура  +</string>
     <string name="var_clouds">Переменная облачность</string>
     <string name="windSpeed">Скорость ветра</string>
     <string name="picture">Тип погоды</string>
@@ -42,5 +42,6 @@
     <string name="after2days">Через 2 дня</string>
     <string name="after3days">Через 3 дня</string>
     <string name="after4days">Через 4 дня</string>
+    <string name="pictureForecast">Картинка</string>
 
 </resources>

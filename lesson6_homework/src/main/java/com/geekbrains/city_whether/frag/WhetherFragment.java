@@ -141,7 +141,8 @@ public class WhetherFragment extends Fragment {
         ArrayList<DataForecast> list = new ArrayList<>(data.length);
         list.addAll(Arrays.asList(data));
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.HORIZONTAL, false);
         cardAdapter = new WhetherCardAdapter(list);
 
         recyclerViewForecast.setLayoutManager(layoutManager);

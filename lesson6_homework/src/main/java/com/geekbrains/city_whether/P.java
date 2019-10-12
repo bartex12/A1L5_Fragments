@@ -14,4 +14,5 @@ public class P {
     public static final String CURRENT_CITY_MARKED = "CURRENT_CITY_MARKED";
 
     public static final String SOME_KEY = "SOME_KEY";
+    public static final String CURRENT_POSITION_DETAIL = "CURRENT_POSITION_DETAIL";
 }

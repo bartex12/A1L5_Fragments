@@ -19,9 +19,9 @@ public class Main_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-            int position = getIntent().getIntExtra("index",0);
+            int position = getIntent().getIntExtra(P.CURRENT_POSITION_DETAIL,0);
             ArrayList<String> cityMarked = getIntent().getStringArrayListExtra(P.CITY_MARKED);
-            //ghb первой загрузке cityMarked=nullБ поэтому страхуемся
+            //при первой загрузке cityMarked=nullБ поэтому страхуемся
             if (cityMarked==null){
                 cityMarked = new ArrayList<>();
             }

@@ -33,7 +33,7 @@ public class DetailActivity extends AppCompatActivity {
             //делать это буду через активность вызовом метода фрагмента
             Log.d(TAG, "DetailActivity onCreate currentPosition = " + currentPosition);
             Intent intent = new Intent(DetailActivity.this, Main_Activity.class);
-            intent.putExtra("currentPosition", currentPosition);
+            intent.putExtra(P.CURRENT_POSITION_DETAIL, currentPosition);
             intent.putExtra(P.CITY_MARKED, cityMarked);
             startActivity(intent);
             // Если устройство перевернули в альбомную ориентацию,
