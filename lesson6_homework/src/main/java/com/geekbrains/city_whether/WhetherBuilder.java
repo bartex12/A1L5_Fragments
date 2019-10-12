@@ -1,11 +1,9 @@
 package com.geekbrains.city_whether;
 
 import android.content.Context;
-
 import java.util.Random;
 
 public class WhetherBuilder {
-
     public String getWhether(Context context){
         String result;
         Random random = new Random();

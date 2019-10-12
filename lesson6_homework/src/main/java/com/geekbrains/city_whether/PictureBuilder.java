@@ -2,7 +2,6 @@ package com.geekbrains.city_whether;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-
 import androidx.core.content.ContextCompat;
 
 public class PictureBuilder {

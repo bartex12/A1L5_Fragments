@@ -1,11 +1,9 @@
 package com.geekbrains.city_whether;
 
 import android.content.Context;
-
 import java.util.Random;
 
 public class WindBuilder {
-
     public String getWindSpeed(Context context){
         Random random = new Random();
         int rndWindSpeed = 1 + random.nextInt(14);

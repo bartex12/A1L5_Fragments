@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +19,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.Toast;
-
 import com.geekbrains.city_whether.DetailActivity;
 import com.geekbrains.city_whether.P;
 import com.geekbrains.city_whether.R;
 import com.geekbrains.city_whether.cityAdapter.RecyclerViewCityAdapter;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -55,7 +51,6 @@ public class ChooseCityFrag extends Fragment {
     public ChooseCityFrag() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -135,7 +130,6 @@ public class ChooseCityFrag extends Fragment {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
@@ -210,7 +204,6 @@ public class ChooseCityFrag extends Fragment {
 
         recyclerViewMarked.setLayoutManager(layoutManager);
         recyclerViewMarked.setAdapter(recyclerViewCityAdapter);
-
     }
 
     // Показать погоду во фрагменте рядом со спиннером в альбомной ориентации
@@ -226,7 +219,6 @@ public class ChooseCityFrag extends Fragment {
                 Log.d(TAG, "whetherFrag.getIndex= " + whetherFrag.getIndex() +
                         "  currentPosition = " + currentPosition);
             }
-
             // Если фрагмент не создан или он не соответствует выбранному городу, то ...
             if (whetherFrag == null || whetherFrag.getIndex() != currentPosition) {
                 // ... создаем новый фрагмент с текущей позицией для вывода погоды
@@ -255,7 +247,6 @@ public class ChooseCityFrag extends Fragment {
         }catch (NullPointerException e){
             e.getStackTrace();
         }
-
     }
 }
 

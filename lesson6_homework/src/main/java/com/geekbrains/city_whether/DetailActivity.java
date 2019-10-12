@@ -2,16 +2,11 @@ package com.geekbrains.city_whether;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-
-import com.geekbrains.city_whether.frag.ChooseCityFrag;
 import com.geekbrains.city_whether.frag.WhetherFragment;
 import com.geekbrains.city_whether.preferences.PrefActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -89,7 +84,4 @@ public class DetailActivity extends AppCompatActivity {
             return false;
         }
     };
-
-
-
 }

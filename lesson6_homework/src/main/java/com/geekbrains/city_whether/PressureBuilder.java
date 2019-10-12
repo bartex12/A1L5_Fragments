@@ -1,11 +1,9 @@
 package com.geekbrains.city_whether;
 
 import android.content.Context;
-
 import java.util.Random;
 
 public class PressureBuilder {
-
     public String getPressure(Context context){
         Random random = new Random();
         int rndPressure = 750 + random.nextInt(20);

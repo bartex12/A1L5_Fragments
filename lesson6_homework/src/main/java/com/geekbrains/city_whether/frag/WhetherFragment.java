@@ -12,13 +12,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.geekbrains.city_whether.GreetingsBuilder;
@@ -30,7 +28,6 @@ import com.geekbrains.city_whether.WhetherBuilder;
 import com.geekbrains.city_whether.WindBuilder;
 import com.geekbrains.city_whether.adapter.DataForecast;
 import com.geekbrains.city_whether.adapter.WhetherCardAdapter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;

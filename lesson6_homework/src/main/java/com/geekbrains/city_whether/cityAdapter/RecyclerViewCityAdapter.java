@@ -6,13 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.geekbrains.city_whether.R;
-import com.geekbrains.city_whether.frag.ChooseCityFrag;
-
 import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,7 +67,6 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-
         TextView textView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

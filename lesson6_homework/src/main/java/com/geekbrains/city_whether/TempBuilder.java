@@ -1,11 +1,9 @@
 package com.geekbrains.city_whether;
 
 import android.content.Context;
-
 import java.util.Random;
 
 public class TempBuilder {
-
     public String getTemperature(Context context){
         Random random = new Random();
         String temper = context.getString(R.string.temper);
