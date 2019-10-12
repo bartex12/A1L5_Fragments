@@ -44,5 +44,10 @@
     <string name="after4days">Через 4 дня</string>
     <string name="pictureForecast">Картинка</string>
     <string name="setting">Установки</string>
+    <string name="about_me">Приложение сделано на расслабоне</string>
+    <string name="ok">OK</string>
+    <string name="yes">Да</string>
+    <string name="dialog">Диалог</string>
+    <string name="aboutApp">О приложении</string>
 
 </resources>

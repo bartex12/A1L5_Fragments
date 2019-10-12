@@ -172,13 +172,13 @@ public class ChooseCityFrag extends Fragment {
     }
 
     private void initRecycledView() {
+        //используем встроенный LinearLayoutManager
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-
+        //реализуем интерфейс адаптера, в  его методе onCityClick получим имя города и его позицию
         RecyclerViewCityAdapter.OnCityClickListener onCityClickListener =
                 new RecyclerViewCityAdapter.OnCityClickListener() {
             @Override
             public void onCityClick(String city, int position) {
-
                 //изменяем текущюю позицию
                 currentPosition = position;
                 // если портретная ориентация, подтверждаем нажатие строки списка с городами
@@ -189,6 +189,9 @@ public class ChooseCityFrag extends Fragment {
                 showCityWhetherWithOrientation();
             }
         };
+        //передадим адаптеру в конструкторе список выбранныз городов и ссылку на интерфейс
+        //в принципе, надо через adapter.setOnCityClickListener, но хочу попробовать так
+        //понятно, что это  неуниверсально, так как адаптер теперь зависит от конкретного интерфейся
         recyclerViewCityAdapter = new RecyclerViewCityAdapter(cityMarked, onCityClickListener);
 
         recyclerViewMarked.setLayoutManager(layoutManager);

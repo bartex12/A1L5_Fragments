@@ -1,14 +1,19 @@
 package com.geekbrains.city_whether;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.geekbrains.city_whether.frag.ChooseCityFrag;
 import com.geekbrains.city_whether.frag.WhetherFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -22,6 +27,8 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        BottomNavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //получаем текущую позицию города в списке городов из интента
         int currentPosition = Objects.requireNonNull(getIntent()
                 .getExtras()).getInt(P.CURRENT_POS);
@@ -55,4 +62,28 @@ public class DetailActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    finish();
+                    return true;
+                case R.id.navigation_about:
+                    AboutDialog aboutDialog = new AboutDialog();
+                    aboutDialog.show(getSupportFragmentManager(),
+                            getResources().getString(R.string.dialog));
+                    return true;
+                case R.id.navigation_settings:
+                    return true;
+            }
+            return false;
+        }
+    };
+
+
+
 }

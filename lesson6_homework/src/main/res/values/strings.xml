@@ -31,7 +31,14 @@
     <string name="after4days">After 4 days</string>
     <string name="pictureForecast">picture</string>
     <string name="about">About</string>
-    <string name="setting">Setting</string>
+    <string name="setting">Settings</string>
+    <string name="home">Home</string>
+    <string name="settings">settings</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="about_me">The app is made on relax</string>
+    <string name="dialog">Диалог</string>
+    <string name="aboutApp">About Application</string>
 
     <string-array name="towns">
         <item>Moscow</item>
