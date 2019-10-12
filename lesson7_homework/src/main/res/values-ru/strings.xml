@@ -51,5 +51,8 @@
     <string name="aboutApp">О приложении</string>
     <string name="NotShow">Не показывать</string>
     <string name="show">Показать</string>
+    <string name="about">О приложении</string>
+    <string name="home">В начало</string>
+    <string name="settings">Установки</string>
 
 </resources>

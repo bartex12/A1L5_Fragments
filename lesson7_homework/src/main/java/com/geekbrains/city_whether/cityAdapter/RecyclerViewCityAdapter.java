@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCityAdapter.ViewHolder>{
     private static final String TAG = "33333";
     private ArrayList<String> data;
-    Context context;
+    private Context context;
     private OnCityClickListener onCityClickListener;
 
     public interface OnCityClickListener {
