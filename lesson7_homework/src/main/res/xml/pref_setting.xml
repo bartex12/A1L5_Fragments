@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
+        android:defaultValue="true"
+        android:icon="@drawable/ic_add_param_red_24dp"
         android:key="showCheckBoxes"
-        android:title="Показать доп. параметры"
-        android:summaryOn="@string/show"
         android:summaryOff="@string/NotShow"
-        android:defaultValue="@string/show">
-    </CheckBoxPreference>
+        android:summaryOn="@string/show"
+        android:title="@string/addParam" />
 
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>

@@ -1,22 +1,50 @@
 package com.geekbrains.city_whether;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+
 import com.geekbrains.city_whether.frag.WhetherFragment;
-import com.geekbrains.city_whether.preferences.PrefActivity;
+import com.geekbrains.city_whether.preferences.SettingsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class DetailActivity extends AppCompatActivity {
 
     private static final String TAG = "33333";
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    finish();
+                    return true;
+                case R.id.navigation_about:
+                    AboutDialog aboutDialog = new AboutDialog();
+                    aboutDialog.show(getSupportFragmentManager(),
+                            getResources().getString(R.string.dialog));
+                    return true;
+                case R.id.navigation_settings:
+                    Log.d(TAG, "onNavigationItemSelected");
+                    Intent intentSettings = new Intent(DetailActivity.this,
+                            SettingsActivity.class);
+                    startActivity(intentSettings);
+                    finish();
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +63,7 @@ public class DetailActivity extends AppCompatActivity {
             //после изменения строки списка и переворота экрана надо передать актуальную позицию
             //делать это буду через активность вызовом метода фрагмента
             Log.d(TAG, "DetailActivity onCreate currentPosition = " + currentPosition);
-            Intent intent = new Intent(DetailActivity.this, Main_Activity.class);
+            Intent intent = new Intent(DetailActivity.this, MainActivity.class);
             intent.putExtra(P.CURRENT_POSITION_DETAIL, currentPosition);
             intent.putExtra(P.CITY_MARKED, cityMarked);
             startActivity(intent);
@@ -58,30 +86,4 @@ public class DetailActivity extends AppCompatActivity {
                     .commit();
         }
     }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    finish();
-                    return true;
-                case R.id.navigation_about:
-                    AboutDialog aboutDialog = new AboutDialog();
-                    aboutDialog.show(getSupportFragmentManager(),
-                            getResources().getString(R.string.dialog));
-                    return true;
-                case R.id.navigation_settings:
-                    Log.d(TAG, "onNavigationItemSelected");
-                    Intent intentSettings = new Intent(DetailActivity.this,
-                            PrefActivity.class);
-                    startActivity(intentSettings);
-                    finish();
-                    return true;
-            }
-            return false;
-        }
-    };
 }

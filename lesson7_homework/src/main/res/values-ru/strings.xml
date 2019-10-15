@@ -54,5 +54,6 @@
     <string name="about">О приложении</string>
     <string name="home">В начало</string>
     <string name="settings">Установки</string>
+    <string name="addParam">Дополнительные параметры</string>
 
 </resources>

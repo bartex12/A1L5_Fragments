@@ -1,12 +1,10 @@
 package com.geekbrains.city_whether;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,13 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+
 import com.geekbrains.city_whether.frag.ChooseCityFrag;
-import com.geekbrains.city_whether.preferences.PrefActivity;
+import com.geekbrains.city_whether.preferences.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Main_Activity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "33333";
     private SharedPreferences prefSetting;
@@ -45,6 +46,10 @@ public class Main_Activity extends AppCompatActivity {
 
             Log.d(TAG, "MainActivity onCreate position = " + position +
                 " cityMarked = " + cityMarked);
+
+        //устанавливаем значения по умолчанию при первой загрузке
+        androidx.preference.PreferenceManager
+                .setDefaultValues(this, R.xml.pref_setting, false);
     }
     // переопределение метода onBackPressed() пришлось убрать, иначе при нажатии кнопки "назад"
     //переход по фрагментам идёт через 2 позиции!!!
@@ -54,23 +59,15 @@ public class Main_Activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(TAG,"MainActivity onResume");
+
         //получаем настройки из активности настроек
-        prefSetting = PreferenceManager.getDefaultSharedPreferences(this);
-        //получаем из файла настроек количество знаков после запятой
+        prefSetting = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        //получаем из файла настроек состояние чекбокса
         isShowCheckboxes = prefSetting.getBoolean("showCheckBoxes", true);
         Log.d(TAG,"MainActivity onResume isShowCheckboxes = " + isShowCheckboxes);
-        ChooseCityFrag fr = (ChooseCityFrag)getSupportFragmentManager().
-                findFragmentById(R.id.citiesWhether);
-        View view = Objects.requireNonNull(fr).getView();
-        CheckBox checkBoxWind = Objects.requireNonNull(view).findViewById(R.id.checkBoxWind);
-        CheckBox checkBoxPressure = Objects.requireNonNull(view).findViewById(R.id.checkBoxPressure);
-        if (isShowCheckboxes){
-            checkBoxWind.setVisibility(View.VISIBLE);
-            checkBoxPressure.setVisibility(View.VISIBLE);
-        }else {
-            checkBoxWind.setVisibility(View.GONE);
-            checkBoxPressure.setVisibility(View.GONE);
-        }
+
+        // показываем/скрываем чекбоксы на экране выбора города
+        setCheckboxesInFrsgment(isShowCheckboxes);
     }
 
     @Override
@@ -92,7 +89,7 @@ public class Main_Activity extends AppCompatActivity {
 
             case R.id.navigation_settings:
                 Log.d(TAG, "OptionsItem = navigation_settings");
-                Intent intentSettings = new Intent(this, PrefActivity.class);
+                Intent intentSettings = new Intent(this, SettingsActivity.class);
                 startActivity(intentSettings);
                 return true;
         }
@@ -119,5 +116,21 @@ public class Main_Activity extends AppCompatActivity {
         });
         bilder.show();
     }
+
+    // показываем/скрываем чекбоксы на экране выбора города
+    private void setCheckboxesInFrsgment(boolean isShowCheckboxes) {
+        ChooseCityFrag fr = (ChooseCityFrag) getSupportFragmentManager().
+                findFragmentById(R.id.citiesWhether);
+        View view = Objects.requireNonNull(fr).getView();
+        CheckBox checkBoxWind = Objects.requireNonNull(view).findViewById(R.id.checkBoxWind);
+        CheckBox checkBoxPressure = Objects.requireNonNull(view).findViewById(R.id.checkBoxPressure);
+        if (isShowCheckboxes) {
+            checkBoxWind.setVisibility(View.VISIBLE);
+            checkBoxPressure.setVisibility(View.VISIBLE);
+        } else {
+            checkBoxWind.setVisibility(View.GONE);
+            checkBoxPressure.setVisibility(View.GONE);
+        }
     }
+}
 

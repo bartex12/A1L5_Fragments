@@ -33,7 +33,7 @@
     <string name="about">About</string>
     <string name="setting">Settings</string>
     <string name="home">Home</string>
-    <string name="settings">settings</string>
+    <string name="settings">Settings</string>
     <string name="ok">OK</string>
     <string name="yes">Yes</string>
     <string name="about_me">The app is made on relax</string>
@@ -41,6 +41,7 @@
     <string name="aboutApp">About Application</string>
     <string name="show">Show</string>
     <string name="NotShow">Not show</string>
+    <string name="addParam">Advanced options</string>
 
     <string-array name="towns">
         <item>Moscow</item>
