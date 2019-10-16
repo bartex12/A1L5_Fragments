@@ -15,4 +15,8 @@ public class P {
 
     public static final String SOME_KEY = "SOME_KEY";
     public static final String CURRENT_POSITION_DETAIL = "CURRENT_POSITION_DETAIL";
+
+    public static final String WEATHER_FRAFMENT_TAG = "WEATHER_FRAFMENT_TAG";
+    public static final String INPUT_CITY = "INPUT_CITY";
+
 }

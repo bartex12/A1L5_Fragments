@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.geekbrains.city_weather.frag.WhetherFragment;
+import com.geekbrains.city_weather.frag.WeatherFragment;
 import com.geekbrains.city_weather.preferences.SettingsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -78,11 +78,11 @@ public class DetailActivity extends AppCompatActivity {
         Log.d(TAG, "DetailActivity  savedInstanceState = "+ savedInstanceState);
         if (savedInstanceState == null) {
             //создаём фрагмент, передавая индекс в аргументы фрагмента
-            WhetherFragment details = WhetherFragment.newInstance(currentPosition);
+            WeatherFragment details = WeatherFragment.newInstance(currentPosition);
             // Добавим фрагмент на activity
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, details)
+                    .replace(R.id.fragment_container, details, P.WEATHER_FRAFMENT_TAG)
                     .commit();
         }
     }

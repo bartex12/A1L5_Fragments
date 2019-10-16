@@ -4,6 +4,7 @@ package com.geekbrains.city_weather.frag;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,28 +38,30 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WhetherFragment extends Fragment {
+public class WeatherFragment extends Fragment {
     private static final String TAG = "33333";
 
     private RecyclerView recyclerViewForecast;
     private WeatherCardAdapter cardAdapter;
+    Typeface weatherFont;
 
     private TextView greetingsTextView;
     private TextView textViewWhether;
     private TextView textViewTemper;
     private TextView textViewWind;
     private TextView textViewPressure;
+    private TextView textViewIcon;
     private ImageView imageViewWhether;
 
     private SharedPreferences prefSetting;
     private boolean isShowCheckboxes;
 
-    public WhetherFragment() {
+    public WeatherFragment() {
         // Required empty public constructor
     }
 
-    public static WhetherFragment newInstance(int position) {
-        WhetherFragment fragment = new WhetherFragment();
+    public static WeatherFragment newInstance(int position) {
+        WeatherFragment fragment = new WeatherFragment();
         // Передача параметра
         Bundle args = new Bundle();
         args.putInt("index", position);
@@ -84,7 +87,23 @@ public class WhetherFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
+        initFonts();
         initRecyclerView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "WeatherFragment onResume");
+
+        prefSetting = androidx.preference.PreferenceManager
+                .getDefaultSharedPreferences(Objects.requireNonNull(getActivity()));
+        //получаем из файла настроек количество знаков после запятой
+        isShowCheckboxes = prefSetting.getBoolean("showCheckBoxes", true);
+        Log.d(TAG, "WeatherFragment initViews isShowCheckboxes = " + isShowCheckboxes);
+
+        // показываем/скрываем данные о ветре и давлении
+        showWindAndPressure(isShowCheckboxes);
     }
 
     private void initViews(View view) {
@@ -95,6 +114,7 @@ public class WhetherFragment extends Fragment {
         textViewTemper = view.findViewById(R.id.textViewTemper);
         textViewWind = view.findViewById(R.id.textViewWind);
         textViewPressure = view.findViewById(R.id.textViewPressure);
+        textViewIcon = view.findViewById(R.id.textViewIcon);
         imageViewWhether = view.findViewById(R.id.imageViewWhether);
 
         String[] towns = getResources().getStringArray(R.array.towns);
@@ -124,21 +144,13 @@ public class WhetherFragment extends Fragment {
         String press = new PressureBuilder().getPressure(getActivity());
         textViewPressure.setText(press);
 
+        textViewIcon.setText("Здесь был Вася");
+
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG,"WhetherFragment onResume");
-
-        prefSetting = androidx.preference.PreferenceManager
-                .getDefaultSharedPreferences(Objects.requireNonNull(getActivity()));
-        //получаем из файла настроек количество знаков после запятой
-        isShowCheckboxes = prefSetting.getBoolean("showCheckBoxes", true);
-        Log.d(TAG,"WhetherFragment initViews isShowCheckboxes = " + isShowCheckboxes);
-
-        // показываем/скрываем данные о ветре и давлении
-        showWindAndPressure(isShowCheckboxes);
+    private void initFonts() {
+        weatherFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/weather.ttf");
+        textViewIcon.setTypeface(weatherFont);
     }
 
     private void  initRecyclerView(){

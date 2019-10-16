@@ -16,7 +16,8 @@
 
         <activity
             android:name="com.geekbrains.city_weather.MainActivity"
-            android:label="@string/CityChoose"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
             android:theme="@style/ChooseThem">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,17 +1,16 @@
 package com.geekbrains.city_weather;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 
 import com.geekbrains.city_weather.frag.ChooseCityFrag;
 import com.geekbrains.city_weather.preferences.SettingsActivity;
@@ -19,6 +18,7 @@ import com.geekbrains.city_weather.preferences.SettingsActivity;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,29 +31,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-            int position = getIntent().getIntExtra(P.CURRENT_POSITION_DETAIL,0);
-            ArrayList<String> cityMarked = getIntent().getStringArrayListExtra(P.CITY_MARKED);
-            //при первой загрузке cityMarked=nullБ поэтому страхуемся
-            if (cityMarked==null){
-                cityMarked = new ArrayList<>();
-            }
-            //находим фрагмент
-            ChooseCityFrag chooseCityFrag = (ChooseCityFrag)getSupportFragmentManager().
-                    findFragmentById(R.id.citiesWhether);
-            //вызываем из активности метод фрагмента для передачи актуальной позиции
-            Objects.requireNonNull(chooseCityFrag).getCurrentPositionAndList(position, cityMarked);
-
-            Log.d(TAG, "MainActivity onCreate position = " + position +
-                " cityMarked = " + cityMarked);
-
-        //устанавливаем значения по умолчанию при первой загрузке
+        //передаём фрагменту из интента позицию и список ранее выбранных городов
+        initFragWithExtra();
+        //устанавливаем из настроек значения по умолчанию для первой загрузки
         androidx.preference.PreferenceManager
                 .setDefaultValues(this, R.xml.pref_setting, false);
     }
-    // переопределение метода onBackPressed() пришлось убрать, иначе при нажатии кнопки "назад"
-    //переход по фрагментам идёт через 2 позиции!!!
-
 
     @Override
     protected void onResume() {
@@ -82,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         int id = item.getItemId();
         Log.d(TAG, "ListOfSmetasNames onOptionsItemSelected id = " + id);
-        switch (id){
+        switch (id) {
             case R.id.navigation_about:
                 openQuitDialog();
                 return true;
@@ -96,25 +79,42 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void initFragWithExtra() {
+        int position = getIntent().getIntExtra(P.CURRENT_POSITION_DETAIL, 0);
+        ArrayList<String> cityMarked = getIntent().getStringArrayListExtra(P.CITY_MARKED);
+        //при первой загрузке cityMarked=nullБ поэтому страхуемся
+        if (cityMarked == null) {
+            cityMarked = new ArrayList<>();
+        }
+        //находим фрагмент
+        ChooseCityFrag chooseCityFrag = (ChooseCityFrag) getSupportFragmentManager().
+                findFragmentById(R.id.citiesWhether);
+        //вызываем из активности метод фрагмента для передачи актуальной позиции и списка городов
+        Objects.requireNonNull(chooseCityFrag).getCurrentPositionAndList(position, cityMarked);
+
+        Log.d(TAG, "MainActivity onCreate position = " + position +
+                " cityMarked = " + cityMarked);
+    }
+
+
     //Создать и открыть диалог выхода из программы
     private void openQuitDialog() {
-        final AlertDialog.Builder bilder = new AlertDialog.Builder(this);
-        bilder.setTitle(getResources().getString(R.string.aboutApp));
-        bilder.setIcon(R.drawable.sun);
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View view = inflater.inflate(R.layout.bottom_dialog, null);
-        final Button buttonDialog = view.findViewById(R.id.buttonDialog);
-        buttonDialog.setVisibility(View.GONE);
-        bilder.setView(view);
-
-        bilder.setPositiveButton(getResources().getString(R.string.ok),
-                new DialogInterface.OnClickListener() {
+        androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.change_city);
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+
+                ChooseCityFrag fr = (ChooseCityFrag) getSupportFragmentManager().
+                        findFragmentById(R.id.citiesWhether);
+                fr.updateWeatherData(input.getText().toString());
+
             }
         });
-        bilder.show();
+        builder.show();
     }
 
     // показываем/скрываем чекбоксы на экране выбора города

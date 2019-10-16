@@ -55,5 +55,7 @@
     <string name="home">В начало</string>
     <string name="settings">Установки</string>
     <string name="addParam">Дополнительные параметры</string>
+    <string name="change_city">Изменить город</string>
+    <string name="place_not_found">Место не обнаружено</string>
 
 </resources>

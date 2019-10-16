@@ -42,6 +42,9 @@
     <string name="show">Show</string>
     <string name="NotShow">Not show</string>
     <string name="addParam">Advanced options</string>
+    <string name="change_city">Change city</string>
+    <string name="place_not_found">Place not found</string>
+
 
     <string-array name="towns">
         <item>Moscow</item>
