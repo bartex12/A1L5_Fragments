@@ -1,6 +1,5 @@
 package com.geekbrains.city_weather.frag;
 
-
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,9 +43,6 @@ public class WeatherFragment extends Fragment {
     private static final String TAG = "33333";
 
     private RecyclerView recyclerViewForecast;
-    private WeatherCardAdapter cardAdapter;
-    private Typeface weatherFont;
-
     private TextView cityTextView;
     private TextView textViewLastUpdate;
     private TextView textViewWhether;
@@ -55,11 +50,6 @@ public class WeatherFragment extends Fragment {
     private TextView textViewWind;
     private TextView textViewPressure;
     private TextView textViewIcon;
-    private ImageView imageViewWhether;
-
-    private SharedPreferences prefSetting;
-    private boolean isShowCheckboxes;
-
     private Handler handler = new Handler();
 
     public WeatherFragment() {
@@ -102,10 +92,10 @@ public class WeatherFragment extends Fragment {
         super.onResume();
         Log.d(TAG, "WeatherFragment onResume");
 
-        prefSetting = androidx.preference.PreferenceManager
+        SharedPreferences prefSetting = androidx.preference.PreferenceManager
                 .getDefaultSharedPreferences(Objects.requireNonNull(getActivity()));
         //получаем из файла настроек количество знаков после запятой
-        isShowCheckboxes = prefSetting.getBoolean("showCheckBoxes", true);
+        boolean isShowCheckboxes = prefSetting.getBoolean("showCheckBoxes", true);
         Log.d(TAG, "WeatherFragment initViews isShowCheckboxes = " + isShowCheckboxes);
 
         // показываем/скрываем данные о ветре и давлении
@@ -113,7 +103,6 @@ public class WeatherFragment extends Fragment {
     }
 
     private void initViews(View view) {
-
         recyclerViewForecast = view.findViewById(R.id.recyclerViewForecast);
         cityTextView = view.findViewById(R.id.greetingsTextView);
         textViewLastUpdate = view.findViewById(R.id.textViewLastUpdate);
@@ -122,40 +111,10 @@ public class WeatherFragment extends Fragment {
         textViewWind = view.findViewById(R.id.textViewWind);
         textViewPressure = view.findViewById(R.id.textViewPressure);
         textViewIcon = view.findViewById(R.id.textViewIcon);
-        imageViewWhether = view.findViewById(R.id.imageViewWhether);
-
-//        String town = getCity();
-//
-//        //формируем строку в зависимости от времени суток
-//        String text =town + ": " + new GreetingsBuilder().getGreetings(Objects.requireNonNull(getActivity()));
-//        //выводим строки в текстовых полях
-//        greetingsTextView.setText(text);
-
-//        String textWhether = new WeatherBuilder().getWhether(getActivity());
-//        textViewWhether.setText(textWhether);
-
-//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-//            imageViewWhether.setVisibility(View.GONE);
-//        }else {
-//            Drawable drawable = new PictureBuilder().getDrawableIcon(getActivity(), textWhether);
-//            imageViewWhether.setImageDrawable(drawable);
-//        }
-
-//        String textTemper = new TempBuilder().getTemperature(getActivity());
-//        textViewTemper.setText(textTemper);
-
-//        String wind = new WindBuilder().getWindSpeed(getActivity());
-//        textViewWind.setText(wind);
-
-//        String press = new PressureBuilder().getPressure(getActivity());
-//        textViewPressure.setText(press);
-
-        // textViewIcon.setText("Здесь был Вася");
-
     }
 
     private void initFonts() {
-        weatherFont = Typeface.createFromAsset(Objects.
+        Typeface weatherFont = Typeface.createFromAsset(Objects.
                 requireNonNull(getActivity()).getAssets(), "fonts/weather.ttf");
         textViewIcon.setTypeface(weatherFont);
     }
@@ -210,8 +169,6 @@ public class WeatherFragment extends Fragment {
         }
     }
 
-
-
     private void  initRecyclerView(){
         DataForecast[] data = new DataForecast[] {
                 new DataForecast(getString(R.string.tomorrow),ContextCompat
@@ -235,7 +192,7 @@ public class WeatherFragment extends Fragment {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL, false);
-        cardAdapter = new WeatherCardAdapter(list);
+        WeatherCardAdapter cardAdapter = new WeatherCardAdapter(list);
 
         recyclerViewForecast.setLayoutManager(layoutManager);
         recyclerViewForecast.setAdapter(cardAdapter);
@@ -258,14 +215,6 @@ public class WeatherFragment extends Fragment {
         //выводим строки в текстовых полях
         cityTextView.setText(cityText);
     }
-
-
-//    private void setDetails(JSONObject details, JSONObject main) throws JSONException {
-//        String detailsText = details.getString("description").toUpperCase() + "\n"
-//                + "Humidity: " + main.getString("humidity") + "%" + "\n"
-//                + "Pressure: " + main.getString("pressure") + "hPa";
-//        detailsTextView.setText(detailsText);
-//    }
 
     private void setUpdatedText(JSONObject jsonObject) throws JSONException {
         DateFormat dateFormat = DateFormat.getDateTimeInstance();

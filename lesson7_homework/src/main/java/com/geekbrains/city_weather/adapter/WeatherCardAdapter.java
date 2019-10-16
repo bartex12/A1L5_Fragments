@@ -35,7 +35,7 @@ public class WeatherCardAdapter extends RecyclerView.Adapter<WeatherCardAdapter.
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         holder.textViewDay.setText(dataForecast.get(position).day);
-        holder.imageViewWhether.setImageDrawable(dataForecast.get(position).whetherDrawble);
+        holder.imageViewWhether.setImageDrawable(dataForecast.get(position).weatherDrawble);
         holder.textViewTemper.setText(dataForecast.get(position).temp);
     }
 

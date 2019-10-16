@@ -1,6 +1,5 @@
 package com.geekbrains.city_weather.frag;
 
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -31,13 +30,8 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class ChooseCityFrag extends Fragment {
     private static final String TAG = "33333";
-    private CheckBox checkBoxWind;
-    private CheckBox checkBoxPressure;
     private String city = "";
-
     private boolean isExistWhetherFrag;  // Можно ли расположить рядом фрагмент с погодой
-    private int currentPosition = 0;    // Текущая позиция (выбранный город)
-
     private RecyclerView recyclerViewMarked; //RecyclerView для списка ранее выбранных городов
     private ArrayList<String> cityMarked = new ArrayList<>(); //список ранее выбранных городов
     private RecyclerViewCityAdapter recyclerViewCityAdapter; //адаптер для RecyclerView
@@ -73,15 +67,11 @@ public class ChooseCityFrag extends Fragment {
             city = savedInstanceState.getString(P.CURRENT_CITY);
             //восстанавливаем список выбранных городов
             cityMarked = savedInstanceState.getStringArrayList(P.CURRENT_CITY_MARKED);
-            Log.d(TAG, "onViewCreated savedInstanceState cityMarked.size()= "+
-                    cityMarked.size() + " city = " + city);
-
             //adapter.notifyDataSetChanged() не работает, придётся так
             this.initRecycledView();
         }
         // Если можно нарисовать рядом данные, то сделаем это
         if (isExistWhetherFrag) {
-            Log.d(TAG, "onActivityCreated  isExistWhetherFrag "+ isExistWhetherFrag);
             showCityWhether(city);
         }
     }
@@ -99,10 +89,10 @@ public class ChooseCityFrag extends Fragment {
     //инициализация View
     private void initViews(View view) {
         recyclerViewMarked = view.findViewById(R.id.recycledViewMarked);
-        checkBoxWind = view.findViewById(R.id.checkBoxWind);
+        CheckBox checkBoxWind = view.findViewById(R.id.checkBoxWind);
         checkBoxWind.setChecked(true);
         checkBoxWind.setEnabled(false);
-        checkBoxPressure = view.findViewById(R.id.checkBoxPressure);
+        CheckBox checkBoxPressure = view.findViewById(R.id.checkBoxPressure);
         checkBoxPressure.setChecked(true);
         checkBoxPressure.setEnabled(false);
     }
@@ -118,15 +108,11 @@ public class ChooseCityFrag extends Fragment {
                     public void onCityClick(String newCity) {
                         //изменяем город
                         city = newCity;
-//                        // если альбомная ориентация, подтверждаем нажатие строки списка с городами
-//                        if (isExistWhetherFrag) {
-//                            //Snackbar.make(Objects.requireNonNull(getView()), city, Snackbar.LENGTH_SHORT).show();
-//                        }
                         // показываем погоду в городе с учётом ориентации экрана
                         showCityWhetherWithOrientation(city);
                     }
                 };
-        //передадим адаптеру в конструкторе список выбранныз городов и ссылку на интерфейс
+        //передадим адаптеру в конструкторе список выбранных городов и ссылку на интерфейс
         //в принципе, надо через adapter.setOnCityClickListener, но хочу попробовать так
         //понятно, что это  неуниверсально, так как адаптер теперь зависит от конкретного интерфейся
         recyclerViewCityAdapter = new RecyclerViewCityAdapter(cityMarked, onCityClickListener);
@@ -150,21 +136,21 @@ public class ChooseCityFrag extends Fragment {
 
         Log.d(TAG, "showCityWhether  isExistWhetherFrag =  " + isExistWhetherFrag);
         // Проверим, что фрагмент с погодой существует в activity - обращение по id фрагмента
-        WeatherFragment whetherFrag = (WeatherFragment)
+        WeatherFragment weatherFrag = (WeatherFragment)
                 Objects.requireNonNull(getFragmentManager()).findFragmentById(R.id.whether_in_citys);
 
         //для отладки
-        if (whetherFrag != null) {
-            Log.d(TAG, "whetherFrag.getCity() = " + whetherFrag.getCity());
+        if (weatherFrag != null) {
+            Log.d(TAG, "weatherFrag.getCity() = " + weatherFrag.getCity());
         }
         // Если фрагмент не создан или он не соответствует выбранному городу, то ...
         //if (whetherFrag == null || whetherFrag.getIndex() != currentPosition) {
         // if (whetherFrag == null|| !(whetherFrag.getCity().equals("Moscow"))) {
         // ... создаем новый фрагмент с текущей позицией для вывода погоды
-        whetherFrag = WeatherFragment.newInstance(city);
+        weatherFrag = WeatherFragment.newInstance(city);
         // ... и выполняем транзакцию по замене фрагмента
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.whether_in_citys, whetherFrag, P.WEATHER_FRAFMENT_TAG);  // замена фрагмента
+        ft.replace(R.id.whether_in_citys, weatherFrag, P.WEATHER_FRAFMENT_TAG);  // замена фрагмента
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);// эффект
         ft.commit();
     }
@@ -173,7 +159,6 @@ public class ChooseCityFrag extends Fragment {
     private void showCityWhetherWithOrientation(String city) {
         //если альбомная ориентация,то
         if (isExistWhetherFrag) {
-            Log.d(TAG, "buttonShow onClick isExistWhetherFrag = " + isExistWhetherFrag);
             showCityWhether(city);
             //а если портретная, то
         } else {
@@ -190,12 +175,6 @@ public class ChooseCityFrag extends Fragment {
         city = currentCity;
         this.cityMarked = cityMarked;
         this.initRecycledView();
-        try {
-            Log.d(TAG, "ChooseCityFrag getCurrentPosition actualPosition = " + currentPosition +
-                    " cityMarked.size() = " + cityMarked.size());
-        }catch (NullPointerException e){
-            e.getStackTrace();
-        }
     }
 
     public void prepareData(String city) {

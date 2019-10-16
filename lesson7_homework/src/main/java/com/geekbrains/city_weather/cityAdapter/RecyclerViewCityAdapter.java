@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCityAdapter.ViewHolder>{
     private static final String TAG = "33333";
     private ArrayList<String> data;
-    private Context context;
     private OnCityClickListener onCityClickListener;
 
     public RecyclerViewCityAdapter(ArrayList<String> data, OnCityClickListener onCityClickListener) {
@@ -46,7 +45,7 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext();
+        Context context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.item_list,
                 parent, false);
         return new ViewHolder(view);

@@ -49,9 +49,7 @@ public class CityWeatherDataLoader {
             } else {
                 return jsonObject;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         return null;

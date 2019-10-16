@@ -25,7 +25,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "33333";
-    private SharedPreferences prefSetting;
     boolean isShowCheckboxes;
 
     @Override
@@ -43,27 +42,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(TAG,"MainActivity onResume");
-
         //получаем настройки из активности настроек
-        prefSetting = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences prefSetting = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
         //получаем из файла настроек состояние чекбокса
         isShowCheckboxes = prefSetting.getBoolean("showCheckBoxes", true);
         Log.d(TAG,"MainActivity onResume isShowCheckboxes = " + isShowCheckboxes);
-
         // показываем/скрываем чекбоксы на экране выбора города
         setCheckboxesInFragment(isShowCheckboxes);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.navigation_toolbar, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
         Log.d(TAG, "ListOfSmetasNames onOptionsItemSelected id = " + id);
         switch (id) {
