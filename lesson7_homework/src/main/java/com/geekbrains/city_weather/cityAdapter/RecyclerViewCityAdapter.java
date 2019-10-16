@@ -20,15 +20,27 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
     private Context context;
     private OnCityClickListener onCityClickListener;
 
-    public interface OnCityClickListener {
-        void onCityClick(String city, int position);
-    }
-
-    public RecyclerViewCityAdapter( ArrayList<String> data, OnCityClickListener onCityClickListener){
-        if (data!=null){
+    public RecyclerViewCityAdapter(ArrayList<String> data, OnCityClickListener onCityClickListener) {
+        if (data != null) {
             this.data = data;
         }
         this.onCityClickListener = onCityClickListener;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.textView.setText(data.get(position));
+        final int pos = position;
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String city = data.get(pos);
+                //вызываем метод интерфейса onCityClick и передаём в него название города
+                //метод сработает у всех подписанных на него - у нас  в ChooseCityFrag
+                Log.d(TAG, "RecyclerViewCityAdapter onBindViewHolder city =  " + city);
+                onCityClickListener.onCityClick(city);
+            }
+        });
     }
 
     @NonNull
@@ -36,32 +48,12 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.item_list,
-                parent, false );
+                parent, false);
         return new ViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-       final int pos = position;
-        final String[] towns = context.getResources().getStringArray(R.array.towns);
-        holder.textView.setText(data.get(position));
-        holder.textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String city = data.get(pos);
-                for (int i = 0; i<towns.length; i++){
-                    if (towns[i].equals(city)){
-                        Log.d(TAG, "RecyclerViewCityAdapter onBindViewHolder city =  "+ city+
-                                " cityPosition = " + i);
-                        //вызываем метод интерфейса onCityClick и передаём в него название и позицию города
-                        //метод сработает у всех подписанных на него - у нас  в ChooseCityFrag
-                        onCityClickListener.onCityClick(city, i);
-
-                        return;
-                    }
-                }
-            }
-        });
+    public interface OnCityClickListener {
+        void onCityClick(String city);
     }
 
     @Override

@@ -20,12 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.060000002">
 
-        <Spinner
-            android:id="@+id/spinnerTowns"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/towns" />
-
         <CheckBox
             android:id="@+id/checkBoxWind"
             style="@style/CheckBoxStyle"
@@ -40,16 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Pressure" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonShow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:text="@string/ShowWeather"
-            android:theme="@style/MaterialButton" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycledViewMarked"

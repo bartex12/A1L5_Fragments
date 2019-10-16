@@ -28,12 +28,7 @@
 
         <activity
             android:name="com.geekbrains.city_weather.preferences.SettingsActivity"
-            android:label="@string/settings"
-            android:parentActivityName="com.geekbrains.city_weather.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.geekbrains.city_weather.MainActivity" />
-        </activity>
+            android:label="@string/settings" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

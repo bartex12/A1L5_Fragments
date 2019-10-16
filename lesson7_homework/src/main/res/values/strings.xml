@@ -34,18 +34,21 @@
     <string name="setting">Settings</string>
     <string name="home">Home</string>
     <string name="settings">Settings</string>
-    <string name="ok">OK</string>
     <string name="yes">Yes</string>
     <string name="about_me">The app is made on relax</string>
-    <string name="dialog">Диалог</string>
+    <string name="dialog">Dialog</string>
     <string name="aboutApp">About Application</string>
     <string name="show">Show</string>
     <string name="NotShow">Not show</string>
     <string name="addParam">Advanced options</string>
     <string name="change_city">Change city</string>
     <string name="place_not_found">Place not found</string>
+    <string name="input_city">Input city</string>
 
 
+    <string name="ok">OK</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="towns">
         <item>Moscow</item>
         <item>St.Petersburg</item>

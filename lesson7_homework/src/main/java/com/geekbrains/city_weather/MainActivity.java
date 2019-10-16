@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.geekbrains.city_weather.frag.ChooseCityFrag;
 import com.geekbrains.city_weather.preferences.SettingsActivity;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "ListOfSmetasNames onOptionsItemSelected id = " + id);
         switch (id) {
             case R.id.navigation_about:
-                openQuitDialog();
+                showInputDialog();
                 return true;
 
             case R.id.navigation_settings:
@@ -80,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFragWithExtra() {
-        int position = getIntent().getIntExtra(P.CURRENT_POSITION_DETAIL, 0);
+        String currentCity = getIntent().getStringExtra(P.CURRENT_CITY_DETAIL);
         ArrayList<String> cityMarked = getIntent().getStringArrayListExtra(P.CITY_MARKED);
-        //при первой загрузке cityMarked=nullБ поэтому страхуемся
+        //при первой загрузке cityMarked=null, поэтому страхуемся
         if (cityMarked == null) {
             cityMarked = new ArrayList<>();
         }
@@ -90,28 +91,30 @@ public class MainActivity extends AppCompatActivity {
         ChooseCityFrag chooseCityFrag = (ChooseCityFrag) getSupportFragmentManager().
                 findFragmentById(R.id.citiesWhether);
         //вызываем из активности метод фрагмента для передачи актуальной позиции и списка городов
-        Objects.requireNonNull(chooseCityFrag).getCurrentPositionAndList(position, cityMarked);
+        Objects.requireNonNull(chooseCityFrag).getCurrentPositionAndList(currentCity, cityMarked);
 
-        Log.d(TAG, "MainActivity onCreate position = " + position +
+        Log.d(TAG, "MainActivity onCreate currentCity = " + currentCity +
                 " cityMarked = " + cityMarked);
     }
 
-
-    //Создать и открыть диалог выхода из программы
-    private void openQuitDialog() {
-        androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.change_city);
+    private void showInputDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.input_city);
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                ChooseCityFrag fr = (ChooseCityFrag) getSupportFragmentManager().
-                        findFragmentById(R.id.citiesWhether);
-                fr.updateWeatherData(input.getText().toString());
-
+                String city = input.getText().toString();
+                if (city.trim().isEmpty()) {
+                    Toast.makeText(getBaseContext(), "Введите город", Toast.LENGTH_SHORT).show();
+                } else {
+                    ChooseCityFrag fr = (ChooseCityFrag) getSupportFragmentManager().
+                            findFragmentById(R.id.citiesWhether);
+                    //передаём во фрагмент введённый город
+                    Objects.requireNonNull(fr).prepareData(city);
+                }
             }
         });
         builder.show();

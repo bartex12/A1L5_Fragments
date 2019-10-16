@@ -53,18 +53,19 @@ public class DetailActivity extends AppCompatActivity {
 
         BottomNavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        //получаем текущую позицию города в списке городов из интента
-        int currentPosition = Objects.requireNonNull(getIntent()
-                .getExtras()).getInt(P.CURRENT_POS);
+        //получаем название города из интента
+        String currentCity = Objects.requireNonNull(getIntent()
+                .getExtras()).getString(P.CURRENT_CITY);
+        //получаем список ранее выьбранных городов их интента
         ArrayList<String> cityMarked = getIntent()
                 .getStringArrayListExtra(P.CITY_MARKED);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             //после изменения строки списка и переворота экрана надо передать актуальную позицию
             //делать это буду через активность вызовом метода фрагмента
-            Log.d(TAG, "DetailActivity onCreate currentPosition = " + currentPosition);
+            Log.d(TAG, "DetailActivity onCreate currentCity = " + currentCity);
             Intent intent = new Intent(DetailActivity.this, MainActivity.class);
-            intent.putExtra(P.CURRENT_POSITION_DETAIL, currentPosition);
+            intent.putExtra(P.CURRENT_CITY_DETAIL, currentCity);
             intent.putExtra(P.CITY_MARKED, cityMarked);
             startActivity(intent);
             // Если устройство перевернули в альбомную ориентацию,
@@ -78,7 +79,7 @@ public class DetailActivity extends AppCompatActivity {
         Log.d(TAG, "DetailActivity  savedInstanceState = "+ savedInstanceState);
         if (savedInstanceState == null) {
             //создаём фрагмент, передавая индекс в аргументы фрагмента
-            WeatherFragment details = WeatherFragment.newInstance(currentPosition);
+            WeatherFragment details = WeatherFragment.newInstance(currentCity);
             // Добавим фрагмент на activity
             getSupportFragmentManager()
                     .beginTransaction()

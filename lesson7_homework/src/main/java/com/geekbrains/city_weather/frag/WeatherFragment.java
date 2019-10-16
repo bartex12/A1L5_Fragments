@@ -60,19 +60,18 @@ public class WeatherFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static WeatherFragment newInstance(int position) {
+    public static WeatherFragment newInstance(String city) {
         WeatherFragment fragment = new WeatherFragment();
         // Передача параметра
         Bundle args = new Bundle();
-        args.putInt("index", position);
+        args.putString("city", city);
         fragment.setArguments(args);
         return fragment;
     }
 
-    // Получить индекс из списка (фактически из параметра)
-    int getIndex() {
-
-        return Objects.requireNonNull(getArguments()).getInt("index", 0);
+    // Получить город из аргументов
+    String getCity() {
+        return Objects.requireNonNull(getArguments()).getString("city", "Moscow");
     }
 
     @Override
@@ -117,8 +116,7 @@ public class WeatherFragment extends Fragment {
         textViewIcon = view.findViewById(R.id.textViewIcon);
         imageViewWhether = view.findViewById(R.id.imageViewWhether);
 
-        String[] towns = getResources().getStringArray(R.array.towns);
-        String town = towns[getIndex()];
+        String town = getCity();
 
         //формируем строку в зависимости от времени суток
         String text =town + ": " + new GreetingsBuilder().getGreetings(Objects.requireNonNull(getActivity()));

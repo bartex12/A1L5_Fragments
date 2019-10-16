@@ -19,4 +19,7 @@ public class P {
     public static final String WEATHER_FRAFMENT_TAG = "WEATHER_FRAFMENT_TAG";
     public static final String INPUT_CITY = "INPUT_CITY";
 
+    public static final String CURRENT_CITY_DETAIL = "CURRENT_CITY_DETAIL";
+
+
 }
