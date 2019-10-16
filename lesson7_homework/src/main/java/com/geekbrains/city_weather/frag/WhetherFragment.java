@@ -1,4 +1,4 @@
-package com.geekbrains.city_whether.frag;
+package com.geekbrains.city_weather.frag;
 
 
 import android.annotation.SuppressLint;
@@ -6,31 +6,33 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.geekbrains.city_whether.GreetingsBuilder;
-import com.geekbrains.city_whether.PictureBuilder;
-import com.geekbrains.city_whether.PressureBuilder;
-import com.geekbrains.city_whether.R;
-import com.geekbrains.city_whether.TempBuilder;
-import com.geekbrains.city_whether.WhetherBuilder;
-import com.geekbrains.city_whether.WindBuilder;
-import com.geekbrains.city_whether.adapter.DataForecast;
-import com.geekbrains.city_whether.adapter.WhetherCardAdapter;
+
+import com.geekbrains.city_weather.GreetingsBuilder;
+import com.geekbrains.city_weather.PictureBuilder;
+import com.geekbrains.city_weather.PressureBuilder;
+import com.geekbrains.city_weather.R;
+import com.geekbrains.city_weather.TempBuilder;
+import com.geekbrains.city_weather.WeatherBuilder;
+import com.geekbrains.city_weather.WindBuilder;
+import com.geekbrains.city_weather.adapter.DataForecast;
+import com.geekbrains.city_weather.adapter.WeatherCardAdapter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +41,7 @@ public class WhetherFragment extends Fragment {
     private static final String TAG = "33333";
 
     private RecyclerView recyclerViewForecast;
-    private WhetherCardAdapter cardAdapter;
+    private WeatherCardAdapter cardAdapter;
 
     private TextView greetingsTextView;
     private TextView textViewWhether;
@@ -103,7 +105,7 @@ public class WhetherFragment extends Fragment {
         //выводим строки в текстовых полях
         greetingsTextView.setText(text);
 
-        String textWhether = new WhetherBuilder().getWhether(getActivity());
+        String textWhether = new WeatherBuilder().getWhether(getActivity());
         textViewWhether.setText(textWhether);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
@@ -128,18 +130,15 @@ public class WhetherFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d(TAG,"WhetherFragment onResume");
-        prefSetting = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        prefSetting = androidx.preference.PreferenceManager
+                .getDefaultSharedPreferences(Objects.requireNonNull(getActivity()));
         //получаем из файла настроек количество знаков после запятой
         isShowCheckboxes = prefSetting.getBoolean("showCheckBoxes", true);
         Log.d(TAG,"WhetherFragment initViews isShowCheckboxes = " + isShowCheckboxes);
 
-        if (isShowCheckboxes){
-            textViewWind.setVisibility(View.VISIBLE);
-            textViewPressure.setVisibility(View.VISIBLE);
-        }else {
-            textViewWind.setVisibility(View.INVISIBLE);
-            textViewPressure.setVisibility(View.INVISIBLE);
-        }
+        // показываем/скрываем данные о ветре и давлении
+        showWindAndPressure(isShowCheckboxes);
     }
 
     private void  initRecyclerView(){
@@ -165,9 +164,20 @@ public class WhetherFragment extends Fragment {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL, false);
-        cardAdapter = new WhetherCardAdapter(list);
+        cardAdapter = new WeatherCardAdapter(list);
 
         recyclerViewForecast.setLayoutManager(layoutManager);
         recyclerViewForecast.setAdapter(cardAdapter);
+    }
+
+    // показываем/скрываем данные о ветре и давлении
+    private void showWindAndPressure(boolean isShowCheckboxes) {
+        if (isShowCheckboxes) {
+            textViewWind.setVisibility(View.VISIBLE);
+            textViewPressure.setVisibility(View.VISIBLE);
+        } else {
+            textViewWind.setVisibility(View.INVISIBLE);
+            textViewPressure.setVisibility(View.INVISIBLE);
+        }
     }
 }

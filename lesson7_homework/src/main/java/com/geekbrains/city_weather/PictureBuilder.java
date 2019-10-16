@@ -1,7 +1,8 @@
-package com.geekbrains.city_whether;
+package com.geekbrains.city_weather;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+
 import androidx.core.content.ContextCompat;
 
 public class PictureBuilder {

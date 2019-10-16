@@ -1,4 +1,4 @@
-package com.geekbrains.city_whether.adapter;
+package com.geekbrains.city_weather.adapter;
 
 
 import android.view.LayoutInflater;
@@ -6,18 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.geekbrains.city_whether.R;
+
+import com.geekbrains.city_weather.R;
+
 import java.util.ArrayList;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class WhetherCardAdapter extends RecyclerView.Adapter<WhetherCardAdapter.CardViewHolder> {
+public class WeatherCardAdapter extends RecyclerView.Adapter<WeatherCardAdapter.CardViewHolder> {
 
-    private static final String TAG = "33333";
     private ArrayList<DataForecast> dataForecast = new ArrayList<>();
 
-    public WhetherCardAdapter(ArrayList<DataForecast> data) {
-        if(data != null) {
+    public WeatherCardAdapter(ArrayList<DataForecast> data) {
+        if (data != null) {
             dataForecast = data;
         }
     }
@@ -25,8 +27,8 @@ public class WhetherCardAdapter extends RecyclerView.Adapter<WhetherCardAdapter.
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view =  LayoutInflater.from(parent.getContext())
-               .inflate(R.layout.item_list_forecast,parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_list_forecast, parent, false);
         return new CardViewHolder(view);
     }
 

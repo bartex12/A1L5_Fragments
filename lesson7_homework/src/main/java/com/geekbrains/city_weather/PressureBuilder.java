@@ -1,6 +1,7 @@
-package com.geekbrains.city_whether;
+package com.geekbrains.city_weather;
 
 import android.content.Context;
+
 import java.util.Random;
 
 public class PressureBuilder {

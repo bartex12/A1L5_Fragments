@@ -1,15 +1,9 @@
-package com.geekbrains.city_whether.frag;
+package com.geekbrains.city_weather.frag;
 
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +13,22 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import com.geekbrains.city_whether.DetailActivity;
-import com.geekbrains.city_whether.P;
-import com.geekbrains.city_whether.R;
-import com.geekbrains.city_whether.cityAdapter.RecyclerViewCityAdapter;
+
+import com.geekbrains.city_weather.DetailActivity;
+import com.geekbrains.city_weather.P;
+import com.geekbrains.city_weather.R;
+import com.geekbrains.city_weather.cityAdapter.RecyclerViewCityAdapter;
 import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A simple {@link Fragment} subclass.

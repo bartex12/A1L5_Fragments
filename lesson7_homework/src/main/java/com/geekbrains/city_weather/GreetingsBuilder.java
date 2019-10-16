@@ -1,7 +1,8 @@
-package com.geekbrains.city_whether;
+package com.geekbrains.city_weather;
 
 import android.content.Context;
 import android.util.Log;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 

@@ -7,7 +7,8 @@
     android:baselineAligned="false">
 
     <!-- Фрагмент с выбором городов -->
-    <fragment android:name="com.geekbrains.city_whether.frag.ChooseCityFrag"
+    <fragment
+        android:name="com.geekbrains.city_weather.frag.ChooseCityFrag"
         android:id="@+id/citiesWhether"
         android:layout_weight="1"
         android:layout_width="0px"

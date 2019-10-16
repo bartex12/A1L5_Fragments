@@ -1,4 +1,4 @@
-package com.geekbrains.city_whether;
+package com.geekbrains.city_weather;
 
 /**
 * класс для констант*/

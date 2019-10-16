@@ -1,4 +1,4 @@
-package com.geekbrains.city_whether;
+package com.geekbrains.city_weather;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,8 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
-import com.geekbrains.city_whether.frag.ChooseCityFrag;
-import com.geekbrains.city_whether.preferences.SettingsActivity;
+import com.geekbrains.city_weather.frag.ChooseCityFrag;
+import com.geekbrains.city_weather.preferences.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG,"MainActivity onResume isShowCheckboxes = " + isShowCheckboxes);
 
         // показываем/скрываем чекбоксы на экране выбора города
-        setCheckboxesInFrsgment(isShowCheckboxes);
+        setCheckboxesInFragment(isShowCheckboxes);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // показываем/скрываем чекбоксы на экране выбора города
-    private void setCheckboxesInFrsgment(boolean isShowCheckboxes) {
+    private void setCheckboxesInFragment(boolean isShowCheckboxes) {
         ChooseCityFrag fr = (ChooseCityFrag) getSupportFragmentManager().
                 findFragmentById(R.id.citiesWhether);
         View view = Objects.requireNonNull(fr).getView();

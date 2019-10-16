@@ -1,4 +1,4 @@
-package com.geekbrains.city_whether;
+package com.geekbrains.city_weather;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.geekbrains.city_whether.frag.WhetherFragment;
-import com.geekbrains.city_whether.preferences.SettingsActivity;
+import com.geekbrains.city_weather.frag.WhetherFragment;
+import com.geekbrains.city_weather.preferences.SettingsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
