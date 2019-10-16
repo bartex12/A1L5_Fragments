@@ -24,19 +24,6 @@
     <string name="var_clouds">Переменная облачность</string>
     <string name="windSpeed">Скорость ветра</string>
     <string name="picture">Тип погоды</string>
-
-    <string-array name="towns">
-        <item>Москва</item>
-        <item>Санкт_Петербург</item>
-        <item>Новосибирск</item>
-        <item>Екатеринбург</item>
-        <item>Нижний Новгород</item>
-        <item>Казань</item>
-        <item>Челябинск</item>
-        <item>Омск</item>
-        <item>Самара</item>
-        <item>Ростов-на-Дону</item>
-    </string-array>
     <string name="tomorrow">Завтра</string>
     <string name="oneDay">Через день</string>
     <string name="after2days">Через 2 дня</string>
@@ -58,5 +45,7 @@
     <string name="change_city">Изменить город</string>
     <string name="place_not_found">Место не обнаружено</string>
     <string name="input_city">Введите город</string>
+    <string name="connecting">Подключение к серверу…</string>
+    <string name="hPa">гПа</string>
 
 </resources>

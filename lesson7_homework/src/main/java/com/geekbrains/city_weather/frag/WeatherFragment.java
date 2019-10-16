@@ -5,27 +5,30 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.geekbrains.city_weather.GreetingsBuilder;
-import com.geekbrains.city_weather.PictureBuilder;
-import com.geekbrains.city_weather.PressureBuilder;
 import com.geekbrains.city_weather.R;
 import com.geekbrains.city_weather.TempBuilder;
-import com.geekbrains.city_weather.WeatherBuilder;
-import com.geekbrains.city_weather.WindBuilder;
 import com.geekbrains.city_weather.adapter.DataForecast;
 import com.geekbrains.city_weather.adapter.WeatherCardAdapter;
+import com.geekbrains.city_weather.data_loader.CityWeatherDataLoader;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -43,9 +46,10 @@ public class WeatherFragment extends Fragment {
 
     private RecyclerView recyclerViewForecast;
     private WeatherCardAdapter cardAdapter;
-    Typeface weatherFont;
+    private Typeface weatherFont;
 
-    private TextView greetingsTextView;
+    private TextView cityTextView;
+    private TextView textViewLastUpdate;
     private TextView textViewWhether;
     private TextView textViewTemper;
     private TextView textViewWind;
@@ -55,6 +59,8 @@ public class WeatherFragment extends Fragment {
 
     private SharedPreferences prefSetting;
     private boolean isShowCheckboxes;
+
+    private Handler handler = new Handler();
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -87,6 +93,7 @@ public class WeatherFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
         initFonts();
+        updateWeatherData(getCity());
         initRecyclerView();
     }
 
@@ -108,7 +115,8 @@ public class WeatherFragment extends Fragment {
     private void initViews(View view) {
 
         recyclerViewForecast = view.findViewById(R.id.recyclerViewForecast);
-        greetingsTextView = view.findViewById(R.id.greetingsTextView);
+        cityTextView = view.findViewById(R.id.greetingsTextView);
+        textViewLastUpdate = view.findViewById(R.id.textViewLastUpdate);
         textViewWhether = view.findViewById(R.id.textViewWhether);
         textViewTemper = view.findViewById(R.id.textViewTemper);
         textViewWind = view.findViewById(R.id.textViewWind);
@@ -116,40 +124,93 @@ public class WeatherFragment extends Fragment {
         textViewIcon = view.findViewById(R.id.textViewIcon);
         imageViewWhether = view.findViewById(R.id.imageViewWhether);
 
-        String town = getCity();
+//        String town = getCity();
+//
+//        //формируем строку в зависимости от времени суток
+//        String text =town + ": " + new GreetingsBuilder().getGreetings(Objects.requireNonNull(getActivity()));
+//        //выводим строки в текстовых полях
+//        greetingsTextView.setText(text);
 
-        //формируем строку в зависимости от времени суток
-        String text =town + ": " + new GreetingsBuilder().getGreetings(Objects.requireNonNull(getActivity()));
-        //выводим строки в текстовых полях
-        greetingsTextView.setText(text);
+//        String textWhether = new WeatherBuilder().getWhether(getActivity());
+//        textViewWhether.setText(textWhether);
 
-        String textWhether = new WeatherBuilder().getWhether(getActivity());
-        textViewWhether.setText(textWhether);
+//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+//            imageViewWhether.setVisibility(View.GONE);
+//        }else {
+//            Drawable drawable = new PictureBuilder().getDrawableIcon(getActivity(), textWhether);
+//            imageViewWhether.setImageDrawable(drawable);
+//        }
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            imageViewWhether.setVisibility(View.GONE);
-        }else {
-            Drawable drawable = new PictureBuilder().getDrawableIcon(getActivity(), textWhether);
-            imageViewWhether.setImageDrawable(drawable);
-        }
+//        String textTemper = new TempBuilder().getTemperature(getActivity());
+//        textViewTemper.setText(textTemper);
 
-        String textTemper = new TempBuilder().getTemperature(getActivity());
-        textViewTemper.setText(textTemper);
+//        String wind = new WindBuilder().getWindSpeed(getActivity());
+//        textViewWind.setText(wind);
 
-        String wind = new WindBuilder().getWindSpeed(getActivity());
-        textViewWind.setText(wind);
+//        String press = new PressureBuilder().getPressure(getActivity());
+//        textViewPressure.setText(press);
 
-        String press = new PressureBuilder().getPressure(getActivity());
-        textViewPressure.setText(press);
-
-        textViewIcon.setText("Здесь был Вася");
+        // textViewIcon.setText("Здесь был Вася");
 
     }
 
     private void initFonts() {
-        weatherFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/weather.ttf");
+        weatherFont = Typeface.createFromAsset(Objects.
+                requireNonNull(getActivity()).getAssets(), "fonts/weather.ttf");
         textViewIcon.setTypeface(weatherFont);
     }
+
+    //получаем погодные данные с сервера  в JSON формате
+    private void updateWeatherData(final String city) {
+        new Thread() {
+            @Override
+            public void run() {
+                final JSONObject jsonObject = CityWeatherDataLoader.getJSONData(city);
+                if (jsonObject == null) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), R.string.place_not_found,
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            renderWeather(jsonObject);
+                        }
+                    });
+                }
+            }
+        }.start();
+    }
+
+    private void renderWeather(JSONObject jsonObject) {
+        Log.d(TAG, "json: " + jsonObject.toString());
+        try {
+            JSONObject details = jsonObject.getJSONArray("weather").getJSONObject(0);
+            JSONObject main = jsonObject.getJSONObject("main");
+            JSONObject wind = jsonObject.getJSONObject("wind");
+
+            Log.e(TAG, "details = " + details + " main = " + main);
+            setPlaceName(jsonObject);
+            setUpdatedText(jsonObject);
+            setDescription(details);
+            setWind(wind);
+            setPressure(main);
+            setCurrentTemp(main);
+
+            setWeatherIcon(details.getInt("id"),
+                    jsonObject.getJSONObject("sys").getLong("sunrise") * 1000,
+                    jsonObject.getJSONObject("sys").getLong("sunset") * 1000);
+        } catch (Exception exc) {
+            exc.printStackTrace();
+            Log.e(TAG, "One or more fields not found in the JSON data");
+        }
+    }
+
+
 
     private void  initRecyclerView(){
         DataForecast[] data = new DataForecast[] {
@@ -186,8 +247,107 @@ public class WeatherFragment extends Fragment {
             textViewWind.setVisibility(View.VISIBLE);
             textViewPressure.setVisibility(View.VISIBLE);
         } else {
-            textViewWind.setVisibility(View.INVISIBLE);
-            textViewPressure.setVisibility(View.INVISIBLE);
+            textViewWind.setVisibility(View.GONE);
+            textViewPressure.setVisibility(View.GONE);
         }
     }
+
+    private void setPlaceName(JSONObject jsonObject) throws JSONException {
+        String cityText = jsonObject.getString("name").toUpperCase() + ", "
+                + jsonObject.getJSONObject("sys").getString("country");
+        //выводим строки в текстовых полях
+        cityTextView.setText(cityText);
+    }
+
+
+//    private void setDetails(JSONObject details, JSONObject main) throws JSONException {
+//        String detailsText = details.getString("description").toUpperCase() + "\n"
+//                + "Humidity: " + main.getString("humidity") + "%" + "\n"
+//                + "Pressure: " + main.getString("pressure") + "hPa";
+//        detailsTextView.setText(detailsText);
+//    }
+
+    private void setUpdatedText(JSONObject jsonObject) throws JSONException {
+        DateFormat dateFormat = DateFormat.getDateTimeInstance();
+        String updateOn = dateFormat.format(new Date(jsonObject.getLong("dt") * 1000));
+        String updatedText = "Last update: " + updateOn;
+        textViewLastUpdate.setText(updatedText);
+    }
+
+    private void setDescription(JSONObject details) throws JSONException {
+        String descriptionText = details.getString("description").toUpperCase();
+        textViewWhether.setText(descriptionText);
+    }
+
+    private void setWind(JSONObject jsonObject) throws JSONException {
+        String wind = jsonObject.getString("speed");
+        String windSpeed = Objects.requireNonNull(getActivity()).getString(R.string.windSpeed);
+        String ms = getActivity().getString(R.string.ms);
+        String windText = windSpeed + " " + wind + " " + ms;
+        textViewWind.setText(windText);
+    }
+
+    private void setCurrentTemp(JSONObject main) throws JSONException {
+        String currentTextText = String.format(Locale.getDefault(), "%.1f",
+                main.getDouble("temp")) + "\u2103";
+        textViewTemper.setText(currentTextText);
+    }
+
+    private void setPressure(JSONObject main) throws JSONException {
+        String pressure = main.getString("pressure");
+        String press = Objects.requireNonNull(getActivity()).getString(R.string.press);
+        String hPa = getActivity().getString(R.string.hPa);
+        String pressureText = press + " " + pressure + " " + hPa;
+        textViewPressure.setText(pressureText);
+    }
+
+    private void setWeatherIcon(int actualId, long sunrise, long sunset) {
+        int id = actualId / 100;
+        String icon = "";
+
+        if (actualId == 800) {
+            long currentTime = new Date().getTime();
+            if (currentTime >= sunrise && currentTime < sunset) {
+                //icon = "\u2600";
+                icon = getString(R.string.weather_sunny);
+            } else {
+                icon = getString(R.string.weather_clear_night);
+            }
+        } else {
+            switch (id) {
+                case 2: {
+                    icon = getString(R.string.weather_thunder);
+                    break;
+                }
+                case 3: {
+                    icon = getString(R.string.weather_drizzle);
+                    break;
+                }
+                case 5: {
+                    icon = getString(R.string.weather_rainy);
+                    break;
+                }
+                case 6: {
+                    icon = getString(R.string.weather_snowy);
+                    break;
+                }
+                case 7: {
+                    icon = getString(R.string.weather_foggy);
+                    break;
+                }
+                case 8: {
+                    //icon = "\u2601";
+                    icon = getString(R.string.weather_cloudy);
+                    break;
+                }
+            }
+        }
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            textViewIcon.setVisibility(View.GONE);
+        } else {
+            textViewIcon.setText(icon);
+        }
+    }
+
 }
+//1 hPa = 0.75006375541921 mmHg

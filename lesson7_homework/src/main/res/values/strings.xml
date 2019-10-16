@@ -16,7 +16,7 @@
     <string name="grad">gr</string>
     <string name="boom">Boom</string>
     <string name="little_rain">Short rainfall</string>
-    <string name="mm">mm</string>
+    <string name="mm">mmHg</string>
     <string name="ms">mps</string>
     <string name="press">Pressure</string>
     <string name="rain">Rain</string>
@@ -44,22 +44,16 @@
     <string name="change_city">Change city</string>
     <string name="place_not_found">Place not found</string>
     <string name="input_city">Input city</string>
-
-
     <string name="ok">OK</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string-array name="towns">
-        <item>Moscow</item>
-        <item>St.Petersburg</item>
-        <item>Novosibirsk</item>
-        <item>Yekaterinburg</item>
-        <item>Nizhniy Novgorod</item>
-        <item>Qazan</item>
-        <item>Chelyabinsk</item>
-        <item>Omsk</item>
-        <item>Samara</item>
-        <item>Rostov-on-Don</item>
-    </string-array>
+    <string name="connecting">Connecting…</string>
+    <string name="hPa">hPa</string>
+    <string name="weather_sunny" translatable="false">&#xf00d;</string>
+    <string name="weather_clear_night" translatable="false">&#xf02e;</string>
+    <string name="weather_foggy" translatable="false">&#xf014;</string>
+    <string name="weather_cloudy" translatable="false">&#xf013;</string>
+    <string name="weather_rainy" translatable="false">&#xf019;</string>
+    <string name="weather_snowy" translatable="false">&#xf01b;</string>
+    <string name="weather_thunder" translatable="false">&#xf01e;</string>
+    <string name="weather_drizzle" translatable="false">&#xf01c;</string>
 
 </resources>

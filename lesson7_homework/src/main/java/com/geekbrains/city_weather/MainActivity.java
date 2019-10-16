@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //передаём фрагменту из интента позицию и список ранее выбранных городов
+        //передаём фрагменту из интента название города и список ранее выбранных городов
         initFragWithExtra();
         //устанавливаем из настроек значения по умолчанию для первой загрузки
         androidx.preference.PreferenceManager

@@ -4,7 +4,6 @@ package com.geekbrains.city_weather.frag;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +15,6 @@ import com.geekbrains.city_weather.DetailActivity;
 import com.geekbrains.city_weather.P;
 import com.geekbrains.city_weather.R;
 import com.geekbrains.city_weather.cityAdapter.RecyclerViewCityAdapter;
-import com.geekbrains.city_weather.data_loader.CityWeatherDataLoader;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -46,8 +41,6 @@ public class ChooseCityFrag extends Fragment {
     private RecyclerView recyclerViewMarked; //RecyclerView для списка ранее выбранных городов
     private ArrayList<String> cityMarked = new ArrayList<>(); //список ранее выбранных городов
     private RecyclerViewCityAdapter recyclerViewCityAdapter; //адаптер для RecyclerView
-
-    private Handler handler = new Handler();
 
     public ChooseCityFrag() {
         // Required empty public constructor
@@ -125,10 +118,10 @@ public class ChooseCityFrag extends Fragment {
                     public void onCityClick(String newCity) {
                         //изменяем город
                         city = newCity;
-                        // если альбомная ориентация, подтверждаем нажатие строки списка с городами
-                        if (isExistWhetherFrag) {
-                            Snackbar.make(Objects.requireNonNull(getView()), city, Snackbar.LENGTH_SHORT).show();
-                        }
+//                        // если альбомная ориентация, подтверждаем нажатие строки списка с городами
+//                        if (isExistWhetherFrag) {
+//                            //Snackbar.make(Objects.requireNonNull(getView()), city, Snackbar.LENGTH_SHORT).show();
+//                        }
                         // показываем погоду в городе с учётом ориентации экрана
                         showCityWhetherWithOrientation(city);
                     }
@@ -169,15 +162,11 @@ public class ChooseCityFrag extends Fragment {
         // if (whetherFrag == null|| !(whetherFrag.getCity().equals("Moscow"))) {
         // ... создаем новый фрагмент с текущей позицией для вывода погоды
         whetherFrag = WeatherFragment.newInstance(city);
-
         // ... и выполняем транзакцию по замене фрагмента
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.whether_in_citys, whetherFrag, P.WEATHER_FRAFMENT_TAG);  // замена фрагмента
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);// эффект
-        //ft.addToBackStack(null);
-        //ft.addToBackStack(P.SOME_KEY); //добавление, чтобы получать по кнопке "назад"
         ft.commit();
-
     }
 
     // показываем погоду в городе с учётом ориентации экрана
@@ -195,15 +184,10 @@ public class ChooseCityFrag extends Fragment {
         }
     }
 
-
-
-
-
     //получаем актуальное значение currentPosition и cityMarked при перевороте экрана в DetailActivity
     //хотя в погодном приложении работает и без этого метода - обновление же по кнопке
     public void getCurrentPositionAndList(String currentCity, ArrayList<String> cityMarked) {
         city = currentCity;
-        //spinnerTowns.setSelection(currentPosition);
         this.cityMarked = cityMarked;
         this.initRecycledView();
         try {
@@ -212,44 +196,6 @@ public class ChooseCityFrag extends Fragment {
         }catch (NullPointerException e){
             e.getStackTrace();
         }
-    }
-
-    //получаем погодные данные с сервера  в JSON формате
-    public void updateWeatherData(final String city) {
-        new Thread() {
-            @Override
-            public void run() {
-                final JSONObject jsonObject = CityWeatherDataLoader.getJSONData(city);
-                if (jsonObject == null) {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getActivity(), R.string.place_not_found,
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
-                } else {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            renderWeather(jsonObject);
-                        }
-                    });
-                }
-            }
-        }.start();
-    }
-
-    private void renderWeather(JSONObject jsonObject) {
-        //находим фрагмент
-        WeatherFragment weatherFrag = (WeatherFragment) Objects.requireNonNull(getFragmentManager()).
-                findFragmentByTag(P.WEATHER_FRAFMENT_TAG);
-        //вызываем из активности метод фрагмента для передачи актуальной позиции и списка городов
-        // Objects.requireNonNull(chooseCityFrag).getCurrentPositionAndList(position, cityMarked);
-        Toast.makeText(getActivity(), Objects.requireNonNull(weatherFrag).toString(),
-                Toast.LENGTH_LONG).show();
-//        Toast.makeText(getApplicationContext(), jsonObject.toString(),
-//                Toast.LENGTH_LONG).show();
     }
 
     public void prepareData(String city) {
