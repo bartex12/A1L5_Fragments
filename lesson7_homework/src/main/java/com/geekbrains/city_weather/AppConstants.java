@@ -3,7 +3,7 @@ package com.geekbrains.city_weather;
 /**
 * класс для констант*/
 
-public class P {
+public class AppConstants {
 
     public static final String CITY_MARKED = "CITY_MARKED";
     public static final String CURRENT_CITY = "CURRENT_CITY";

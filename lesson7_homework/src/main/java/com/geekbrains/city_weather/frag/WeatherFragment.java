@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geekbrains.city_weather.R;
-import com.geekbrains.city_weather.TempBuilder;
 import com.geekbrains.city_weather.adapter.DataForecast;
 import com.geekbrains.city_weather.adapter.WeatherCardAdapter;
 import com.geekbrains.city_weather.data_loader.CityWeatherDataLoader;
@@ -51,7 +50,8 @@ public class WeatherFragment extends Fragment {
     private TextView textViewPressure;
     private TextView textViewIcon;
     private Handler handler = new Handler();
-
+    private String[] dates = new String[5];
+    private double[] temperuteres = new double[5];
     public WeatherFragment() {
         // Required empty public constructor
     }
@@ -84,7 +84,6 @@ public class WeatherFragment extends Fragment {
         initViews(view);
         initFonts();
         updateWeatherData(getCity());
-        initRecyclerView();
     }
 
     @Override
@@ -125,6 +124,7 @@ public class WeatherFragment extends Fragment {
             @Override
             public void run() {
                 final JSONObject jsonObject = CityWeatherDataLoader.getJSONData(city);
+                final JSONObject jsonObjectForecast = CityWeatherDataLoader.getJSONDataForecast(city);
                 if (jsonObject == null) {
                     handler.post(new Runnable() {
                         @Override
@@ -138,6 +138,7 @@ public class WeatherFragment extends Fragment {
                         @Override
                         public void run() {
                             renderWeather(jsonObject);
+                            renderForecast(jsonObjectForecast);
                         }
                     });
                 }
@@ -145,14 +146,27 @@ public class WeatherFragment extends Fragment {
         }.start();
     }
 
+    private void renderForecast(JSONObject jsonObjectForecast) {
+        try {
+            dates = getDateArray(jsonObjectForecast);
+            temperuteres = getTempArray(jsonObjectForecast);
+            //после формирования данных для адаптера
+            initRecyclerView();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e(TAG, "Ошибка в renderForecast");
+        }
+
+    }
+
     private void renderWeather(JSONObject jsonObject) {
-        Log.d(TAG, "json: " + jsonObject.toString());
+
         try {
             JSONObject details = jsonObject.getJSONArray("weather").getJSONObject(0);
             JSONObject main = jsonObject.getJSONObject("main");
             JSONObject wind = jsonObject.getJSONObject("wind");
 
-            Log.e(TAG, "details = " + details + " main = " + main);
             setPlaceName(jsonObject);
             setUpdatedText(jsonObject);
             setDescription(details);
@@ -169,23 +183,54 @@ public class WeatherFragment extends Fragment {
         }
     }
 
+    private String[] getDateArray(JSONObject jsonObjectForecast) throws JSONException {
+        Log.e(TAG, "getDateArray");
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        long dateTime;
+        String[] dateTimeArray = new String[5];
+        for (int i = 0; i < dateTimeArray.length; i++) {
+            dateTime = jsonObjectForecast.getJSONArray("list").
+                    getJSONObject(7 + 8 * i).getLong("dt");
+            dateTimeArray[i] = dateFormat.format(new Date(dateTime * 1000));
+        }
+        Log.e(TAG, "dateTimeArray.length = " + dateTimeArray.length);
+        return dateTimeArray;
+    }
+
+    private double[] getTempArray(JSONObject jsonObjectForecast) throws JSONException {
+        Log.e(TAG, "getTempArray");
+        double[] temper = new double[5];
+        for (int i = 0; i < temper.length; i++) {
+            JSONObject list = jsonObjectForecast.getJSONArray("list").getJSONObject(7 + 8 * i);
+            temper[i] = list.getJSONObject("main").getDouble("temp");
+        }
+        Log.e(TAG, "temper.length = " + temper.length);
+        return temper;
+    }
+
     private void  initRecyclerView(){
+        //пока на иконки заглушка TODO
         DataForecast[] data = new DataForecast[] {
-                new DataForecast(getString(R.string.tomorrow),ContextCompat
+                new DataForecast(dates[0], ContextCompat
                         .getDrawable(Objects.requireNonNull(getActivity()), R.drawable.sun),
-                        new TempBuilder().getTemperature(getActivity())),
-                new DataForecast(getString(R.string.oneDay),ContextCompat
+                        String.format(Locale.getDefault(),
+                                "%.1f", temperuteres[0]) + "\u2103"),
+                new DataForecast(dates[1], ContextCompat
                         .getDrawable(Objects.requireNonNull(getActivity()), R.drawable.rain),
-                        new TempBuilder().getTemperature(getActivity())),
-                new DataForecast(getString(R.string.after2days),ContextCompat.
+                        String.format(Locale.getDefault(),
+                                "%.1f", temperuteres[1]) + "\u2103"),
+                new DataForecast(dates[2], ContextCompat.
                         getDrawable(Objects.requireNonNull(getActivity()), R.drawable.partly_cloudy),
-                        new TempBuilder().getTemperature(getActivity())),
-                new DataForecast(getString(R.string.after3days),ContextCompat.
+                        String.format(Locale.getDefault(),
+                                "%.1f", temperuteres[2]) + "\u2103"),
+                new DataForecast(dates[3], ContextCompat.
                         getDrawable(Objects.requireNonNull(getActivity()), R.drawable.sun),
-                        new TempBuilder().getTemperature(getActivity())),
-                new DataForecast(getString(R.string.after4days),ContextCompat.
+                        String.format(Locale.getDefault(),
+                                "%.1f", temperuteres[3]) + "\u2103"),
+                new DataForecast(dates[4], ContextCompat.
                         getDrawable(Objects.requireNonNull(getActivity()), R.drawable.boom),
-                        new TempBuilder().getTemperature(getActivity()))};
+                        String.format(Locale.getDefault(),
+                                "%.1f", temperuteres[4]) + "\u2103")};
 
         ArrayList<DataForecast> list = new ArrayList<>(data.length);
         list.addAll(Arrays.asList(data));
@@ -219,7 +264,8 @@ public class WeatherFragment extends Fragment {
     private void setUpdatedText(JSONObject jsonObject) throws JSONException {
         DateFormat dateFormat = DateFormat.getDateTimeInstance();
         String updateOn = dateFormat.format(new Date(jsonObject.getLong("dt") * 1000));
-        String updatedText = "Last update: " + updateOn;
+        String updatedText = Objects.requireNonNull(getActivity()).getResources()
+                .getString(R.string.lastUpdate) + updateOn;
         textViewLastUpdate.setText(updatedText);
     }
 

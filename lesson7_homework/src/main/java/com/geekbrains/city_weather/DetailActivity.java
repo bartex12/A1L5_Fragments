@@ -16,6 +16,11 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
+import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY;
+import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY_DETAIL;
+import static com.geekbrains.city_weather.AppConstants.WEATHER_FRAFMENT_TAG;
+
 public class DetailActivity extends AppCompatActivity {
 
     private static final String TAG = "33333";
@@ -55,18 +60,18 @@ public class DetailActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //получаем название города из интента
         String currentCity = Objects.requireNonNull(getIntent()
-                .getExtras()).getString(P.CURRENT_CITY);
+                .getExtras()).getString(CURRENT_CITY);
         //получаем список ранее выьбранных городов их интента
         ArrayList<String> cityMarked = getIntent()
-                .getStringArrayListExtra(P.CITY_MARKED);
+                .getStringArrayListExtra(CITY_MARKED);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             //после изменения строки списка и переворота экрана надо передать актуальную позицию
             //делать это буду через активность вызовом метода фрагмента
             Log.d(TAG, "DetailActivity onCreate currentCity = " + currentCity);
             Intent intent = new Intent(DetailActivity.this, MainActivity.class);
-            intent.putExtra(P.CURRENT_CITY_DETAIL, currentCity);
-            intent.putExtra(P.CITY_MARKED, cityMarked);
+            intent.putExtra(CURRENT_CITY_DETAIL, currentCity);
+            intent.putExtra(CITY_MARKED, cityMarked);
             startActivity(intent);
             // Если устройство перевернули в альбомную ориентацию,
             // то надо эту activity закрыть и убрать из стэка
@@ -83,7 +88,7 @@ public class DetailActivity extends AppCompatActivity {
             // Добавим фрагмент на activity
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, details, P.WEATHER_FRAFMENT_TAG)
+                    .replace(R.id.fragment_container, details, WEATHER_FRAFMENT_TAG)
                     .commit();
         }
     }

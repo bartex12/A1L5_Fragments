@@ -47,5 +47,6 @@
     <string name="input_city">Введите город</string>
     <string name="connecting">Подключение к серверу…</string>
     <string name="hPa">гПа</string>
+    <string name="lastUpdate">Обновлено: </string>
 
 </resources>

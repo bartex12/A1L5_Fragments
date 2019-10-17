@@ -11,7 +11,6 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.geekbrains.city_weather.DetailActivity;
-import com.geekbrains.city_weather.P;
 import com.geekbrains.city_weather.R;
 import com.geekbrains.city_weather.cityAdapter.RecyclerViewCityAdapter;
 
@@ -24,6 +23,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
+import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY;
+import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY_MARKED;
+import static com.geekbrains.city_weather.AppConstants.WEATHER_FRAFMENT_TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,9 +68,9 @@ public class ChooseCityFrag extends Fragment {
         // Если это не первое создание, то восстановим текущую позицию
         if (savedInstanceState != null) {
             // Восстановление текущий город
-            city = savedInstanceState.getString(P.CURRENT_CITY);
+            city = savedInstanceState.getString(CURRENT_CITY);
             //восстанавливаем список выбранных городов
-            cityMarked = savedInstanceState.getStringArrayList(P.CURRENT_CITY_MARKED);
+            cityMarked = savedInstanceState.getStringArrayList(CURRENT_CITY_MARKED);
             //adapter.notifyDataSetChanged() не работает, придётся так
             this.initRecycledView();
         }
@@ -79,8 +83,8 @@ public class ChooseCityFrag extends Fragment {
     // Сохраним текущий город (вызывается перед выходом из фрагмента)
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString(P.CURRENT_CITY, city);
-        outState.putStringArrayList(P.CURRENT_CITY_MARKED, cityMarked);
+        outState.putString(CURRENT_CITY, city);
+        outState.putStringArrayList(CURRENT_CITY_MARKED, cityMarked);
         Log.d(TAG, "ChooseCityFrag savedInstanceState cityMarked.size()= " +
                 cityMarked.size() + " city = " + city);
         super.onSaveInstanceState(outState);
@@ -143,14 +147,11 @@ public class ChooseCityFrag extends Fragment {
         if (weatherFrag != null) {
             Log.d(TAG, "weatherFrag.getCity() = " + weatherFrag.getCity());
         }
-        // Если фрагмент не создан или он не соответствует выбранному городу, то ...
-        //if (whetherFrag == null || whetherFrag.getIndex() != currentPosition) {
-        // if (whetherFrag == null|| !(whetherFrag.getCity().equals("Moscow"))) {
-        // ... создаем новый фрагмент с текущей позицией для вывода погоды
+        // создаем новый фрагмент с текущей позицией для вывода погоды
         weatherFrag = WeatherFragment.newInstance(city);
         // ... и выполняем транзакцию по замене фрагмента
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.whether_in_citys, weatherFrag, P.WEATHER_FRAFMENT_TAG);  // замена фрагмента
+        ft.replace(R.id.whether_in_citys, weatherFrag, WEATHER_FRAFMENT_TAG);  // замена фрагмента
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);// эффект
         ft.commit();
     }
@@ -163,8 +164,8 @@ public class ChooseCityFrag extends Fragment {
             //а если портретная, то
         } else {
             Intent intent = new Intent(getActivity(), DetailActivity.class);
-            intent.putExtra(P.CURRENT_CITY, city);
-            intent.putExtra(P.CITY_MARKED, cityMarked);
+            intent.putExtra(CURRENT_CITY, city);
+            intent.putExtra(CITY_MARKED, cityMarked);
             startActivity(intent);
         }
     }

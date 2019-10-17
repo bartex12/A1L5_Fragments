@@ -22,6 +22,9 @@ import java.util.Objects;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
+import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY_DETAIL;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "33333";
@@ -76,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFragWithExtra() {
-        String currentCity = getIntent().getStringExtra(P.CURRENT_CITY_DETAIL);
-        ArrayList<String> cityMarked = getIntent().getStringArrayListExtra(P.CITY_MARKED);
+        String currentCity = getIntent().getStringExtra(CURRENT_CITY_DETAIL);
+        ArrayList<String> cityMarked = getIntent().getStringArrayListExtra(CITY_MARKED);
         //при первой загрузке cityMarked=null, поэтому страхуемся
         if (cityMarked == null) {
             cityMarked = new ArrayList<>();
