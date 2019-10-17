@@ -118,6 +118,7 @@ public class WeatherFragment extends Fragment {
         textViewIcon.setTypeface(weatherFont);
     }
 
+    //TODO перенести всё в отдельный класс
     //получаем погодные данные с сервера  в JSON формате
     private void updateWeatherData(final String city) {
         new Thread() {
@@ -157,7 +158,6 @@ public class WeatherFragment extends Fragment {
             e.printStackTrace();
             Log.e(TAG, "Ошибка в renderForecast");
         }
-
     }
 
     private void renderWeather(JSONObject jsonObject) {
@@ -183,6 +183,7 @@ public class WeatherFragment extends Fragment {
         }
     }
 
+    //получение даты для прогноза на 5 дней
     private String[] getDateArray(JSONObject jsonObjectForecast) throws JSONException {
         Log.e(TAG, "getDateArray");
         DateFormat dateFormat = DateFormat.getDateInstance();
@@ -197,6 +198,7 @@ public class WeatherFragment extends Fragment {
         return dateTimeArray;
     }
 
+    //получение температуры для прогноза на 5 дней
     private double[] getTempArray(JSONObject jsonObjectForecast) throws JSONException {
         Log.e(TAG, "getTempArray");
         double[] temper = new double[5];
@@ -208,6 +210,7 @@ public class WeatherFragment extends Fragment {
         return temper;
     }
 
+    //загрузка данных в адаптер списка прогноза на 5 дней
     private void  initRecyclerView(){
         //пока на иконки заглушка TODO
         DataForecast[] data = new DataForecast[] {
