@@ -84,7 +84,7 @@ public class DetailActivity extends AppCompatActivity {
         Log.d(TAG, "DetailActivity  savedInstanceState = "+ savedInstanceState);
         if (savedInstanceState == null) {
             //создаём фрагмент, передавая индекс в аргументы фрагмента
-            WeatherFragment details = WeatherFragment.newInstance(currentCity);
+            WeatherFragment details = WeatherFragment.newInstance(currentCity, cityMarked);
             // Добавим фрагмент на activity
             getSupportFragmentManager()
                     .beginTransaction()

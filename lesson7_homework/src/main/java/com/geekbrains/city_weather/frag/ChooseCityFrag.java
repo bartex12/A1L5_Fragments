@@ -80,6 +80,12 @@ public class ChooseCityFrag extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        recyclerViewCityAdapter.notifyDataSetChanged();
+    }
+
     // Сохраним текущий город (вызывается перед выходом из фрагмента)
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -148,7 +154,7 @@ public class ChooseCityFrag extends Fragment {
             Log.d(TAG, "weatherFrag.getCity() = " + weatherFrag.getCity());
         }
         // создаем новый фрагмент с текущей позицией для вывода погоды
-        weatherFrag = WeatherFragment.newInstance(city);
+        weatherFrag = WeatherFragment.newInstance(city, cityMarked);
         // ... и выполняем транзакцию по замене фрагмента
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.whether_in_citys, weatherFrag, WEATHER_FRAFMENT_TAG);  // замена фрагмента

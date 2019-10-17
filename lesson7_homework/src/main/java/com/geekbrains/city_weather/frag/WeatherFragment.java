@@ -1,6 +1,7 @@
 package com.geekbrains.city_weather.frag;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geekbrains.city_weather.MainActivity;
 import com.geekbrains.city_weather.R;
 import com.geekbrains.city_weather.adapter.DataForecast;
 import com.geekbrains.city_weather.adapter.WeatherCardAdapter;
@@ -56,25 +58,30 @@ public class WeatherFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static WeatherFragment newInstance(String city) {
+    public static WeatherFragment newInstance(String city, ArrayList<String> cityMarked) {
         WeatherFragment fragment = new WeatherFragment();
         // Передача параметра
         Bundle args = new Bundle();
         args.putString("city", city);
+        args.putStringArrayList("cityMarked", cityMarked);
         fragment.setArguments(args);
         return fragment;
     }
 
-    // Получить город из аргументов
-    String getCity() {
+    // Получить город из аргументов public - он используется ещё где то
+    public String getCity() {
         return Objects.requireNonNull(getArguments()).getString("city", "Moscow");
+    }
+
+    // Получить город из аргументов
+    public ArrayList<String> getCityMarkedArray() {
+        return Objects.requireNonNull(getArguments()).getStringArrayList("cityMarked");
     }
 
     @Override
     @SuppressLint("Recycle")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_whether, container, false);
     }
 
@@ -132,6 +139,10 @@ public class WeatherFragment extends Fragment {
                         public void run() {
                             Toast.makeText(getActivity(), R.string.place_not_found,
                                     Toast.LENGTH_LONG).show();
+                            ArrayList<String> cityMarked = getCityMarkedArray();
+                            cityMarked.remove(city);
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+
                         }
                     });
                 } else {

@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         Log.d(TAG, "ListOfSmetasNames onOptionsItemSelected id = " + id);
         switch (id) {
-            case R.id.navigation_about:
+            case R.id.navigation_choose_city:
                 showChangecityDialogFragment();
                 return true;
 
@@ -78,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
     private void initFragWithExtra() {
         String currentCity = getIntent().getStringExtra(CURRENT_CITY_DETAIL);
         ArrayList<String> cityMarked = getIntent().getStringArrayListExtra(CITY_MARKED);
+        if (currentCity == null) {
+            currentCity = "Moscow";
+        }
         //при первой загрузке cityMarked=null, поэтому страхуемся
         if (cityMarked == null) {
             cityMarked = new ArrayList<>();
