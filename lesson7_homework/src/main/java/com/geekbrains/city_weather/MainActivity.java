@@ -1,26 +1,23 @@
 package com.geekbrains.city_weather;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Toast;
 
+import com.geekbrains.city_weather.dialogs.DialogCityChange;
 import com.geekbrains.city_weather.frag.ChooseCityFrag;
 import com.geekbrains.city_weather.preferences.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
 import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY_DETAIL;
@@ -66,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "ListOfSmetasNames onOptionsItemSelected id = " + id);
         switch (id) {
             case R.id.navigation_about:
-                showInputDialog();
+                showChangecityDialogFragment();
                 return true;
 
             case R.id.navigation_settings:
@@ -95,27 +92,10 @@ public class MainActivity extends AppCompatActivity {
                 " cityMarked = " + cityMarked);
     }
 
-    private void showInputDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.input_city);
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String city = input.getText().toString();
-                if (city.trim().isEmpty()) {
-                    Toast.makeText(getBaseContext(), "Введите город", Toast.LENGTH_SHORT).show();
-                } else {
-                    ChooseCityFrag fr = (ChooseCityFrag) getSupportFragmentManager().
-                            findFragmentById(R.id.citiesWhether);
-                    //передаём во фрагмент введённый город
-                    Objects.requireNonNull(fr).prepareData(city);
-                }
-            }
-        });
-        builder.show();
+    //диалог сохранения, оформленный как класс с указанием имени файла
+    private void showChangecityDialogFragment() {
+        DialogFragment dialogFragment = new DialogCityChange();
+        dialogFragment.show(getSupportFragmentManager(), "changeCity");
     }
 
     // показываем/скрываем чекбоксы на экране выбора города
