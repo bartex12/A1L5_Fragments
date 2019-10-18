@@ -5,10 +5,13 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.geekbrains.city_weather.frag.WeatherFragment;
 import com.geekbrains.city_weather.preferences.SettingsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -57,6 +60,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        initFab();
         initBottomNavigation();
         getDataFromIntent();
 
@@ -84,6 +88,16 @@ public class DetailActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, details, WEATHER_FRAFMENT_TAG)
                     .commit();
         }
+    }
+
+    private void initFab() {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(), "TODO", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initBottomNavigation() {
