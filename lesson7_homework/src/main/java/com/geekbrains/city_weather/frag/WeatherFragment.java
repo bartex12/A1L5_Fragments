@@ -32,10 +32,12 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
+import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY_DETAIL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +56,11 @@ public class WeatherFragment extends Fragment {
     private Handler handler = new Handler();
     private String[] dates = new String[5];
     private double[] temperuteres = new double[5];
+    private int[] idArray = new int[5];
+    private String[] iconArray = new String[5];
+    private long sunrise;
+    private long sunset;
+
     public WeatherFragment() {
         // Required empty public constructor
     }
@@ -73,7 +80,7 @@ public class WeatherFragment extends Fragment {
         return Objects.requireNonNull(getArguments()).getString("city", "Moscow");
     }
 
-    // Получить город из аргументов
+    // Получить список из аргументов public - он используется ещё где то
     public ArrayList<String> getCityMarkedArray() {
         return Objects.requireNonNull(getArguments()).getStringArrayList("cityMarked");
     }
@@ -120,8 +127,8 @@ public class WeatherFragment extends Fragment {
     }
 
     private void initFonts() {
-        Typeface weatherFont = Typeface.createFromAsset(Objects.
-                requireNonNull(getActivity()).getAssets(), "fonts/weather.ttf");
+        Typeface weatherFont = Typeface.createFromAsset(
+                Objects.requireNonNull(getActivity()).getAssets(), "fonts/weather.ttf");
         textViewIcon.setTypeface(weatherFont);
     }
 
@@ -139,10 +146,14 @@ public class WeatherFragment extends Fragment {
                         public void run() {
                             Toast.makeText(getActivity(), R.string.place_not_found,
                                     Toast.LENGTH_LONG).show();
+//                            Snackbar.make(getView(), getActivity().getString(R.string.place_not_found),
+//                                    Snackbar.LENGTH_SHORT).show();
                             ArrayList<String> cityMarked = getCityMarkedArray();
                             cityMarked.remove(city);
                             Intent intent = new Intent(getActivity(), MainActivity.class);
-
+                            intent.putExtra(CURRENT_CITY_DETAIL, "Moscow");
+                            intent.putExtra(CITY_MARKED, cityMarked);
+                            startActivity(intent);
                         }
                     });
                 } else {
@@ -162,7 +173,11 @@ public class WeatherFragment extends Fragment {
         try {
             dates = getDateArray(jsonObjectForecast);
             temperuteres = getTempArray(jsonObjectForecast);
-            //после формирования данных для адаптера
+            idArray = getIdArray(jsonObjectForecast);
+            sunrise = getSunrise(jsonObjectForecast);
+            sunset = getSunset(jsonObjectForecast);
+            iconArray = getIconsArray(idArray, sunrise, sunset);
+            //после формирования данных для адаптера инициализируем сам адаптер
             initRecyclerView();
 
         } catch (JSONException e) {
@@ -221,28 +236,52 @@ public class WeatherFragment extends Fragment {
         return temper;
     }
 
+    //получение массива id для прогноза на 5 дней
+    private int[] getIdArray(JSONObject jsonObjectForecast) throws JSONException {
+        Log.e(TAG, "getIdArray");
+        int[] id = new int[5];
+        for (int i = 0; i < id.length; i++) {
+            JSONObject list = jsonObjectForecast.getJSONArray("list").getJSONObject(7 + 8 * i);
+            id[i] = list.getJSONArray("weather").getJSONObject(0).getInt("id");
+            Log.e(TAG, "id[i] = " + id[i]);
+        }
+        Log.e(TAG, "id.length = " + id.length);
+        return id;
+    }
+
+    //получение времени  восход для прогноза на 5 дней
+    private long getSunrise(JSONObject jsonObjectForecast) throws JSONException {
+        Log.e(TAG, "getSunrise");
+        long sunrise = jsonObjectForecast.getJSONObject("city").getLong("sunrise");
+        Log.e(TAG, "sunrise = " + sunrise);
+        return sunrise;
+    }
+
+    //получение времени  заката для прогноза на 5 дней
+    private long getSunset(JSONObject jsonObjectForecast) throws JSONException {
+        Log.e(TAG, "getSunset");
+        long sunset = jsonObjectForecast.getJSONObject("city").getLong("sunset");
+        Log.e(TAG, "sunset = " + sunset);
+        return sunset;
+    }
+
     //загрузка данных в адаптер списка прогноза на 5 дней
     private void  initRecyclerView(){
-        //пока на иконки заглушка TODO
+        //иконки
         DataForecast[] data = new DataForecast[] {
-                new DataForecast(dates[0], ContextCompat
-                        .getDrawable(Objects.requireNonNull(getActivity()), R.drawable.sun),
+                new DataForecast(dates[0], iconArray[0],
                         String.format(Locale.getDefault(),
                                 "%.1f", temperuteres[0]) + "\u2103"),
-                new DataForecast(dates[1], ContextCompat
-                        .getDrawable(Objects.requireNonNull(getActivity()), R.drawable.rain),
+                new DataForecast(dates[1], iconArray[1],
                         String.format(Locale.getDefault(),
                                 "%.1f", temperuteres[1]) + "\u2103"),
-                new DataForecast(dates[2], ContextCompat.
-                        getDrawable(Objects.requireNonNull(getActivity()), R.drawable.partly_cloudy),
+                new DataForecast(dates[2], iconArray[2],
                         String.format(Locale.getDefault(),
                                 "%.1f", temperuteres[2]) + "\u2103"),
-                new DataForecast(dates[3], ContextCompat.
-                        getDrawable(Objects.requireNonNull(getActivity()), R.drawable.sun),
+                new DataForecast(dates[3], iconArray[3],
                         String.format(Locale.getDefault(),
                                 "%.1f", temperuteres[3]) + "\u2103"),
-                new DataForecast(dates[4], ContextCompat.
-                        getDrawable(Objects.requireNonNull(getActivity()), R.drawable.boom),
+                new DataForecast(dates[4], iconArray[4],
                         String.format(Locale.getDefault(),
                                 "%.1f", temperuteres[4]) + "\u2103")};
 
@@ -251,7 +290,7 @@ public class WeatherFragment extends Fragment {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL, false);
-        WeatherCardAdapter cardAdapter = new WeatherCardAdapter(list);
+        WeatherCardAdapter cardAdapter = new WeatherCardAdapter(getActivity(), list);
 
         recyclerViewForecast.setLayoutManager(layoutManager);
         recyclerViewForecast.setAdapter(cardAdapter);
@@ -308,6 +347,54 @@ public class WeatherFragment extends Fragment {
         String hPa = getActivity().getString(R.string.hPa);
         String pressureText = press + " " + pressure + " " + hPa;
         textViewPressure.setText(pressureText);
+    }
+
+    private String[] getIconsArray(int[] actualId, long sunrise, long sunset) {
+        String[] icons = new String[5];
+        for (int i = 0; i < icons.length; i++) {
+            int id = actualId[i] / 100;
+
+            if (actualId[i] == 800) {
+                long currentTime = new Date().getTime();
+                if (currentTime >= sunrise && currentTime < sunset) {
+                    //icon = "\u2600";
+                    icons[i] = getString(R.string.weather_sunny);
+                } else {
+                    icons[i] = getString(R.string.weather_clear_night);
+                }
+            } else {
+                switch (id) {
+                    case 2: {
+                        icons[i] = getString(R.string.weather_thunder);
+                        break;
+                    }
+                    case 3: {
+                        icons[i] = getString(R.string.weather_drizzle);
+                        break;
+                    }
+                    case 5: {
+                        icons[i] = getString(R.string.weather_rainy);
+                        break;
+                    }
+                    case 6: {
+                        icons[i] = getString(R.string.weather_snowy);
+                        break;
+                    }
+                    case 7: {
+                        icons[i] = getString(R.string.weather_foggy);
+                        break;
+                    }
+                    case 8: {
+                        //icon = "\u2601";
+                        icons[i] = getString(R.string.weather_cloudy);
+                        break;
+                    }
+                }
+            }
+
+        }
+        Log.e(TAG, "icons.length = " + icons.length);
+        return icons;
     }
 
     private void setWeatherIcon(int actualId, long sunrise, long sunset) {
