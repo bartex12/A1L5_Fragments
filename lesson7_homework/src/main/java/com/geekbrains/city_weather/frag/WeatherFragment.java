@@ -350,50 +350,55 @@ public class WeatherFragment extends Fragment {
     }
 
     private String[] getIconsArray(int[] actualId, long sunrise, long sunset) {
+
         String[] icons = new String[5];
-        for (int i = 0; i < icons.length; i++) {
-            int id = actualId[i] / 100;
+        try {
+            for (int i = 0; i < icons.length; i++) {
+                int id = actualId[i] / 100;
 
-            if (actualId[i] == 800) {
-                long currentTime = new Date().getTime();
-                if (currentTime >= sunrise && currentTime < sunset) {
-                    //icon = "\u2600";
-                    icons[i] = getString(R.string.weather_sunny);
+                if (actualId[i] == 800) {
+                    long currentTime = new Date().getTime();
+                    if (currentTime >= sunrise && currentTime < sunset) {
+                        //icon = "\u2600";
+                        icons[i] = getString(R.string.weather_sunny);
+                    } else {
+                        icons[i] = getString(R.string.weather_clear_night);
+                    }
                 } else {
-                    icons[i] = getString(R.string.weather_clear_night);
-                }
-            } else {
-                switch (id) {
-                    case 2: {
-                        icons[i] = getString(R.string.weather_thunder);
-                        break;
-                    }
-                    case 3: {
-                        icons[i] = getString(R.string.weather_drizzle);
-                        break;
-                    }
-                    case 5: {
-                        icons[i] = getString(R.string.weather_rainy);
-                        break;
-                    }
-                    case 6: {
-                        icons[i] = getString(R.string.weather_snowy);
-                        break;
-                    }
-                    case 7: {
-                        icons[i] = getString(R.string.weather_foggy);
-                        break;
-                    }
-                    case 8: {
-                        //icon = "\u2601";
-                        icons[i] = getString(R.string.weather_cloudy);
-                        break;
+                    switch (id) {
+                        case 2: {
+                            icons[i] = getString(R.string.weather_thunder);
+                            break;
+                        }
+                        case 3: {
+                            icons[i] = getString(R.string.weather_drizzle);
+                            break;
+                        }
+                        case 5: {
+                            icons[i] = getString(R.string.weather_rainy);
+                            break;
+                        }
+                        case 6: {
+                            icons[i] = getString(R.string.weather_snowy);
+                            break;
+                        }
+                        case 7: {
+                            icons[i] = getString(R.string.weather_foggy);
+                            break;
+                        }
+                        case 8: {
+                            //icon = "\u2601";
+                            icons[i] = getString(R.string.weather_cloudy);
+                            break;
+                        }
                     }
                 }
-            }
 
+            }
+            Log.e(TAG, "icons.length = " + icons.length);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
-        Log.e(TAG, "icons.length = " + icons.length);
         return icons;
     }
 

@@ -31,6 +31,7 @@ import static com.geekbrains.city_weather.AppConstants.WEATHER_FRAFMENT_TAG;
 
 /**
  * A simple {@link Fragment} subclass.
+ *
  */
 public class ChooseCityFrag extends Fragment {
     private static final String TAG = "33333";
@@ -72,7 +73,7 @@ public class ChooseCityFrag extends Fragment {
             //восстанавливаем список выбранных городов
             cityMarked = savedInstanceState.getStringArrayList(CURRENT_CITY_MARKED);
             //adapter.notifyDataSetChanged() не работает, придётся так
-            this.initRecycledView();
+            //this.initRecycledView();
         }
         // Если можно нарисовать рядом данные, то сделаем это
         if (isExistWhetherFrag) {
@@ -181,6 +182,10 @@ public class ChooseCityFrag extends Fragment {
     public void getCurrentPositionAndList(String currentCity, ArrayList<String> cityMarked) {
         city = currentCity;
         this.cityMarked = cityMarked;
+        if (!isCityInList(city)) {
+            //если нет, добавляем его
+            cityMarked.add(city); //добавляем город в список ранее выбранных городов
+        }
         this.initRecycledView();
     }
 

@@ -18,12 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
 import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY;
-import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY_DETAIL;
 import static com.geekbrains.city_weather.AppConstants.WEATHER_FRAFMENT_TAG;
 
 public class DetailActivity extends AppCompatActivity {
 
     private static final String TAG = "33333";
+    private String currentCity;
+    private ArrayList<String> cityMarked;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -56,32 +57,24 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        BottomNavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        //получаем название города из интента
-        String currentCity = Objects.requireNonNull(getIntent()
-                .getExtras()).getString(CURRENT_CITY);
-        //получаем список ранее выьбранных городов их интента
-        ArrayList<String> cityMarked = getIntent()
-                .getStringArrayListExtra(CITY_MARKED);
+        initBottomNavigation();
+        getDataFromIntent();
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             //после изменения строки списка и переворота экрана надо передать актуальную позицию
             //делать это буду через активность вызовом метода фрагмента
             Log.d(TAG, "DetailActivity onCreate currentCity = " + currentCity);
             Intent intent = new Intent(DetailActivity.this, MainActivity.class);
-            intent.putExtra(CURRENT_CITY_DETAIL, currentCity);
+            intent.putExtra(CURRENT_CITY, currentCity);
             intent.putExtra(CITY_MARKED, cityMarked);
             startActivity(intent);
             // Если устройство перевернули в альбомную ориентацию,
             // то надо эту activity закрыть и убрать из стэка
             finish();
-            return;
         }
 
         // Если эта activity запускается первый раз (с каждым новым городом первый раз)
         // то перенаправим параметр фрагменту
-        Log.d(TAG, "DetailActivity  savedInstanceState = "+ savedInstanceState);
         if (savedInstanceState == null) {
             //создаём фрагмент, передавая индекс в аргументы фрагмента
             WeatherFragment details = WeatherFragment.newInstance(currentCity, cityMarked);
@@ -91,5 +84,19 @@ public class DetailActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, details, WEATHER_FRAFMENT_TAG)
                     .commit();
         }
+    }
+
+    private void initBottomNavigation() {
+        BottomNavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
+
+    private void getDataFromIntent() {
+        //получаем название города из интента
+        currentCity = Objects.requireNonNull(getIntent()
+                .getExtras()).getString(CURRENT_CITY);
+        //получаем список ранее выьбранных городов их интента
+        cityMarked = getIntent()
+                .getStringArrayListExtra(CITY_MARKED);
     }
 }

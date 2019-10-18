@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
-import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY_DETAIL;
+import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //передаём фрагменту из интента название города и список ранее выбранных городов
         initFragWithExtra();
         //устанавливаем из настроек значения по умолчанию для первой загрузки
@@ -76,10 +77,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFragWithExtra() {
-        String currentCity = getIntent().getStringExtra(CURRENT_CITY_DETAIL);
+        String currentCity = getIntent().getStringExtra(CURRENT_CITY);
         ArrayList<String> cityMarked = getIntent().getStringArrayListExtra(CITY_MARKED);
+        //при первой загрузке currentCity=null, поэтому страхуемся
         if (currentCity == null) {
-            currentCity = "Moscow";
+            currentCity = "Saint Petersburg";
         }
         //при первой загрузке cityMarked=null, поэтому страхуемся
         if (cityMarked == null) {
