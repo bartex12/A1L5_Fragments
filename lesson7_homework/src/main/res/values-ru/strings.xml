@@ -49,5 +49,9 @@
     <string name="hPa">гПа</string>
     <string name="lastUpdate">Обновлено: </string>
     <string name="inputCitiName">Введите название города</string>
+    <string name="add">Добавить</string>
+    <string name="cancel">Назад</string>
+    <string name="clear">Очистить</string>
+    <string name="remove">Удалить</string>
 
 </resources>

@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -56,6 +57,7 @@ public class ChooseCityFrag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
         initRecycledView();
+        registerForContextMenu(recyclerViewMarked);
     }
 
     @Override
@@ -97,6 +99,51 @@ public class ChooseCityFrag extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
+    //************************************************************************************
+    //Действия по подключению контекстного меню для пунктов списка RecyclerView во фрагменте
+    // 1 в onViewCreated фрагмента пишем registerForContextMenu(recyclerViewMarked);
+    // 2 делаем метод onContextItemSelected(MenuItem item) как обычно (см ниже)
+    // 3 ViewHolder адаптера implements View.OnCreateContextMenuListener и реализуем
+    //onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) интерфейса
+    // 4 присваиваем слушатель адаптеру во ViewHolder: itemView.setOnCreateContextMenuListener(this);
+    // 5  устанавливаем слушатель для долгих нажатий в onBindViewHolder адаптера
+    // holder.textView.setOnLongClickListener(new View.OnLongClickListener()
+    //*******************************************************************
+
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        handleMenuItemClick(item);
+        return super.onContextItemSelected(item);
+    }
+
+    private void handleMenuItemClick(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.menu_add: {
+
+                break;
+            }
+
+            case R.id.menu_remove: {
+                recyclerViewCityAdapter.removeElement();
+                break;
+            }
+            case R.id.menu_clear: {
+                recyclerViewCityAdapter.clearList();
+                break;
+            }
+
+            case R.id.menu_cancel: {
+
+                break;
+            }
+
+            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
     //инициализация View
     private void initViews(View view) {
         recyclerViewMarked = view.findViewById(R.id.recycledViewMarked);
@@ -126,7 +173,8 @@ public class ChooseCityFrag extends Fragment {
         //передадим адаптеру в конструкторе список выбранных городов и ссылку на интерфейс
         //в принципе, надо через adapter.setOnCityClickListener, но хочу попробовать так
         //понятно, что это  неуниверсально, так как адаптер теперь зависит от конкретного интерфейся
-        recyclerViewCityAdapter = new RecyclerViewCityAdapter(cityMarked, onCityClickListener);
+        recyclerViewCityAdapter = new RecyclerViewCityAdapter(cityMarked, onCityClickListener,
+                getActivity());
 
         recyclerViewMarked.setLayoutManager(layoutManager);
         recyclerViewMarked.setAdapter(recyclerViewCityAdapter);

@@ -57,5 +57,10 @@
     <string name="weather_drizzle" translatable="false">&#xf01c;</string>
     <string name="lastUpdate">Last update:</string>
     <string name="inputCitiName">Input city name</string>
+    <string name="add">add</string>
+    <string name="remove">remove</string>
+    <string name="clear">clear</string>
+    <string name="cancel">cancel</string>
+
 
 </resources>
