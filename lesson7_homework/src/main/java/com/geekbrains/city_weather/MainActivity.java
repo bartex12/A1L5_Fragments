@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.navigation_about:
                 //TODO
+                Intent intent = new Intent(MainActivity.this, TestActivity.class);
+                startActivity(intent);
                 return true;
 
             case R.id.navigation_settings:

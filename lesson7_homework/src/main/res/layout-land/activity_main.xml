@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- это макет для альбомной ориентации -->
+
+<!-- это макет для альбомной ориентации здесь два фрагмента-->
+<!--один - статический citiesWhether и другой - динамический whether_in_citys-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:baselineAligned="false">
-
     <!-- Фрагмент с выбором городов -->
     <fragment
         android:name="com.geekbrains.city_weather.frag.ChooseCityFrag"
@@ -14,7 +15,6 @@
         android:layout_weight="1"
         android:layout_width="0px"
         android:layout_height="match_parent" />
-
     <!-- Здесь будет погода выбранного города -->
     <FrameLayout
         android:id="@+id/whether_in_citys"
@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="?android:attr/detailsElementBackground">
-
+        <!--это плавающая кнопка для установки города-->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_main"
             android:layout_width="wrap_content"
