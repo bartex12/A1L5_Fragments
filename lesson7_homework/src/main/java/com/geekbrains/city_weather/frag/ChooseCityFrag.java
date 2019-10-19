@@ -173,10 +173,8 @@ public class ChooseCityFrag extends Fragment {
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_add: {
-                //TODO
                 DialogFragment dialogFragment = new DialogCityAdd();
                 dialogFragment.show(Objects.requireNonNull(getFragmentManager()), "addCity");
-                //recyclerViewCityAdapter.addItem("Moscow");
                 break;
             }
             case R.id.menu_remove: {
