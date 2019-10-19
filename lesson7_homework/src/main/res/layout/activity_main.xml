@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- это макет для портретной ориентации -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main">
     <!-- в портретной ориентации у activity только один статический фрагмент citiesWhether -->
     <FrameLayout
         android:layout_width="match_parent"
@@ -28,4 +31,4 @@
 
     </FrameLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,17 +14,23 @@ import com.geekbrains.city_weather.dialogs.DialogCityChange;
 import com.geekbrains.city_weather.frag.ChooseCityFrag;
 import com.geekbrains.city_weather.preferences.SettingsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
 import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
 import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "33333";
     boolean isShowCheckboxes;
@@ -32,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main1);
 
         //передаём фрагменту из интента название города и список ранее выбранных городов
         initFragWithExtra();
@@ -40,6 +46,18 @@ public class MainActivity extends AppCompatActivity {
         //устанавливаем из настроек значения по умолчанию для первой загрузки
         androidx.preference.PreferenceManager
                 .setDefaultValues(this, R.xml.pref_setting, false);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -77,8 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.navigation_about:
                 //TODO
-                Intent intent = new Intent(MainActivity.this, TestActivity.class);
-                startActivity(intent);
                 return true;
 
             case R.id.navigation_settings:
@@ -141,6 +157,11 @@ public class MainActivity extends AppCompatActivity {
             checkBoxWind.setVisibility(View.GONE);
             checkBoxPressure.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
     }
 }
 
