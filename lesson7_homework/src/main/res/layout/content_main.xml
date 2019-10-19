@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- это макет для портретной ориентации -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,14 +9,26 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
+    <!-- в портретной ориентации у activity только один статический фрагмент citiesWhether -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="32dp"
+            app:backgroundTint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_my_location_white_24dp" />
+
+        <fragment
+            android:id="@+id/citiesWhether"
+            android:name="com.geekbrains.city_weather.frag.ChooseCityFrag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

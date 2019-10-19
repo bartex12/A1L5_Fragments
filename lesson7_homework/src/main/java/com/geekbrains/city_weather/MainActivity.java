@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main1);
+        setContentView(R.layout.activity_main);
 
         //передаём фрагменту из интента название города и список ранее выбранных городов
         initFragWithExtra();
