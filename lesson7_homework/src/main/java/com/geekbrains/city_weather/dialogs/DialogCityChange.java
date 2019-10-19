@@ -37,7 +37,7 @@ public class DialogCityChange extends DialogFragment {
         etCity.requestFocus();
         etCity.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(view);
-        builder.setTitle("Изменить город");
+        builder.setTitle(R.string.show_city);
         builder.setIcon(R.drawable.ic_my_location_red_24dp);
 
         //действия при нажатии кнопки OK

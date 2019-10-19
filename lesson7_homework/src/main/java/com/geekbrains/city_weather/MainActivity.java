@@ -9,9 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 
+import com.geekbrains.city_weather.dialogs.DialogCityAdd;
 import com.geekbrains.city_weather.dialogs.DialogCityChange;
 import com.geekbrains.city_weather.frag.ChooseCityFrag;
 import com.geekbrains.city_weather.preferences.SettingsActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         //передаём фрагменту из интента название города и список ранее выбранных городов
         initFragWithExtra();
+        initFab();
         //устанавливаем из настроек значения по умолчанию для первой загрузки
         androidx.preference.PreferenceManager
                 .setDefaultValues(this, R.xml.pref_setting, false);
@@ -67,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
                 showChangecityDialogFragment();
                 return true;
 
+            case R.id.navigation_add:
+                DialogFragment dialogFragment = new DialogCityAdd();
+                dialogFragment.show(getSupportFragmentManager(), "addCity");
+                return true;
+
             case R.id.navigation_about:
                 //TODO
                 return true;
@@ -78,6 +86,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initFab() {
+        FloatingActionButton fab = findViewById(R.id.fab_main);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showChangecityDialogFragment();
+            }
+        });
     }
 
     private void initFragWithExtra() {
