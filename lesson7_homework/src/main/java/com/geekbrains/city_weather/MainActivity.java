@@ -67,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
                 showChangecityDialogFragment();
                 return true;
 
+            case R.id.navigation_about:
+                //TODO
+                return true;
+
             case R.id.navigation_settings:
                 Log.d(TAG, "OptionsItem = navigation_settings");
                 Intent intentSettings = new Intent(this, SettingsActivity.class);

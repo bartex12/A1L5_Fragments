@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.geekbrains.city_weather.R;
+import com.geekbrains.city_weather.frag.ChooseCityFrag;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
     private OnCityClickListener onCityClickListener;
     private Activity activity;
     private long posItem = 0;
+    private Context context;
 
     public RecyclerViewCityAdapter(ArrayList<String> data,
                                    OnCityClickListener onCityClickListener, Activity activity) {
@@ -32,13 +35,20 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
         this.activity = activity;
     }
 
-    public void addItem() {
+    public void addItem(String city) {
         Log.d(TAG, "RecyclerViewCityAdapter addItem");
+        if (ChooseCityFrag.isNotCityInList(city, data)) {
+            data.add(city);
+            notifyItemInserted(data.size() - 1);
+        } else {
+            Toast.makeText(context, "Такой город уже есть в списке", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void removeElement() {
         Log.d(TAG, "RecyclerViewCityAdapter removeElement");
-
+        //TODO если удалить текущий элемент, в альбоме отображаются данные удалённого города
+        //в принципе, это даже прикольно, если случайно удалили
         if (data.size() > 0) {
             data.remove((int) posItem);
             notifyItemRemoved((int) posItem);
@@ -49,6 +59,15 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
         Log.d(TAG, "RecyclerViewCityAdapter clearList");
         data.clear();
         notifyDataSetChanged();
+    }
+
+    private boolean isNotCityInList(String city) {
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).toUpperCase().equals(city.toUpperCase())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -78,7 +97,7 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.item_list,
                 parent, false);
         return new ViewHolder(view);

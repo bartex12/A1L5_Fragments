@@ -144,10 +144,10 @@ public class WeatherFragment extends Fragment {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+                            //TODO если город не обнаружен и телефон в альбомной ориентации,
+                            // нужно выводить картинку на эту тему - смущённый чел
                             Toast.makeText(getActivity(), R.string.place_not_found,
                                     Toast.LENGTH_LONG).show();
-//                            Snackbar.make(getView(), getActivity().getString(R.string.place_not_found),
-//                                    Snackbar.LENGTH_SHORT).show();
                             ArrayList<String> cityMarked = getCityMarkedArray();
                             cityMarked.remove(city);
                             Intent intent = new Intent(getActivity(), MainActivity.class);
