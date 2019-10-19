@@ -36,8 +36,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
-import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY_DETAIL;
+import static com.geekbrains.city_weather.constants.AppConstants.CITY_MARKED;
+import static com.geekbrains.city_weather.constants.AppConstants.CURRENT_CITY_DETAIL;
 
 /**
  * A simple {@link Fragment} subclass.

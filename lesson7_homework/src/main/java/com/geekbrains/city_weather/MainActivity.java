@@ -26,8 +26,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
-import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
-import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY;
+import static com.geekbrains.city_weather.constants.AppConstants.CITY_MARKED;
+import static com.geekbrains.city_weather.constants.AppConstants.CURRENT_CITY;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {

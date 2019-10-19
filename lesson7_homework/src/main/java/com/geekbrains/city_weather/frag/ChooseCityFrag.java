@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.geekbrains.city_weather.DetailActivity;
 import com.geekbrains.city_weather.R;
-import com.geekbrains.city_weather.cityAdapter.RecyclerViewCityAdapter;
+import com.geekbrains.city_weather.adapter.RecyclerViewCityAdapter;
 import com.geekbrains.city_weather.dialogs.DialogCityAdd;
 
 import java.util.ArrayList;
@@ -27,10 +27,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
-import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY;
-import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY_MARKED;
-import static com.geekbrains.city_weather.AppConstants.WEATHER_FRAFMENT_TAG;
+import static com.geekbrains.city_weather.constants.AppConstants.CITY_MARKED;
+import static com.geekbrains.city_weather.constants.AppConstants.CURRENT_CITY;
+import static com.geekbrains.city_weather.constants.AppConstants.CURRENT_CITY_MARKED;
+import static com.geekbrains.city_weather.constants.AppConstants.WEATHER_FRAFMENT_TAG;
 
 /**
  * A simple {@link Fragment} subclass.

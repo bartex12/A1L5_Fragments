@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.geekbrains.city_weather.dialogs.AboutDialog;
 import com.geekbrains.city_weather.frag.WeatherFragment;
 import com.geekbrains.city_weather.preferences.SettingsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,9 +20,9 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
-import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY;
-import static com.geekbrains.city_weather.AppConstants.WEATHER_FRAFMENT_TAG;
+import static com.geekbrains.city_weather.constants.AppConstants.CITY_MARKED;
+import static com.geekbrains.city_weather.constants.AppConstants.CURRENT_CITY;
+import static com.geekbrains.city_weather.constants.AppConstants.WEATHER_FRAFMENT_TAG;
 
 public class DetailActivity extends AppCompatActivity {
 

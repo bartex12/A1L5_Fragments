@@ -1,4 +1,4 @@
-package com.geekbrains.city_weather.cityAdapter;
+package com.geekbrains.city_weather.adapter;
 
 import android.app.Activity;
 import android.content.Context;

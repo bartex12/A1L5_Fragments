@@ -1,4 +1,4 @@
-package com.geekbrains.city_weather;
+package com.geekbrains.city_weather.dialogs;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.geekbrains.city_weather.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import androidx.annotation.NonNull;
