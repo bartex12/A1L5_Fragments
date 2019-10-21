@@ -31,7 +31,7 @@ public class DialogCityChange extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = Objects.requireNonNull(getActivity()).getLayoutInflater();
-        final View view = inflater.inflate(R.layout.choose_city_dialog, null);
+        final View view = inflater.inflate(R.layout.dialog_choose_city, null);
         final EditText etCity = view.findViewById(R.id.editTextCity);
         final Button buttonOk = view.findViewById(R.id.buttonOk);
         etCity.requestFocus();

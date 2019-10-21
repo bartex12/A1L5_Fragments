@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 
 import com.geekbrains.city_weather.dialogs.DialogCityAdd;
 import com.geekbrains.city_weather.dialogs.DialogCityChange;
+import com.geekbrains.city_weather.dialogs.MessageDialog;
 import com.geekbrains.city_weather.frag.ChooseCityFrag;
 import com.geekbrains.city_weather.preferences.SettingsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final String TAG = "33333";
     boolean isShowCheckboxes;
+    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +53,15 @@ public class MainActivity extends AppCompatActivity implements
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view_main);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
     }
 
     @Override
@@ -89,21 +93,29 @@ public class MainActivity extends AppCompatActivity implements
                 return true;
 
             case R.id.navigation_add:
-                DialogFragment dialogFragment = new DialogCityAdd();
-                dialogFragment.show(getSupportFragmentManager(), "addCity");
+                showAddcityDialogFragment();
                 return true;
 
             case R.id.navigation_about:
                 //TODO
+                DialogFragment dialogMessage = MessageDialog.newInstance(
+                        getResources().getString(R.string.aboutAppMessage));
+                //DialogFragment dialogMessage = MessageDialog.newInstance(
+                //        "Справка");
+                dialogMessage.show(getSupportFragmentManager(), "dialogMessage");
                 return true;
 
             case R.id.navigation_settings:
                 Log.d(TAG, "OptionsItem = navigation_settings");
-                Intent intentSettings = new Intent(this, SettingsActivity.class);
-                startActivity(intentSettings);
+                showSettingsActivity();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showSettingsActivity() {
+        Intent intentSettings = new Intent(this, SettingsActivity.class);
+        startActivity(intentSettings);
     }
 
     private void initFab() {
@@ -143,6 +155,12 @@ public class MainActivity extends AppCompatActivity implements
         dialogFragment.show(getSupportFragmentManager(), "changeCity");
     }
 
+    //диалог сохранения, оформленный как класс с указанием имени файла
+    private void showAddcityDialogFragment() {
+        DialogFragment dialogFragment = new DialogCityAdd();
+        dialogFragment.show(getSupportFragmentManager(), "addCity");
+    }
+
     // показываем/скрываем чекбоксы на экране выбора города
     private void setCheckboxesInFragment(boolean isShowCheckboxes) {
         ChooseCityFrag fr = (ChooseCityFrag) getSupportFragmentManager().
@@ -161,7 +179,42 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        // Handle navigation view item clicks here.
+        int id = menuItem.getItemId();
+
+        int optionId = R.layout.content_main;
+
+        if (id == R.id.nav_camera) {
+            Log.d(TAG, "MainActivity onNavigationItemSelected nav_camera");
+            showChangecityDialogFragment();
+        } else if (id == R.id.nav_gallery) {
+            Log.d(TAG, "MainActivity onNavigationItemSelected nav_gallery");
+            showAddcityDialogFragment();
+        } else if (id == R.id.nav_help) {
+            Log.d(TAG, "MainActivity onNavigationItemSelected nav_help");
+            DialogFragment dialogMessage = MessageDialog.newInstance(
+                    getResources().getString(R.string.willBeHelp));
+            //DialogFragment dialogMessage = MessageDialog.newInstance(
+            //        "Справка");
+            dialogMessage.show(getSupportFragmentManager(), "dialogMessage");
+        } else if (id == R.id.nav_manage) {
+            Log.d(TAG, "MainActivity onNavigationItemSelected nav_tools");
+            showSettingsActivity();
+        } else if (id == R.id.nav_share) {
+            Log.d(TAG, "MainActivity onNavigationItemSelected nav_share");
+        } else if (id == R.id.nav_send) {
+            Log.d(TAG, "MainActivity onNavigationItemSelected nav_send");
+        }
+
+        // Выделяем выбранный пункт меню в шторке
+        menuItem.setChecked(true);
+
+//        ViewGroup parent = (ViewGroup) findViewById(R.id.content);
+////        parent.removeAllViews();
+////        View newContent = getLayoutInflater().inflate(optionId, parent, false);
+////        parent.addView(newContent);
+        // DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         return false;
     }
 }
-

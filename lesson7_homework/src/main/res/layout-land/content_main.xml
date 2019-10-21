@@ -11,6 +11,16 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
     <!-- Фрагмент с выбором городов -->
+    <fragment
+        android:id="@+id/citiesWhether"
+        android:name="com.geekbrains.city_weather.frag.ChooseCityFrag"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/whether_in_citys"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <!-- Здесь будет погода выбранного города -->
     <FrameLayout
         android:id="@+id/whether_in_citys"
@@ -35,14 +45,5 @@
 
     </FrameLayout>
 
-    <fragment
-        android:id="@+id/citiesWhether"
-        android:name="com.geekbrains.city_weather.frag.ChooseCityFrag"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/whether_in_citys"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
