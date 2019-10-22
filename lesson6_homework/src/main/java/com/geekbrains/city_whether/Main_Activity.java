@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.geekbrains.city_whether.frag.ChooseCityFrag;
-import com.geekbrains.city_whether.frag.WhetherFragment;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Main_Activity extends AppCompatActivity {
@@ -17,17 +17,19 @@ public class Main_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_fr);
+        setContentView(R.layout.activity_main);
 
         if (getIntent().getExtras()!=null){
             int position = getIntent().getIntExtra("index",0);
-            Log.d(TAG, "MainActivity onCreate position = " + position);
+            ArrayList<String> cityMarked = getIntent().getStringArrayListExtra(P.CITY_MARKED);
+            Log.d(TAG, "MainActivity onCreate position = " + position +
+                    " cityMarked.size() = " + cityMarked.size());
 
+            //находим фрагмент
             ChooseCityFrag chooseCityFrag = (ChooseCityFrag)getSupportFragmentManager().
                     findFragmentById(R.id.citiesWhether);
-
             //вызываем из активности метод фрагмента для передачи актуальной позиции
-            Objects.requireNonNull(chooseCityFrag).getCurrentPosition(position);
+            Objects.requireNonNull(chooseCityFrag).getCurrentPositionAndList(position, cityMarked);
         }
     }
     // переопределение метода onBackPressed() пришлось убрать, иначе при нажатии кнопки "назад"

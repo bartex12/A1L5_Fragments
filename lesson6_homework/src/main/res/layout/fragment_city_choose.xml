@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/autumn2"
-    tools:context=".ChooseActivity">
+   >
 
     <LinearLayout
         android:layout_width="0dp"
@@ -32,7 +31,7 @@
             style="@style/CheckBoxStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="@string/WindSpeed" />
 
         <CheckBox
@@ -40,7 +39,6 @@
             style="@style/CheckBoxStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:text="@string/Pressure" />
 
         <Button
@@ -49,8 +47,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="@string/ShowWeather" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycledViewMarked"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

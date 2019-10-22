@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#80cff2da"
     android:orientation="vertical">
 
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/weather" />
 
     <TextView
@@ -23,8 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp" />
+        android:layout_marginStart="24dp" />
 
     <TextView
         android:id="@+id/textViewTemper"
@@ -32,8 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginStart="24dp" />
 
     <TextView
         android:id="@+id/textViewWind"
@@ -49,13 +47,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginStart="24dp" />
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="10dp" />
 
     <ImageView
         android:id="@+id/imageViewWhether"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="200dp"
         android:contentDescription="@string/picture"
         app:srcCompat="@drawable/boom" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewForecast"
+        android:background="#80cff2da"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>

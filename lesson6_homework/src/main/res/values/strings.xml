@@ -24,6 +24,11 @@
     <string name="var_clouds">Partly cloudy</string>
     <string name="windSpeed">Wind speed</string>
     <string name="picture">Whether type</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="oneDay">In one day</string>
+    <string name="after2days">After 2 days</string>
+    <string name="after3days">After 3 days</string>
+    <string name="after4days">After 4 days</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -1,0 +1,76 @@
+package com.geekbrains.city_whether.cityAdapter;
+
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.geekbrains.city_whether.R;
+import com.geekbrains.city_whether.frag.ChooseCityFrag;
+
+import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCityAdapter.ViewHolder>{
+    private static final String TAG = "33333";
+    private ArrayList<String> data;
+    Context context;
+
+    public RecyclerViewCityAdapter( ArrayList<String> data){
+        if (data!=null){
+            this.data = data;
+        }
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list,
+                parent, false );
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        final int pos = position;
+        holder.textView.setText(data.get(position));
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String city = data.get(pos);
+                String[] towns = context.getResources().getStringArray(R.array.towns);
+                for (int i = 0; i<towns.length; i++){
+                    if (towns[i].equals(city)){
+                        Log.d(TAG, "RecyclerViewCityAdapter onBindViewHolder city =  "+ city+
+                                " cityPosition = " + i);
+                        Toast.makeText(context, "Выбран город: "+ city, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
+
+
+    class ViewHolder extends RecyclerView.ViewHolder{
+
+        TextView textView;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            textView = itemView.findViewById(R.id.textViewCity);
+        }
+    }
+
+
+}
