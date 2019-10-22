@@ -17,9 +17,10 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent().getExtras()!=null){
             int position = getIntent().getIntExtra("index",0);
             Log.d(TAG, "MainActivity onCreate position = " + position);
-            CitiesFragment fr = (CitiesFragment)getSupportFragmentManager().
+            CitiesFragment citiesFragment = (CitiesFragment)getSupportFragmentManager().
                     findFragmentById(R.id.cities);
-            Objects.requireNonNull(fr).getCurrentPosition(position);
+            //вызываем метод фрагмента для передачи актуальной позиции
+            Objects.requireNonNull(citiesFragment).getCurrentPosition(position);
         }
     }
     // переопределение метода onBackPressed() пришлось убрать, иначе при нажатии кнопки "назад"

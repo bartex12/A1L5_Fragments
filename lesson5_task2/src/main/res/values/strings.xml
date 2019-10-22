@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">HomeWork_Lesson1</string>
+    <string name="app_name" translatable="false">Whether</string>
     <string name="weather_morning">Weather in the morning</string>
     <string name="weather_afternoon">Weather in the afternoon</string>
     <string name="weather_evening">Weather in the evening</string>
@@ -25,6 +25,8 @@
     <string name="windSpeed">Wind speed</string>
     <string name="picture">Whether type</string>
 
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="towns">
         <item>Moscow</item>
         <item>St.Petersburg</item>

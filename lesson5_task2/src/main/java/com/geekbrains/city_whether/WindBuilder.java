@@ -4,9 +4,9 @@ import android.content.Context;
 
 import java.util.Random;
 
- class WindBuilder {
+public class WindBuilder {
 
-    String getWindSpeed(Context context){
+    public String getWindSpeed(Context context){
         Random random = new Random();
         int rndWindSpeed = 1 + random.nextInt(14);
         String windSpeed = context.getString(R.string.windSpeed);

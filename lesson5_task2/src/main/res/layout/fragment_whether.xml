@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#80cff2da"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/greetingsTextView"
+        style="@style/GreetingCityStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/weather" />
+
+    <TextView
+        android:id="@+id/textViewWhether"
+        style="@style/WhetherCityStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/textViewTemper"
+        style="@style/WhetherCityStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/textViewWind"
+        style="@style/WhetherCityStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="24dp" />
+
+    <TextView
+        android:id="@+id/textViewPressure"
+        style="@style/WhetherCityStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="24dp" />
+
+    <ImageView
+        android:id="@+id/imageViewWhether"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/picture"
+        app:srcCompat="@drawable/boom" />
+</LinearLayout>

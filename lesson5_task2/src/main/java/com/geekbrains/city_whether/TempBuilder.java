@@ -4,9 +4,9 @@ import android.content.Context;
 
 import java.util.Random;
 
-class TempBuilder {
+public class TempBuilder {
 
-    String getTemperature(Context context){
+    public String getTemperature(Context context){
         Random random = new Random();
         String temper = context.getString(R.string.temper);
         String grad = context.getString(R.string.grad);
