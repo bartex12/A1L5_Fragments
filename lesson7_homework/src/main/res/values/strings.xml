@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name" translatable="false">Whether</string>
+    <string name="weather_morning">Weather in the morning</string>
+    <string name="weather_afternoon">Weather in the afternoon</string>
+    <string name="weather_evening">Weather in the evening</string>
+    <string name="weather_night">Weather at night</string>
+    <string name="on">at</string>
+    <string name="weather">Weather</string>
+    <string name="ShowWeather">Weather forecast</string>
+    <string name="WindSpeed">Speed of Wind</string>
+    <string name="Pressure">Pressure</string>
+    <string name="WhetherInCity">Whether In City</string>
+    <string name="CityChoose">Choose а City</string>
+    <string name="city">City</string>
+    <string name="Sun">Сloudless</string>
+    <string name="grad">gr</string>
+    <string name="boom">Boom</string>
+    <string name="little_rain">Short rainfall</string>
+    <string name="mm">mm</string>
+    <string name="ms">mps</string>
+    <string name="press">Pressure</string>
+    <string name="rain">Rain</string>
+    <string name="temper">Temperature  +</string>
+    <string name="var_clouds">Partly cloudy</string>
+    <string name="windSpeed">Wind speed</string>
+    <string name="picture">Whether type</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="oneDay">In one day</string>
+    <string name="after2days">After 2 days</string>
+    <string name="after3days">After 3 days</string>
+    <string name="after4days">After 4 days</string>
+    <string name="pictureForecast">picture</string>
+    <string name="about">About</string>
+    <string name="setting">Settings</string>
+    <string name="home">Home</string>
+    <string name="settings">settings</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="about_me">The app is made on relax</string>
+    <string name="dialog">Диалог</string>
+    <string name="aboutApp">About Application</string>
+    <string name="show">Show</string>
+    <string name="NotShow">Not show</string>
+
+    <string-array name="towns">
+        <item>Moscow</item>
+        <item>St.Petersburg</item>
+        <item>Novosibirsk</item>
+        <item>Yekaterinburg</item>
+        <item>Nizhniy Novgorod</item>
+        <item>Qazan</item>
+        <item>Chelyabinsk</item>
+        <item>Omsk</item>
+        <item>Samara</item>
+        <item>Rostov-on-Don</item>
+    </string-array>
+
+</resources>
