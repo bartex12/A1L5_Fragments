@@ -1,10 +1,10 @@
 package com.geekbrains.city_weather.adapter;
 
-
+import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.geekbrains.city_weather.R;
@@ -17,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 public class WeatherCardAdapter extends RecyclerView.Adapter<WeatherCardAdapter.CardViewHolder> {
 
     private ArrayList<DataForecast> dataForecast = new ArrayList<>();
+    private Context context;
 
-    public WeatherCardAdapter(ArrayList<DataForecast> data) {
+    public WeatherCardAdapter(Context context, ArrayList<DataForecast> data) {
         if (data != null) {
             dataForecast = data;
         }
+        this.context = context;
     }
 
     @NonNull
@@ -35,7 +37,7 @@ public class WeatherCardAdapter extends RecyclerView.Adapter<WeatherCardAdapter.
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         holder.textViewDay.setText(dataForecast.get(position).day);
-        holder.imageViewWhether.setImageDrawable(dataForecast.get(position).weatherDrawble);
+        holder.textViewIcon.setText(dataForecast.get(position).weatherIcon);
         holder.textViewTemper.setText(dataForecast.get(position).temp);
     }
 
@@ -47,14 +49,17 @@ public class WeatherCardAdapter extends RecyclerView.Adapter<WeatherCardAdapter.
     class CardViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewDay;
-        ImageView imageViewWhether;
+        TextView textViewIcon;
         TextView textViewTemper;
 
         CardViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewDay = itemView.findViewById(R.id.textViewDay);
-            imageViewWhether = itemView.findViewById(R.id.imageViewWhether);
+            textViewIcon = itemView.findViewById(R.id.textViewIcon);
             textViewTemper = itemView.findViewById(R.id.textViewTemper);
+            Typeface weatherFont = Typeface.createFromAsset(
+                    context.getAssets(), "fonts/weather.ttf");
+            textViewIcon.setTypeface(weatherFont);
         }
     }
 }

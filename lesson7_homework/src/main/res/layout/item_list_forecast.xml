@@ -15,15 +15,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageViewWhether"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/pictureForecast"
-            android:scaleType="fitXY"
-            android:visibility="gone" />
-
         <TextView
             android:id="@+id/textViewTemper"
             style="@style/WhetherCityStyle"
@@ -37,6 +28,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/textViewIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textSize="24sp" />
 
     </LinearLayout>
 

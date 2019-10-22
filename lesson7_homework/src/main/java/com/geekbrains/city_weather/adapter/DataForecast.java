@@ -1,15 +1,13 @@
 package com.geekbrains.city_weather.adapter;
 
-import android.graphics.drawable.Drawable;
-
 public class DataForecast {
     String day;
-    Drawable weatherDrawble;
+    String weatherIcon;
     String temp;
 
-    public DataForecast(String day, Drawable weather, String temp) {
+    public DataForecast(String day, String weatherIcon, String temp) {
         this.day = day;
-        this.weatherDrawble = weather;
+        this.weatherIcon = weatherIcon;
         this.temp = temp;
     }
 }
