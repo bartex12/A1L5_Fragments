@@ -31,13 +31,13 @@ public class DialogCityChange extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = Objects.requireNonNull(getActivity()).getLayoutInflater();
-        final View view = inflater.inflate(R.layout.choose_city_dialog, null);
+        final View view = inflater.inflate(R.layout.dialog_choose_city, null);
         final EditText etCity = view.findViewById(R.id.editTextCity);
         final Button buttonOk = view.findViewById(R.id.buttonOk);
         etCity.requestFocus();
         etCity.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(view);
-        builder.setTitle("Изменить город");
+        builder.setTitle(R.string.show_city);
         builder.setIcon(R.drawable.ic_my_location_red_24dp);
 
         //действия при нажатии кнопки OK

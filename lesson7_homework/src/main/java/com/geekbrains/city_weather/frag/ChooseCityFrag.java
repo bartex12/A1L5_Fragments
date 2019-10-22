@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -12,25 +13,28 @@ import android.widget.Toast;
 
 import com.geekbrains.city_weather.DetailActivity;
 import com.geekbrains.city_weather.R;
-import com.geekbrains.city_weather.cityAdapter.RecyclerViewCityAdapter;
+import com.geekbrains.city_weather.adapter.RecyclerViewCityAdapter;
+import com.geekbrains.city_weather.dialogs.DialogCityAdd;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.geekbrains.city_weather.AppConstants.CITY_MARKED;
-import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY;
-import static com.geekbrains.city_weather.AppConstants.CURRENT_CITY_MARKED;
-import static com.geekbrains.city_weather.AppConstants.WEATHER_FRAFMENT_TAG;
+import static com.geekbrains.city_weather.constants.AppConstants.CITY_MARKED;
+import static com.geekbrains.city_weather.constants.AppConstants.CURRENT_CITY;
+import static com.geekbrains.city_weather.constants.AppConstants.CURRENT_CITY_MARKED;
+import static com.geekbrains.city_weather.constants.AppConstants.WEATHER_FRAFMENT_TAG;
 
 /**
  * A simple {@link Fragment} subclass.
+ *
  */
 public class ChooseCityFrag extends Fragment {
     private static final String TAG = "33333";
@@ -50,11 +54,56 @@ public class ChooseCityFrag extends Fragment {
         return inflater.inflate(R.layout.fragment_city_choose, container, false);
     }
 
+    //проверка - если такой город есть в списке- возвращает false
+    //сделан статическим, чтобы можно было использовать в адаптере списка
+    public static boolean isNotCityInList(String city, ArrayList<String> cityMarked) {
+        for (int i = 0; i < cityMarked.size(); i++) {
+            if (cityMarked.get(i).toUpperCase().equals(city.toUpperCase())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
-        initRecycledView();
+        //initRecycledView();
+        registerForContextMenu(recyclerViewMarked);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        recyclerViewCityAdapter.notifyDataSetChanged();
+    }
+
+    // Сохраним текущий город (вызывается перед выходом из фрагмента)
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(CURRENT_CITY, city);
+        outState.putStringArrayList(CURRENT_CITY_MARKED, cityMarked);
+        Log.d(TAG, "ChooseCityFrag savedInstanceState cityMarked.size()= " +
+                cityMarked.size() + " city = " + city);
+        super.onSaveInstanceState(outState);
+    }
+
+    //************************************************************************************
+    //Действия по подключению контекстного меню для пунктов списка RecyclerView во фрагменте
+    // 1 в onViewCreated фрагмента пишем registerForContextMenu(recyclerViewMarked);
+    // 2 делаем метод onContextItemSelected(MenuItem item) как обычно (см ниже)
+    // 3 ViewHolder адаптера implements View.OnCreateContextMenuListener и реализуем
+    //onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) интерфейса
+    // 4 присваиваем слушатель адаптеру во ViewHolder: itemView.setOnCreateContextMenuListener(this);
+    // 5  устанавливаем слушатель для долгих нажатий в onBindViewHolder адаптера
+    // holder.textView.setOnLongClickListener(new View.OnLongClickListener()
+    //*******************************************************************
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        handleMenuItemClick(item);
+        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -72,22 +121,15 @@ public class ChooseCityFrag extends Fragment {
             //восстанавливаем список выбранных городов
             cityMarked = savedInstanceState.getStringArrayList(CURRENT_CITY_MARKED);
             //adapter.notifyDataSetChanged() не работает, придётся так
-            this.initRecycledView();
+            this.initRecycledView(); //если не сделать, при повороте теряем список
+            Log.d(TAG, "ChooseCityFrag onActivityCreated cityMarked.size()= " +
+                    cityMarked.size() + " city = " + city);
         }
+
         // Если можно нарисовать рядом данные, то сделаем это
         if (isExistWhetherFrag) {
             showCityWhether(city);
         }
-    }
-
-    // Сохраним текущий город (вызывается перед выходом из фрагмента)
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString(CURRENT_CITY, city);
-        outState.putStringArrayList(CURRENT_CITY_MARKED, cityMarked);
-        Log.d(TAG, "ChooseCityFrag savedInstanceState cityMarked.size()= " +
-                cityMarked.size() + " city = " + city);
-        super.onSaveInstanceState(outState);
     }
 
     //инициализация View
@@ -119,20 +161,35 @@ public class ChooseCityFrag extends Fragment {
         //передадим адаптеру в конструкторе список выбранных городов и ссылку на интерфейс
         //в принципе, надо через adapter.setOnCityClickListener, но хочу попробовать так
         //понятно, что это  неуниверсально, так как адаптер теперь зависит от конкретного интерфейся
-        recyclerViewCityAdapter = new RecyclerViewCityAdapter(cityMarked, onCityClickListener);
+        recyclerViewCityAdapter = new RecyclerViewCityAdapter(cityMarked, onCityClickListener,
+                getActivity());
 
         recyclerViewMarked.setLayoutManager(layoutManager);
         recyclerViewMarked.setAdapter(recyclerViewCityAdapter);
     }
 
-
-    private boolean isCityInList(String city) {
-        for (int i = 0; i < cityMarked.size(); i++){
-            if (cityMarked.get(i).equals(city)){
-                return true;
+    //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    private void handleMenuItemClick(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_add: {
+                DialogFragment dialogFragment = new DialogCityAdd();
+                dialogFragment.show(Objects.requireNonNull(getFragmentManager()), "addCity");
+                break;
+            }
+            case R.id.menu_remove: {
+                recyclerViewCityAdapter.removeElement();
+                break;
+            }
+            case R.id.menu_clear: {
+                recyclerViewCityAdapter.clearList();
+                break;
+            }
+            case R.id.menu_cancel: {
+                //TODO
+                break;
             }
         }
-        return false;
     }
 
     // Показать погоду во фрагменте рядом со спиннером в альбомной ориентации
@@ -148,7 +205,7 @@ public class ChooseCityFrag extends Fragment {
             Log.d(TAG, "weatherFrag.getCity() = " + weatherFrag.getCity());
         }
         // создаем новый фрагмент с текущей позицией для вывода погоды
-        weatherFrag = WeatherFragment.newInstance(city);
+        weatherFrag = WeatherFragment.newInstance(city, cityMarked);
         // ... и выполняем транзакцию по замене фрагмента
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.whether_in_citys, weatherFrag, WEATHER_FRAFMENT_TAG);  // замена фрагмента
@@ -175,13 +232,17 @@ public class ChooseCityFrag extends Fragment {
     public void getCurrentPositionAndList(String currentCity, ArrayList<String> cityMarked) {
         city = currentCity;
         this.cityMarked = cityMarked;
+        if (isNotCityInList(city, cityMarked)) {
+            //если нет, добавляем его
+            cityMarked.add(city); //добавляем город в список ранее выбранных городов
+        }
         this.initRecycledView();
     }
 
     public void prepareData(String city) {
         this.city = city;
         //проверяем есть ли город в списке cityMarked
-        if (!isCityInList(city)) {
+        if (isNotCityInList(city, cityMarked)) {
             //если нет, добавляем его
             cityMarked.add(city); //добавляем город в список ранее выбранных городов
         }
@@ -190,6 +251,10 @@ public class ChooseCityFrag extends Fragment {
         Toast.makeText(getActivity(), city, Toast.LENGTH_LONG).show();
         // показываем погоду в городе с учётом ориентации экрана
         showCityWhetherWithOrientation(city);
+    }
+
+    public void addNewCity(String city) {
+        recyclerViewCityAdapter.addItem(city);
     }
 }
 
