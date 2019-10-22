@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.geekbrains.city_whether">
+    package="com.geekbrains.city_weather">
 
     <application
         android:allowBackup="true"
@@ -9,21 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".preferences.PrefActivity"></activity>
+
         <activity
-            android:name=".DetailActivity"
-            android:label="@string/WhetherInCity"></activity>
+            android:name="com.geekbrains.city_weather.DetailActivity"
+            android:label="@string/WhetherInCity" />
+
         <activity
-            android:name=".Main_Activity"
-            android:label="@string/CityChoose"
+            android:name="com.geekbrains.city_weather.MainActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
             android:theme="@style/ChooseThem">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.geekbrains.city_weather.preferences.SettingsActivity"
+            android:label="@string/settings" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
