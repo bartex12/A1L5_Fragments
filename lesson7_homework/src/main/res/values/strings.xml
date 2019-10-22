@@ -57,6 +57,17 @@
     <string name="willBeHelp">There will be help here</string>
     <string name="sh">Show city</string>
     <string name="aboutAppMessage">GeekBrains weather app Android advanced level</string>
+    <string name="saint_petersburg">Saint Petersburg</string>
+    <string name="stub">Stub</string>
+    <string name="addision">Additionally</string>
+    <string name="share">Share</string>
+    <string name="send">Estimate</string>
+    <string name="willBeLink">There will be a link to the application in PlayMarket
+ 
+</string>
+    <string name="willBeEstimate">There will be a link to the application page in PlayMarket
+ 
+</string>
 
 
 </resources>

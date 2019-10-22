@@ -47,5 +47,12 @@
     <string name="willBeHelp">Здесь будет справка</string>
     <string name="sh">Показать город</string>
     <string name="aboutAppMessage">Погодное приложение GeekBrains Андроид продвинутый уровень</string>
+    <string name="saint_petersburg">Saint Petersburg</string>
+    <string name="stub">Пока заглушка</string>
+    <string name="addision">Дополнительно</string>
+    <string name="share">Поделиться</string>
+    <string name="send">Оценить</string>
+    <string name="willBeLink">Здесь будет ссылка на приложение в PlayMarket</string>
+    <string name="willBeEstimate">Здесь будет ссылка на страницу приложения в PlayMarket</string>
 
 </resources>

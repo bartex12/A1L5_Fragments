@@ -97,12 +97,7 @@ public class MainActivity extends AppCompatActivity implements
                 return true;
 
             case R.id.navigation_about:
-                //TODO
-                DialogFragment dialogMessage = MessageDialog.newInstance(
-                        getResources().getString(R.string.aboutAppMessage));
-                //DialogFragment dialogMessage = MessageDialog.newInstance(
-                //        "Справка");
-                dialogMessage.show(getSupportFragmentManager(), "dialogMessage");
+                showMessageDialogFfagment(getResources().getString(R.string.aboutAppMessage));
                 return true;
 
             case R.id.navigation_settings:
@@ -111,6 +106,11 @@ public class MainActivity extends AppCompatActivity implements
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showMessageDialogFfagment(String message) {
+        DialogFragment dialogMessage = MessageDialog.newInstance(message);
+        dialogMessage.show(getSupportFragmentManager(), "dialogMessage");
     }
 
     private void showSettingsActivity() {
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements
         ArrayList<String> cityMarked = getIntent().getStringArrayListExtra(CITY_MARKED);
         //при первой загрузке currentCity=null, поэтому страхуемся
         if (currentCity == null) {
-            currentCity = "Saint Petersburg";
+            currentCity = getResources().getString(R.string.saint_petersburg);
         }
         //при первой загрузке cityMarked=null, поэтому страхуемся
         if (cityMarked == null) {
@@ -192,18 +192,16 @@ public class MainActivity extends AppCompatActivity implements
             showAddcityDialogFragment();
         } else if (id == R.id.nav_help) {
             Log.d(TAG, "MainActivity onNavigationItemSelected nav_help");
-            DialogFragment dialogMessage = MessageDialog.newInstance(
-                    getResources().getString(R.string.willBeHelp));
-            //DialogFragment dialogMessage = MessageDialog.newInstance(
-            //        "Справка");
-            dialogMessage.show(getSupportFragmentManager(), "dialogMessage");
+            showMessageDialogFfagment(getResources().getString(R.string.willBeHelp));
         } else if (id == R.id.nav_manage) {
             Log.d(TAG, "MainActivity onNavigationItemSelected nav_tools");
             showSettingsActivity();
         } else if (id == R.id.nav_share) {
             Log.d(TAG, "MainActivity onNavigationItemSelected nav_share");
+            showMessageDialogFfagment(getResources().getString(R.string.willBeLink));
         } else if (id == R.id.nav_send) {
             Log.d(TAG, "MainActivity onNavigationItemSelected nav_send");
+            showMessageDialogFfagment(getResources().getString(R.string.willBeEstimate));
         }
 
         // Выделяем выбранный пункт меню в шторке
